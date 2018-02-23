@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style type="text/css">
+            .button1 {
+                    background-color: white;
+                    border: 2px solid red;
+                    color: black;
+                    text-align: center;
+                    display: inline-block;
+                    font-size: 16px;
+                    padding: 10px 24px;
+                    border-radius: 4px;
+                    //position: absolute;
+                    //top: 22%;
+                    //left: 10%;
+                    -webkit-transition-duration: 0.4s;
+                    transition-duration: 0.4s;
+            }
+            .button1:hover {
+                    background-color: red;
+                    color:white;
+            }
+            .button2 {
+                    background-color: white;
+                    border: 2px solid blue;
+                    color: black;
+                    text-align: center;
+                    display: inline-block;
+                    font-size: 16px;
+                    padding: 10px 24px;
+                    border-radius: 4px;
+                    //position: absolute;
+                    //top: 34%;
+                    //left: 10%;
+                    -webkit-transition-duration: 0.4s;
+                    transition-duration: 0.4s;
+            }
+            .button2:hover {
+                    background-color: blue;
+                    color:white;
+            }
+            .button3 {
+                    background-color: white;
+                    border: 2px solid yellow;
+                    color: black;
+                    text-align: center;
+                    display: inline-block;
+                    font-size: 16px;
+                    padding: 10px 24px;
+                    border-radius: 4px;
+                    //position: absolute;
+                    //top: 46%;
+                    //left: 10%;
+                    -webkit-transition-duration: 0.4s;
+                    transition-duration: 0.4s;
+            }
+            .button3:hover {
+                    background-color: yellow;
+                    color:white;
+            }
+            .button4 {
+                    background-color: white;
+                    border: 2px solid green;
+                    color: black;
+                    text-align: center;
+                    display: inline-block;
+                    font-size: 16px;
+                    padding: 10px 24px;
+                    border-radius: 4px;
+                    //position: absolute;
+                    //top: 58%;
+                    //left: 10%;
+                    -webkit-transition-duration: 0.4s;
+                    transition-duration: 0.4s;
+            }
+            .button4:hover {
+                    background-color: green;
+                    color:white;
+            }
+            h1 {
+                text-align: center;
+                color: black;
+            }
+            .buttons{
+                display:grid;
+                grid-template-columns: 1fr 1fr;
+                grid-auto-rows: minmax(10px, auto);
+                grid-gap:1em;
+                justify-items:center;
+                align-items:center;                
+            }
+            .graphAndButtons{
+                display:grid;
+                grid-template-columns: 1fr 1fr;
+                grid-auto-rows: minmax(10px, auto);
+                grid-gap:1em;
+                justify-items:center;
+                align-items:center;
+            }
+            .grid{
+                display:grid;
+                grid-template-columns: 1fr;
+                grid-auto-rows: minmax(10px, auto);
+                grid-gap:1em;
+                justify-items:center;
+                align-items:stretch;
+            }
+            .part4{
+                display:grid;
+                justify-items:center;
+                align-items:stretch
+            }
+            .text{
+                display:grid;
+                justify-items:center;
+                align-items:stretch
+            }
+            .line {
+				fill: none;
+				stroke: blue;
+				stroke-width: 1;
+			}
+            
+        </style>
+        <meta charset="utf-8">
+        <title> 02806 Social data analysis and visualization: Assignment 1</title>
+        <script type="text/javascript" src="d3.js"></script>
+    </head>
+    <body>
+        <div class="grid">
+        <h1> Assignment 1 </h1>
+        <div class="text">
+        <h2>Part 1 </h2>
+            <div> 
+            </div>
+            <div> KKTUL TAU Numarul 1 AICI
+            </div>
+        </div>
+        
+        <div class="text">
+        <h2>Part 2 </h2>
+            <div> 
+            </div>
+            <div> KKTUL TAU Numarul 2 AICI
+            </div>
+        </div>
+        
+
+        <!-- buttons -->
+        <div class="text">
+        <h2>Part 3: NYC Green Markets - Unique Produce Types</h2>
+        </div>
+
+        <div class="graphAndButtons">
+            <div class="buttons">
+                <div class="button1"> Fresh Fruit
+                </div>                
+                <div class="button2"> Fresh Vegetable
+                </div>            
+                <div class="button3"> Storage Fruit
+                </div>
+                <div class="button4"> Storage Vegetable 
+                </div>
+            </div>
+        
+        <script type="text/javascript", src="part3.js"> </script>
+        </div>
+        
+        <div class="part4">
+        <h2>Part 4 </h2>
+            <div> 
+            </div>
+            <div> blablablabla2
+            </div>
+        
+        
+
+<!--         <div class="graphAndButtons">
+            <div class="buttons">
+            <div> button 1 
+            </div>
+            </div>
+        <script type="text/javascript", src="part4.js"> </script>
+        </div>  -->       
+        
+        <script type="text/javascript", src="part4.js"> </script>
+        </div>
+        
+        </body>
+</html>
