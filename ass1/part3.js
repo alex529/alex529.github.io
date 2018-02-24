@@ -14,7 +14,7 @@
             var rowConverter = function(d) {
                 return {
                         Index: parseInt(d.Index),  
-                        Month: parseTime(d.Month), //No conversion
+                        Month: d.Month, //No conversion
                         Count: parseInt(d.Count)
                     };
                 }          
@@ -30,13 +30,10 @@
 				var startdate2 = d3.min(dataset, function(d) { return d.Month; });
 				var endDate2 = d3.max(dataset, function(d) { return d.Month; });
                 
-                xScale2 = d3.scaleTime()
-                           .domain([
-                                //d3.timeMonth.offset("", -1),
-                                d3.timeMonth.offset(startdate2, -1),
-                                d3.timeMonth.offset(endDate2, 0)
-                                ])
-                           .range([0, width2]);
+                xScale2 = d3.scaleBand()
+                            .domain(dataset.map(function(d){return d.Month; }))
+                            .rangeRound([0, width2])
+                            .padding(3);
                 
                 yScale2 = d3.scaleLinear()
                            .domain([0,
@@ -46,8 +43,7 @@
                 
                 //Define X axis
 				var xAxis2 = d3.axisBottom()
-								  .scale(xScale2)
-								  .tickFormat(formatTime);
+								  .scale(xScale2);
 				//Define Y axis
 				var yAxis2 = d3.axisLeft()
 								  .scale(yScale2)
@@ -188,7 +184,7 @@
                             return height2 - yScale2(d.Count) 
                         })
                        .attr("width", 10)
-                       .attr("fill", "rgb(255, 136, 0)");
+                       .attr("fill", "yellow");
                        //.attr("class", "storageFruit");
                 }); 
                 
