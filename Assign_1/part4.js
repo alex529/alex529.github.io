@@ -222,7 +222,15 @@
                     drawLegendWomen();                     
                     drawLegendRegressionLine();  
                     drawLegendMen();                    
-   
+                    //update axis   
+                    svg.select(".y.axis")
+                       .transition()
+                       .duration(500)
+                       .call(yAxis);
+                    svg.select(".x.axis")
+                       .transition()
+                       .duration(500)
+                       .call(xAxis);   
                     //reset the triggers for men and women data removal
                     menDataRemoved = 0;
                     womenDataRemoved = 0;
