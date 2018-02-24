@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title> 02806 Social data analysis and visualization: Assignment 1</title>
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style type="text/css">
+    </style>
+</head>
+
+<body>
+    <div class="grid">
+        <h1> Assignment 1 </h1>
+        <div class="text">
+            <h2>Part 1 </h2>
+            <div>
+                <ol>
+                    <li> Explain in your own words the point of the jitter plot.
+                        <br> A jitter point is used to make graphs of data-points that are clustered together in specific points,
+                        therefore getting a good idea of how many data points are identical.
+                    </li>
+                    <li> Explain in your own words the point of figure 2-3. (I'm going to skip saying "in your own words" going
+                        forward, but I hope you get the point; I expect all answers to be in your own words).
+                        <br> Figure 2-3 show the how big difference can make the alignment of the bins, and how easily a dataset
+                        can be misunderstood. By having the bin that large we lose information in the visualization.
+                    </li>
+                    <li> The author of DAOST (Philipp Janert) likes KDEs (and think they're better than histograms). And I don't.
+                        I didn't give a detailed explanation in the video, but now that works to my advantage. I'll ask you
+                        <br> guys to think about this and thereby create an excellent exercise: When can KDEs be misleading?
+                        KDE can be misleading because it makes the visualization smooth, thus it looks that the graph has
+                        many data-points, when it can have just a couple.
+                    </li>
+                    <li> I've discussed some strengths of the CDF - there are also weaknesses. Janert writes "[CDFs] have less
+                        intuitive appeal than histograms of KDEs". What does he mean by that?
+                        <br> CDF may be less intuitive because it visualizes a different kind of data instead of showing the
+                        amplitude it shows the frequency of the data-points.
+                    </li>
+                    <li> What is a Quantile plot? What is it good for.
+                        <br> Its a CDF plot with the axis switched, visualizing how often the data-points occur.
+                    </li>
+                    <li> How is a Probability plot defined? What is it useful for? Have you ever seen one before?
+                        <br> Probability plot is formed by plotting ?????
+                        <br> It can easily show if the data-points fallow a distribution.
+                        <br> No
+                    </li>
+                    <li> One of the reasons I like DAOST is that Janert is so suspicious of mean, median, and related summary
+                        statistics. Explain why one has to be careful when using those - and why visualization of the full
+                        data is always better.
+                        <br> This is the problem that is described in Simpson's paradox. If the data is grouped the trends are
+                        different compared with the trends that are generated from the aggregated data. By visualizing the
+                        data this error can be spotted very easily.
+                    </li>
+                    <li> I love box plots. When are box plots most useful?
+                        <br> Box plots are used a lot in visualizing stocks, a lot of information can be shown using this plot,
+                        each box containing the median, min&max observations and lower&upper quartile.
+                    </li>
+                    <li> The book doesn't mention violin plots. Are those better or worse than box plots? Why?
+                        <br> The violin plots show more data than the box-plots, the violin plot shows the full distribution
+                        if the data.
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="text">
+            <h2>Part 2 </h2>
+            <div>
+                <ol>
+                    <li> Looking at Fig 3-1, Janert writes "the data itself shows clearly that the amount of random noise in the
+                        data is small". What do you think his argument is?
+                        <br> Fig 3-1 shows a graph that fallows a specific pattern which could fallow a specific equation.
+                    </li>
+                    <li> Can you think of a real-world example of a multivariate relationship like the one in Fig 3-3 (lower right
+                        panel)?
+                        <br> ?????
+                    </li>
+                    <li> What are the two methods Janert mentions for smoothing noisy data? Can you think of other ones?
+                        <br> Applying a filter to the data. ex: Low-Pass Filter
+                    </li>
+                    <li> What are residuals? Why is it a good idea to plot the residuals of your fit?
+                        <br> Residuals are the reminder of the smoothening process, by looking at the residuals one can verify
+                        if the smoothening is accurate, the residuals shouldn't have a trend it should be balanced, having
+                        both positive and negative values.
+                    </li>
+                    <li> Explain in your own words the point of the smooth tube in figure 3-7.
+                        <br> It is just a double-check, or how the book says, gives confidence, of how accurate the smooth representation
+                        is.
+                    </li>
+                    <li> What kind of relationships will a semi-log plot help you discover?
+                        <br> Semi-log plots are very good at discovering relative changes.
+                    </li>
+                    <li> What kind of functions will loglog plots help you see?
+                        <br> LogLog plots help in visualizing data that spans many orders of magnitude
+                    </li>
+                    <li> What the h#ll is banking and what element from our visual system does it use to help us see patterns?
+                        What are potential problems with banking?
+                        <br> Banking is the process where the scale of the graph is changed so the slopes are ~ 45 degrees, this
+                        change makes it much easier for the human bran to perceive change. In some cases to achieve 45 degrees
+                        the graph needs to be skewed to much the graph becomes unreadable, or it has to be stacked.
+                    </li>
+                    <li> I think figure 3-14 makes an important point about linear fits that is rarely made. What is it?
+                        <br> ?????
+                    </li>
+                    <li> Summarize the discussion of Graphical Analysis and Presentation Graphics on pp. 68-69 in your own words.
+                        <br> Graphical Analysis is the step that comes before the Presentation Graphics. The analysis is the
+                        part where one figures out what the dataset is about, figuring out the trend that data data fallows,
+                        at this point the visualization and the message that the plot transmits doesn't have to be 100% clear,
+                        as the person who is making the visualizations knows what he is looking at. While the presentation
+                        is more about transmitting the data to the audience in the most intuitive and easy to grasp way.
+                        At this point its more important that the message gets transmitted to the audience and that everything
+                        is clear, and self explanatory.
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="text">
+            <h2>Part 3: NYC Green Markets - Unique Produce Types</h2>
+            <div>
+                <p>As part of a homework assignment, I ask my students at Pratt to go out and chart something of interest to
+                    them, and Katherine Savarese came back with a simple chart about farmers markets that I loved- it inspired
+                    this post. </p>
+                <p>You probably know that farmers markets are a staple across all five boroughs of New York City, but September
+                    happens to be a very special month. Why is that? Well, it turns out September is the month with the most
+                    unique types of fresh produce- forty three to be exact.</p>
+                <p> To show the current offerings, we charted how many types of fruits and vegetables are available by month,
+                    and showed if they were fresh or from storage. </p>
+            </div>
+        </div>
+        <div class="graphAndButtons">
+            <!-- buttons -->
+            <div class="buttonsGreenMarkets">
+                <div class="btn btn-size button1"> Fresh Fruit
+                </div>
+                <div class="btn btn-size button2"> Fresh Vegetable
+                </div>
+                <div class="btn btn-size button3"> Storage Fruit
+                </div>
+                <div class="btn btn-size button4"> Storage Vegetable
+                </div>
+            </div>
+
+            <script type="text/javascript" , src="part3.js"> </script>
+        </div>
+
+        <div class="text">
+            <h2>Part 4: Boston Marathon</h2>
+            <div> The Boston Marathon is an annual marathon held in the Greater Boston area in Massachusetts. The event is held
+                on Patriots Day, the third Monday of April. The Boston Marathon has been held annually since 1897 and is
+                the oldest annual marathon in the world.
+            </div>
+        </div>
+
+        <div class="part4">
+            <!-- buttons -->
+            <div class="buttonsMarathon">
+                <div class="btn menAndWomenButton"> All Data
+                </div>
+                <div class="btn womenButton"> Only Women
+                </div>
+                <div class="btn menButton"> Only Men
+                </div>
+            </div>
+            <script type="text/javascript" , src="part4.js"> </script>
+        </div>
+
+    </div>
+</body>
+
+</html>

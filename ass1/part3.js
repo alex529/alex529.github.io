@@ -184,7 +184,7 @@
                        .attr("height", function(d) {        
                             return height2 - yScale2(d.Count); 
                         })
-                       .attr("fill", "yellow");
+                       .attr("fill", "rgb(255, 136, 0)");
                 }); 
                 
                 d3.select("div.button4")
