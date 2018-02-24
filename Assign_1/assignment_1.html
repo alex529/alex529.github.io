@@ -1,131 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <style type="text/css">
-            .button1 {
-                    background-color: white;
-                    border: 2px solid red;
-                    color: black;
-                    text-align: center;
-                    display: inline-block;
-                    font-size: 16px;
-                    padding: 10px 24px;
-                    border-radius: 4px;
-                    //position: absolute;
-                    //top: 22%;
-                    //left: 10%;
-                    -webkit-transition-duration: 0.4s;
-                    transition-duration: 0.4s;
-            }
-            .button1:hover {
-                    background-color: red;
-                    color:white;
-            }
-            .button2 {
-                    background-color: white;
-                    border: 2px solid blue;
-                    color: black;
-                    text-align: center;
-                    display: inline-block;
-                    font-size: 16px;
-                    padding: 10px 24px;
-                    border-radius: 4px;
-                    //position: absolute;
-                    //top: 34%;
-                    //left: 10%;
-                    -webkit-transition-duration: 0.4s;
-                    transition-duration: 0.4s;
-            }
-            .button2:hover {
-                    background-color: blue;
-                    color:white;
-            }
-            .button3 {
-                    background-color: white;
-                    border: 2px solid yellow;
-                    color: black;
-                    text-align: center;
-                    display: inline-block;
-                    font-size: 16px;
-                    padding: 10px 24px;
-                    border-radius: 4px;
-                    //position: absolute;
-                    //top: 46%;
-                    //left: 10%;
-                    -webkit-transition-duration: 0.4s;
-                    transition-duration: 0.4s;
-            }
-            .button3:hover {
-                    background-color: yellow;
-                    color:white;
-            }
-            .button4 {
-                    background-color: white;
-                    border: 2px solid green;
-                    color: black;
-                    text-align: center;
-                    display: inline-block;
-                    font-size: 16px;
-                    padding: 10px 24px;
-                    border-radius: 4px;
-                    //position: absolute;
-                    //top: 58%;
-                    //left: 10%;
-                    -webkit-transition-duration: 0.4s;
-                    transition-duration: 0.4s;
-            }
-            .button4:hover {
-                    background-color: green;
-                    color:white;
-            }
-            h1 {
-                text-align: center;
-                color: black;
-            }
-            .buttons{
-                display:grid;
-                grid-template-columns: 1fr 1fr;
-                grid-auto-rows: minmax(10px, auto);
-                grid-gap:1em;
-                justify-items:center;
-                align-items:center;                
-            }
-            .graphAndButtons{
-                display:grid;
-                grid-template-columns: 1fr 1fr;
-                grid-auto-rows: minmax(10px, auto);
-                grid-gap:1em;
-                justify-items:center;
-                align-items:center;
-            }
-            .grid{
-                display:grid;
-                grid-template-columns: 1fr;
-                grid-auto-rows: minmax(10px, auto);
-                grid-gap:1em;
-                justify-items:center;
-                align-items:stretch;
-            }
-            .part4{
-                display:grid;
-                justify-items:center;
-                align-items:stretch
-            }
-            .text{
-                display:grid;
-                justify-items:center;
-                align-items:stretch
-            }
-            .line {
-				fill: none;
-				stroke: blue;
-				stroke-width: 1;
-			}
-            
-        </style>
         <meta charset="utf-8">
         <title> 02806 Social data analysis and visualization: Assignment 1</title>
         <script type="text/javascript" src="d3.js"></script>
+        <link rel="stylesheet"  href="part4_css.css">
+        <style type="text/css"> </style>
     </head>
     <body>
         <div class="grid">
@@ -145,15 +25,18 @@
             <div> KKTUL TAU Numarul 2 AICI
             </div>
         </div>
-        
 
-        <!-- buttons -->
         <div class="text">
         <h2>Part 3: NYC Green Markets - Unique Produce Types</h2>
+        <div>
+            <p>As part of a homework assignment, I ask my students at Pratt to go out and chart something of interest to them, and Katherine Savarese came back with a simple chart about farmers markets that I loved- it inspired this post. </p>
+            <p>You probably know that farmers markets are a staple across all five boroughs of New York City, but September happens to be a very special month. Why is that?  Well, it turns out September is the month with the most unique types of fresh produce- forty three to be exact.</p>
+            <p> To show the current offerings, we charted how many types of fruits and vegetables are available by month, and showed if they were fresh or from storage.  </p>       
         </div>
-
+        </div>
         <div class="graphAndButtons">
-            <div class="buttons">
+            <!-- buttons -->
+            <div class="buttonsGreenMarkets">
                 <div class="button1"> Fresh Fruit
                 </div>                
                 <div class="button2"> Fresh Vegetable
@@ -167,25 +50,27 @@
         <script type="text/javascript", src="part3.js"> </script>
         </div>
         
+        <div class="text">
+        <h2>Part 4: Boston Marathon</h2>
+        <div> The Boston Marathon is an annual marathon held in the Greater Boston area in Massachusetts. 
+              The event is held on Patriots Day, the third Monday of April. 
+              The Boston Marathon has been held annually since 1897 and is the oldest annual marathon in the world.
+        </div>
+        </div>
+        
         <div class="part4">
-        <h2>Part 4 </h2>
-            <div> 
-            </div>
-            <div> blablablabla2
-            </div>
-        
-        
-
-<!--         <div class="graphAndButtons">
-            <div class="buttons">
-            <div> button 1 
-            </div>
-            </div>
-        <script type="text/javascript", src="part4.js"> </script>
-        </div>  -->       
-        
+            <!-- buttons -->
+            <div class="buttonsMarathon">            
+                <div class="menAndWomenButton"> All Data
+                </div>
+                <div class="womenButton"> Only Women
+                </div>
+                <div class="menButton"> Only Men
+                </div>   
+            </div>          
         <script type="text/javascript", src="part4.js"> </script>
         </div>
         
+        </div>
         </body>
 </html>

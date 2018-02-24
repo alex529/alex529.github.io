@@ -1,0 +1,241 @@
+/*Farmer graph CSS attributes*/
+            .button1 {
+                    background-color: white;
+                    border: 2px solid red;
+                    color: black;
+                    text-align: center;
+                    display: inline-block;
+                    font-size: 16px;
+                    padding: 10px 24px;
+                    border-radius: 4px;
+                    //position: absolute;
+                    //top: 22%;
+                    //left: 10%;
+                    -webkit-transition-duration: 0.4s;
+                    transition-duration: 0.4s;
+            }
+            .button1:hover {
+                    background-color: red;
+                    color:white;
+            }
+            .button2 {
+                    background-color: white;
+                    border: 2px solid blue;
+                    color: black;
+                    text-align: center;
+                    display: inline-block;
+                    font-size: 16px;
+                    padding: 10px 24px;
+                    border-radius: 4px;
+                    //position: absolute;
+                    //top: 34%;
+                    //left: 10%;
+                    -webkit-transition-duration: 0.4s;
+                    transition-duration: 0.4s;
+            }
+            .button2:hover {
+                    background-color: blue;
+                    color:white;
+            }
+            .button3 {
+                    background-color: white;
+                    border: 2px solid yellow;
+                    color: black;
+                    text-align: center;
+                    display: inline-block;
+                    font-size: 16px;
+                    padding: 10px 24px;
+                    border-radius: 4px;
+                    //position: absolute;
+                    //top: 46%;
+                    //left: 10%;
+                    -webkit-transition-duration: 0.4s;
+                    transition-duration: 0.4s;
+            }
+            .button3:hover {
+                    background-color: yellow;
+                    color:white;
+            }
+            .button4 {
+                    background-color: white;
+                    border: 2px solid green;
+                    color: black;
+                    text-align: center;
+                    display: inline-block;
+                    font-size: 16px;
+                    padding: 10px 24px;
+                    border-radius: 4px;
+                    //position: absolute;
+                    //top: 58%;
+                    //left: 10%;
+                    -webkit-transition-duration: 0.4s;
+                    transition-duration: 0.4s;
+            }
+            .button4:hover {
+                    background-color: green;
+                    color:white;
+            }
+            h1 {
+                text-align: center;
+                color: black;
+            }
+            .buttonsGreenMarkets{
+                display:grid;
+                grid-template-columns: 1fr 1fr;
+                grid-auto-rows: minmax(10px, auto);
+                grid-gap:1em;
+                justify-items:center;
+                align-items:center;                
+            }
+            .graphAndButtons{
+                display:grid;
+                grid-template-columns: 1fr 1fr;
+                grid-auto-rows: minmax(10px, auto);
+                grid-gap:1em;
+                justify-items:center;
+                align-items:center;
+            }
+            .part4{
+                display:grid;
+                grid-template-columns: 1fr 1fr;
+                grid-auto-rows: minmax(10px, auto);
+                grid-gap:1em;
+                justify-items:center;
+                align-items:center;
+            }
+            .grid{
+                display:grid;
+                grid-template-columns: 1fr;
+                grid-auto-rows: minmax(10px, auto);
+                grid-gap:1em;
+                justify-items:center;
+                align-items:stretch;
+            }
+            .text{
+                display:grid;
+                justify-items:center;
+                align-items:stretch
+            }
+            .line {
+				fill: none;
+				stroke: blue;
+				stroke-width: 1;
+			}
+            rect:freshFruit{
+                width: 10;
+                fill: red; 
+            }
+            
+/*Marathon graph CSS attributes*/
+			.lgWomen{
+                    stroke: black;
+                    stroke-dasharray: 4,4;
+                    stroke-width: 3;               
+            }
+            .lgMen{
+                    stroke: black;
+                    stroke-dasharray: 4,4;
+                    stroke-width: 3; 
+            }
+            circle {
+                    stroke: red;
+                    stroke-width: 1;
+                    fill: white;
+            }
+            circle:hover{
+                    fill:yellow;
+            }
+            rect.womenDataRects {
+                    stroke: green; 
+                    stroke-width: 1;
+                    fill: white;
+            }
+            rect:hover {
+                    fill: blue;
+			}
+            .legendMen{
+                stroke: red;
+                fill: red;   
+            }
+            .legendWomen{
+                stroke: green;
+                fill: green;   
+            }
+            .legendLr{
+                stroke: black;
+                fill: black; 
+                stroke-dasharray: 3,3;
+            }
+            .legendLrText{
+                stroke: black;
+                fill: black; 
+            }
+            .menAndWomenButton {
+                    background-color: white;
+                    border: 2px solid yellow;
+                    color: black;
+                    text-align: center;
+                    display: inline-block;
+                    font-size: 16px;
+                    padding: 10px 24px;
+                    border-radius: 4px;
+                    -webkit-transition-duration: 0.4s;
+                    transition-duration: 0.4s;
+                    align-self:end;
+            }
+            .menAndWomenButton:hover {
+                    background-color: yellow;
+                    color:white;
+            }
+            .womenButton {
+                    background-color: white;
+                    border: 2px solid green;
+                    color: black;
+                    text-align: center;
+                    display: inline-block;
+                    font-size: 16px;
+                    padding: 10px 24px;
+                    border-radius: 4px;
+                    -webkit-transition-duration: 0.4s;
+                    transition-duration: 0.4s;
+            }
+            .womenButton:hover {
+                    background-color: green;
+                    color:white;
+            }
+            .menButton {
+                    background-color: white;
+                    border: 2px solid red;
+                    color: black;
+                    text-align: center;
+                    display: inline-block;
+                    font-size: 16px;
+                    padding: 10px 24px;
+                    border-radius: 4px;
+                    -webkit-transition-duration: 0.4s;
+                    transition-duration: 0.4s;
+                    align-self:start;
+                    
+            }
+            .menButton:hover {
+                    background-color: red;
+                    color:white;
+            }
+            .buttonsMarathon{
+                display:grid;
+                grid-template-columns: 1fr;
+                grid-auto-rows: minmax(20px, auto);
+                grid-gap:1em;
+                //justify-items:center;
+                align-items:center;                
+            }
+            .line1 {
+				fill: none;
+				stroke: red;
+				stroke-width: 1;
+			}
+            .line2 {
+				fill: none;
+				stroke: green;
+				stroke-width: 1;
+			}

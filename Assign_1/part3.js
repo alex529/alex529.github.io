@@ -3,8 +3,7 @@
             var width2 = 960 - margin2.left - margin2.right,
                 height2 = 500 - margin2.top - margin2.bottom;        
                 padding2 = 100;
-			var datasetX, xScale2, yScale2, xAxis2, yAxis2;  //Empty, for now
-			var datasetX2;
+			var dataset, xScale2, yScale2, xAxis2, yAxis2;  //Empty, for now
             //For converting strings to Dates
             var parseTime = d3.timeParse("%b");
             
@@ -22,14 +21,14 @@
             //read from CSV 
             d3.csv("data_converted.csv", rowConverter, function(rawData){
                
-                //copy data into a global datasetX
-                datasetX = rawData.slice(0,12);
-                datasetX2 = rawData.slice(12,24);
-                datasetX3 = rawData.slice(24,36);
-                datasetX4 = rawData.slice(36,48);
+                //copy data into a global dataset
+                dataset = rawData.slice(0,12);
+                dataset2 = rawData.slice(12,24);
+                dataset3 = rawData.slice(24,36);
+                dataset4 = rawData.slice(36,48);
                 
-				var startdate2 = d3.min(datasetX, function(d) { return d.Month; });
-				var endDate2 = d3.max(datasetX, function(d) { return d.Month; });
+				var startdate2 = d3.min(dataset, function(d) { return d.Month; });
+				var endDate2 = d3.max(dataset, function(d) { return d.Month; });
                 
                 xScale2 = d3.scaleTime()
                            .domain([
@@ -41,43 +40,28 @@
                 
                 yScale2 = d3.scaleLinear()
                            .domain([0,
-                                d3.max(datasetX, function(d) { return d.Count;})
+                                d3.max(dataset, function(d) { return d.Count;})
                                 ])
                            .range([height2, 0]);
                 
                 //Define X axis
 				var xAxis2 = d3.axisBottom()
 								  .scale(xScale2)
-								  //.ticks(10)
 								  .tickFormat(formatTime);
 				//Define Y axis
 				var yAxis2 = d3.axisLeft()
 								  .scale(yScale2)
 								  .ticks(10);
-                
-                
+                                
                 //Create SVG element
                 var svg = d3.select("div.graphAndButtons").append("svg")
                             .attr("width", width2 + margin2.left + margin2.right)
                             .attr("height", height2 + margin2.top + margin2.bottom)
                             .append("g")
                             .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
-                
-/*                //Create X axis
-	   			svg.append("g")
-	   				.attr("class", "axis")
-	   				.attr("transform", "translate(0," + (height2) + ")")
-	   				.call(xAxis2);
-	   			
-	   			//Create Y axis
-	   			svg.append("g")
-	   				.attr("class", "axis")
-	   				//.attr("transform", "translate(" + 0 + ",0)")
-	   				.call(yAxis2);
-*/                    
-                    
+                                    
                 svg.selectAll("rect")
-                       .data(datasetX)
+                       .data(dataset)
                        .enter()
                        .append("rect")
                        .attr("x", function(d){
@@ -88,8 +72,8 @@
                         })
                        .attr("height", function(d) {        
                             return height2 - yScale2(d.Count); })
-                       .attr("width", 10)
-                       .attr("fill", "red"); 
+                       .attr("class", "freshFruit");
+
                 //Create x-axis
                 svg.append("g")
                     .attr("class", "x axis")    
@@ -117,7 +101,7 @@
                     
                     //Update scale domain
                     yScale2.domain([0,
-                                d3.max(datasetX, function(d) { return d.Count;})
+                                d3.max(dataset, function(d) { return d.Count;})
                                 ]);
                     //Update y-axis
                     svg.select(".y.axis")
@@ -127,10 +111,10 @@
                     
                     
                     svg.selectAll("rect")
-                       .data(datasetX)
+                       .data(dataset)
                        .transition()
                        .delay(function(d, i) {
-                            return i / datasetX.length * 1000;   // <-- Where the magic happens
+                            return i / dataset.length * 1000;   // <-- Where the magic happens
                         })
                        .duration(500)
                        .ease(d3.easeBounceOut)
@@ -149,7 +133,7 @@
                     
                     //Update scale domain
                     yScale2.domain([0,
-                                d3.max(datasetX2, function(d) { return d.Count;})
+                                d3.max(dataset2, function(d) { return d.Count;})
                                 ]);
                     //Update y-axis
                     svg.select(".y.axis")
@@ -158,10 +142,10 @@
                        .call(yAxis2);
                     
                     svg.selectAll("rect")
-                       .data(datasetX2)
+                       .data(dataset2)
                        .transition()
                        .delay(function(d, i) {
-                            return i / datasetX.length * 1000;   // <-- Where the magic happens
+                            return i / dataset.length * 1000;   // <-- Where the magic happens
                         })
                        .duration(500)
                        .ease(d3.easeBounceOut) 
@@ -178,7 +162,7 @@
                     
                     //Update scale domain
                     yScale2.domain([0,
-                                d3.max(datasetX3, function(d) { return d.Count;})
+                                d3.max(dataset3, function(d) { return d.Count;})
                                 ]);
                     //Update y-axis
                     svg.select(".y.axis")
@@ -187,10 +171,10 @@
                        .call(yAxis2);
                     
                     svg.selectAll("rect")
-                       .data(datasetX3)
+                       .data(dataset3)
                        .transition()
                        .delay(function(d, i) {
-                            return i / datasetX.length * 1000;   // <-- Where the magic happens
+                            return i / dataset.length * 1000;   // <-- Where the magic happens
                         })
                        .duration(500)
                        .ease(d3.easeBounceOut) 
@@ -208,7 +192,7 @@
                     
                     //Update scale domain
                     yScale2.domain([0,
-                                d3.max(datasetX4, function(d) { return d.Count;})
+                                d3.max(dataset4, function(d) { return d.Count;})
                                 ]);
                     //Update y-axis
                     svg.select(".y.axis")
@@ -217,10 +201,10 @@
                        .call(yAxis2);
                     
                     svg.selectAll("rect")
-                       .data(datasetX4)
+                       .data(dataset4)
                        .transition()
                        .delay(function(d, i) {
-                            return i / datasetX.length * 1000;   // <-- Where the magic happens
+                            return i / dataset.length * 1000;   // <-- Where the magic happens
                         })
                        .duration(500)
                        .ease(d3.easeBounceOut) 
