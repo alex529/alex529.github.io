@@ -184,7 +184,7 @@
                             return height2 - yScale2(d.Count) 
                         })
                        .attr("width", 10)
-                       .attr("fill", "yellow");
+                       .attr("fill", "rgb(255, 136, 0)");
                        //.attr("class", "storageFruit");
                 }); 
                 
