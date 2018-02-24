@@ -1,4 +1,9 @@
 /*Farmer graph CSS attributes*/
+.container{
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
 
 .btn {
   background-color: white;
@@ -10,7 +15,7 @@
   border-radius: 4px;
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
-  width: 160px;  
+  width: 160px;
 }
 
 .btn-size {
@@ -104,11 +109,6 @@ h1 {
   fill: none;
   stroke: blue;
   stroke-width: 1;
-}
-
-rect:freshFruit {
-  width: 10;
-  fill: red;
 }
 
 /*Marathon graph CSS attributes*/
