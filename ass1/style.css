@@ -4,6 +4,10 @@
   padding-right: 10%;
 }
 
+.question {
+  font-weight: bold;
+}
+
 
 .btn {
   background-color: white;
@@ -102,7 +106,8 @@ h1 {
 .text {
   display: grid;
   justify-items: center;
-  align-items: stretch
+  align-items: stretch;
+  max-width: 80%;
 }
 
 .line {
@@ -199,7 +204,7 @@ rect:hover {
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-rows: minmax(20px, auto);
-  grid-gap: 1em; //justify-items:center;
+  grid-gap: 1em;
   align-items: center;
 }
 
