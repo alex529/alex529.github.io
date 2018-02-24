@@ -45,7 +45,7 @@ Applying a filter to the data. ex: Low-Pass Filter
 Residuals are the reminder of the smoothening process, by looking at the residuals one can verify if the smoothening is accurate, the residuals shouldn't have a trend it should be balanced, having both positive and negative values. 
 
 #### Explain in your own words the point of the smooth tube in figure 3-7.
-It is just a doublecheck, or how the book says, gives confidence, of how accurate the smooth representation is.
+It is just a double-check, or how the book says, gives confidence, of how accurate the smooth representation is.
 
 #### What kind of relationships will a semi-log plot help you discover?
 Semi-log plots are very good at discovering relative changes.
@@ -54,9 +54,12 @@ Semi-log plots are very good at discovering relative changes.
 LogLog plots help in visualizing data that spans many orders of magnitude
 
 #### What the h#ll is banking and what element from our visual system does it use to help us see patterns? What are potential problems with banking?
-banking is the process where the scale of the graph is changed so the slopes are ~ 45 degrees, this change makes it much easier for the human bran to percive change. In some cases to achive 45 egrees the graph needs to be skewed to much the graph becomes unreadable, or it has to be stacked. 
+Banking is the process where the scale of the graph is changed so the slopes are ~ 45 degrees, this change makes it much easier for the human bran to perceive change. In some cases to achieve 45 degrees the graph needs to be skewed to much the graph becomes unreadable, or it has to be stacked. 
 
 #### I think figure 3-14 makes an important point about linear fits that is rarely made. What is it?
-
+?????
 
 #### Summarize the discussion of Graphical Analysis and Presentation Graphics on pp. 68-69 in your own words.
+Graphical Analysis is the step that comes before the Presentation Graphics.
+The analysis is the part where one figures out what the dataset is about, figuring out the trend that data data fallows, at this point the visualization and the message that the plot transmits doesn't have to be 100% clear, as the person who is making the visualizations knows what he is looking at. While the presentation is more about transmitting the data to the audience in the most intuitive and easy to grasp way. At this point its more important that the message gets transmitted to the audience and that everything is clear, and self explanatory.
+
