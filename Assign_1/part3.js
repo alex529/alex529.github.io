@@ -72,7 +72,9 @@
                         })
                        .attr("height", function(d) {        
                             return height2 - yScale2(d.Count); })
-                       .attr("class", "freshFruit");
+                       .attr("width", 10)
+                       .attr("fill", "red");
+                       //.attr("class", "freshFruit");
 
                 //Create x-axis
                 svg.append("g")
@@ -95,7 +97,7 @@
                     .attr("transform", "translate("+ (width2/2) +","+(height2+(padding2/3))+")")  // centre below axis
                     .text("Month of the Year");
                        
-//Transitions                      
+                //Transitions                      
                 d3.select("div.button1")
                     .on("click", function() {
                     
@@ -103,18 +105,12 @@
                     yScale2.domain([0,
                                 d3.max(dataset, function(d) { return d.Count;})
                                 ]);
-                    //Update y-axis
-                    svg.select(".y.axis")
-                       .transition()
-                       .duration(500)
-                       .call(yAxis2);
-                    
-                    
+                    //re-draw rect with new data
                     svg.selectAll("rect")
                        .data(dataset)
                        .transition()
                        .delay(function(d, i) {
-                            return i / dataset.length * 1000;   // <-- Where the magic happens
+                            return i / dataset.length * 1000;  
                         })
                        .duration(500)
                        .ease(d3.easeBounceOut)
@@ -125,6 +121,11 @@
                             return height2 - yScale2(d.Count); })
                        .attr("width", 10)
                        .attr("fill", "red");    
+                    //Update y-axis
+                    svg.select(".y.axis")
+                       .transition()
+                       .duration(500)
+                       .call(yAxis2);                            
                 });
                 
                 
@@ -140,7 +141,7 @@
                        .transition()
                        .duration(500)
                        .call(yAxis2);
-                    
+                    //re-draw rect with new data                   
                     svg.selectAll("rect")
                        .data(dataset2)
                        .transition()
@@ -153,9 +154,11 @@
                             return yScale2(d.Count);
                         })
                        .attr("height", function(d) {        
-                            return height2 - yScale2(d.Count); 
+                            return height2 - yScale2(d.Count) 
                         })
+                       .attr("width", 10)
                        .attr("fill", "blue");
+                       //.attr("class", "freshVegetable");
                 });  
                 d3.select("div.button3")
                     .on("click", function() {
@@ -169,7 +172,7 @@
                        .transition()
                        .duration(500)
                        .call(yAxis2);
-                    
+                    //re-draw rect with new data
                     svg.selectAll("rect")
                        .data(dataset3)
                        .transition()
@@ -182,9 +185,11 @@
                             return yScale2(d.Count);
                         })
                        .attr("height", function(d) {        
-                            return height2 - yScale2(d.Count); 
+                            return height2 - yScale2(d.Count) 
                         })
+                       .attr("width", 10)
                        .attr("fill", "yellow");
+                       //.attr("class", "storageFruit");
                 }); 
                 
                 d3.select("div.button4")
@@ -199,7 +204,7 @@
                        .transition()
                        .duration(500)
                        .call(yAxis2);
-                    
+                    //re-draw rect with new data
                     svg.selectAll("rect")
                        .data(dataset4)
                        .transition()
@@ -212,9 +217,11 @@
                             return yScale2(d.Count);
                         })
                        .attr("height", function(d) {        
-                            return height2 - yScale2(d.Count); 
+                            return height2 - yScale2(d.Count)
                         })
+                       .attr("width", 10)
                        .attr("fill", "green");
+                       //.attr("class", "storageVegetable");
                 }); 
                 
             });             
