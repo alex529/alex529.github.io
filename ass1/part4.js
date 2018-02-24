@@ -71,7 +71,7 @@
 							.y(function(d) { return yScale(d.Time); });                
                 
                 //Create SVG element
-                var svg = d3.select("div.part4").append("svg")
+                var svg = d3.select("#part4-graph").append("svg")
                             .attr("width", width + margin.left + margin.right)
                             .attr("height", height + margin.top + margin.bottom)
                             .append("g")

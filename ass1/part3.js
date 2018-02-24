@@ -54,7 +54,7 @@
 								  .ticks(10);
                                 
                 //Create SVG element
-                var svg = d3.select("div.graphAndButtons").append("svg")
+                var svg = d3.select("#part3-graph").append("svg")
                             .attr("width", width2 + margin2.left + margin2.right)
                             .attr("height", height2 + margin2.top + margin2.bottom)
                             .append("g")
