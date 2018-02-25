@@ -49,7 +49,7 @@
  
                 //x and y scales
                 xScale = d3.scaleLinear()
-                           .domain([d3.timeYear.offset(startDate, 0), d3.timeYear.offset(endDate, 0)])
+                           .domain([d3.timeYear.offset(startDate, 0), d3.timeYear.offset(endDate+2, 0)])
                            .range([0, width]);
                
                 yScale = d3.scaleLinear()
@@ -405,7 +405,7 @@
                 drawLegendRegressionLine();
             });                  
         });  
-        
+//source for linear regression function: https://bl.ocks.org/HarryStevens/be559bed98d662f69e68fc8a7e0ad097        
 //linear regression function        
         function calcLinear(data, x, y, minX, minY){
           /////////
