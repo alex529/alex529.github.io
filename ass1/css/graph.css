@@ -54,32 +54,31 @@
   }
   
   .menAndWomenButton {
-    border: 2px solid rgb(255, 136, 0);
+    border: 1px solid rgb(255, 136, 0);
     align-self: end;
   }
   
   .menAndWomenButton:hover {
-    background-color: rgb(255, 136, 0);
+    background-color: rgba(255, 136, 0, 0.2);
     color: white;
   }
   
   .womenButton {
-    border: 2px solid green;
+    border: 1px solid green;
   }
   
   .womenButton:hover {
     background-color: green;
-    color: white;
+    background-color: rgba(0, 255, 0, 0.2);
   }
   
   .menButton {
-    border: 2px solid red;
+    border: 1px solid red;
     align-self: start;
   }
   
   .menButton:hover {
-    background-color: red;
-    color: white;
+    background-color: rgba(255, 0, 0, 0.2);
   }
   
   .buttonsMarathon {

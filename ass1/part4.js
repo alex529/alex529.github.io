@@ -1,7 +1,7 @@
             //Width and height
 			var margin = {top: 10, right: 50, bottom: 60, left: 60};
-            var width = 960 - margin.left - margin.right,
-                height = 500 - margin.top - margin.bottom;        
+            var width = 650 - margin.left - margin.right,
+                height = 400 - margin.top - margin.bottom;        
                 padding = 100;
 			var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
 			var startDate, endDate;
