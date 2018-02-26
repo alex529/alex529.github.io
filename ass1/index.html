@@ -32,7 +32,6 @@
     <script src="https://d3js.org/d3.v4.js"></script>
     <script type="text/javascript" , src="part3.js"> </script>
     <script type="text/javascript" , src="part4.js"> </script>
-    <script type="text/javascript" , src="part3_stacked_barChart.js"> </script>
 
   </head>
   <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
@@ -104,15 +103,15 @@
 
                 <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
                   <h5>#1 Looking at Fig 3-1, Janert writes "the data itself shows clearly that the amount of random noise in the data is small". What do you think his argument is?</h5>
-                  Fig 3-1 shows a graph that fallows a specific pattern which could fallow a specific equation.
+                  Fig 3-1 shows a graph that follows a specific pattern which could follow a specific equation. To the human mind, the graph looks like a recognizable pattern without any anomalities not following the "bouncy" uniform path.
                 </div>
                 <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
                   <h5>#2 Can you think of a real-world example of a multivariate relationship like the one in Fig 3-3 (lower right panel)?</h5>
-                  A real world example of a multivariate relationship could be when examining the marketing impact of an advertisement in terms of turnover generated from <i>males</i> depending on the number of times the ad has featured in television. One could introduce a new variable e.g. <i>females</i> and the impact between males and females exposed to the ad can be measured.
+                  A real world example of a multivariate relationship could be when examining the marketing impact of an advertisement, let's say for a betting site, in terms of turnover generated from <i>males</i> depending on the number of times the ad has featured in television. One could introduce a new variable e.g. <i>females</i> and measure the impact between males and females exposed to the ad. In this example the variables would be independent of each other.
                 </div>
                 <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
                   <h5>#3 What are the two methods Janert mentions for smoothing noisy data? Can you think of other ones?</h5>
-                  Applying a filter to the data. ex: Low-Pass Filter
+                  The two methods for smoothiung noisy data are called <i>splines</i> and <i>LOESS.</i>. Splines are used for smoothing globally while LOESS are particularly useful for smoothing local details. Other methods includes applying a filter to the data. e.g. <i>low-pass filter</i> or <i>Gaussian filter</i>.
                 </div>
                 <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
                   <h5>#4 What are residuals? Why is it a good idea to plot the residuals of your fit?</h5>
@@ -124,7 +123,7 @@
                 </div>
                 <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
                   <h5>#6 What kind of relationships will a semi-log plot help you discover?</h5>
-                  Semi-log plots are very good at discovering relative changes.
+                  Semi-log plots are very good at discovering relative changes e.g. in the context of stock charts. The book includes an example of the usefulness of seeing exchange loss relatively to the invested amount of money.
                 </div>
                 <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
                   <h5>#7 What kind of functions will loglog plots help you see?</h5>
@@ -155,12 +154,13 @@
                 <h2 class="mdl-cell mdl-cell--12-col">Part 3</h2>
 
                 <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  <h5>This is a reproduction of http://iquantny.tumblr.com/post/129373499164/this-is-quantifiably-the-best-month-to-go-to-the as the first line</h5>
                   <h5>As part of a homework assignment, I ask my students at Pratt to go out and chart something of interest to them, and Katherine Savarese came back with a simple chart about farmers markets that I loved-it inspired this post.</h5>
                   <h5>You probably know that farmers markets are a staple across all five boroughs of New York City, but September happens to be a very special month. Why is that? Well, it turns out September is the month with the most unique types of fresh produce- forty three to be exact.</h5>
                   <h5>To show the current offerings, we charted how many types of fruits and vegetables are available by month, and showed if they were fresh or from storage.</h5>
 
                   <div class = "mdl-grid">
-                    <div class = "mdl-cell mdl-cell--2-col graybox graph">
+                    <div class = "mdl-cell mdl-cell--2-col graybox">
                       <div class="grid-btn-container">
                         <div class="btn button1"> Fresh Fruit
                         </div>
@@ -179,12 +179,6 @@
                   </div>
                   <h5>If you miss the month of September, you might be behind the fruit curve, but there are plenty more months of vegetables left.  The chart shows that fresh vegetables are available 9 out of 12 months, but fruit is only available 5 out of 12. Now if only we could quantify how delicious the produce is… </h5>
                   <h5>By pressing one of the four buttons: "Fresh Fruit", "Fresh Vegetable", "Storage Fruit", "Storage Vegetable", the data for the selected item is displayed over 12 months of the year.  </h5>  
-                  <h4 class="mdl-cell mdl-cell--12-col">Stacked Bar Chart</h4>
-                  <h5> The same data for fresh/storage fruits and vegetables is displayed below in a stacked bar chart, giving the ability to the user to see all the data at once, compared to pressing buttons in the previous example. </h5> 
-                   <div class = "mdl-cell mdl-cell--10-col graybox">
-                      <div id="part3-stacked-barChart" class="graph"></div>
-                    </div>                
-
                 </div>
               </div>
             </div>
@@ -200,7 +194,7 @@
                   <h5>The Boston Marathon is an annual marathon held in the Greater Boston area in Massachusetts. The event is held on Patriots Day, the third Monday of April. The Boston Marathon has been held annually since 1897 and is the oldest annual marathon in the world.</h5>
 
                   <div class = "mdl-grid">
-                      <div class = "mdl-cell mdl-cell--2-col graybox graph">
+                      <div class = "mdl-cell mdl-cell--2-col graybox">
                           <div class="grid-btn-container">
                               <div class="btn menAndWomenButton"> All Data
                               </div>
