@@ -28,7 +28,7 @@
     fill: white;
   }
   
-  rect:hover {
+  rect.womenDataRects:hover {
     fill: blue;
   }
   
