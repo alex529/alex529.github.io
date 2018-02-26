@@ -49,7 +49,7 @@
  
                 //x and y scales
                 xScale = d3.scaleLinear()
-                           .domain([d3.timeYear.offset(startDate, 0), d3.timeYear.offset(endDate+2, 0)])
+                           .domain([d3.min(dataSetMen, function(d) { return d.Year; }), d3.max(dataSetWomen, function(d) { return d.Year; }) ])
                            .range([0, width]);
                
                 yScale = d3.scaleLinear()
