@@ -1,56 +1,136 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
+<!doctype html>
+<!--
+  Google Material Design Lite (MDL) has been used for the layout. The assignment is loosely based on the MDL template from
+  https://getmdl.io/templates/text-only/index.html licensed under APACHE 2.0
+-->
 
-<head>
-  <title>Basic geo (svg)</title>
-</head>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Assignment 2</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Material Design Lite">
 
-<style>
-  body {
-    font-family: "Helvetica Neue", Helvetica, sans-serif;
-    font-size: 14px;
-    color: #333;
-    background-color: black;
-  }
-
-  #content .map path {
-    fill: #ddd;
-    stroke: #aaa;
-  }
-</style>
-
-<body>
-  <div id="content">
-    <div style="background-color: white; display: inline-block">
-      <svg width="650px" height="600px" style: "fill: white;">
-        <g class="map"></g>
-      </svg>
-    </div>
-  </div>
-
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.js"></script>
-
-  <script>
-
-    var projection = d3.geoMercator().center([-73.946342, 40.740610]).scale(60000).translate([350, 250])
-
-    var geoGenerator = d3.geoPath()
-      .projection(projection);
-
-    function update(geojson) {
-      var u = d3.select('#content g.map')
-        .selectAll('path')
-        .data(geojson.features);
-
-      u.enter()
-        .append('path')
-        .attr('d', geoGenerator);
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_purple-pink.min.css">
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/graph.css">
+    <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
     }
-    d3.json("boroughs.geojson", function (err, geojson) {
-      update(geojson);
-    });
-  </script>
-</body>
+    </style>
 
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.js"></script>
+    <script type="text/javascript", src="part2.js"> </script>
+
+  </head>
+  <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        </div>
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+          <h3>02806 - Social Data Analysis and Visualization - Assignment 2</h3>
+        </div>
+        <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        </div>
+      </header>
+      <main class="mdl-layout__content">
+        <div class="mdl-layout__tab-panel is-active" id="overview">
+
+          <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+            <div class="mdl-card mdl-cell mdl-cell--12-col">
+              <div class="mdl-card__supporting-text mdl-grid">
+                <h2 class="mdl-cell mdl-cell--12-col">Part 1</h2>
+
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  <h5>#1 Explain in your own words the point of the jitter plot.</h5>
+                  A jitter point is used to make graphs of data-points that are clustered together in specific points, therefore getting a good idea of how many data points are identical.
+                </div>
+
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  <h5>#2 What is the Oxford English Dictionary's defintion of a narrative?</h5>
+                  The definition of narrative in the  Oxford English Dictionary is:
+                  <i>An account of a series of events, facts, etc., given in order and with the establishing of connections between them*; a narration, a story, an account.</i>
+                </div>
+
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  <h5>#3 What is your favorite visualization among the examples in section 3? Explain why in a few words.</h5>
+                  The first visualization **Steroids Or Not, the Pursuit is On. New York Times.** is the one that is most visually appealing to me, the graphics and colors are very nice but the thing that impressed me the most is the amount of information that was squeezed in single page. And having all that data organized in such a way that it is easy to fallow, and at the end its eye pleasing.               
+                </div>
+
+
+
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  <h5>#5 Use Figure 7 to find the most common design choice within each category for the Visual narrative and Narrative structure (the categories within visual narrative are 'visual structuring', 'highlighting', etc).</h5>
+                  Visual Narrative
+
+                  + Visual structuring: Consistent visual platform **59%**
+                  + Highlighting: Feature Distinction **79%**
+                  + Transition Guidance: Object Continuity **38%**
+  
+                  Narrative Structure
+  
+                  + Ordering: User Directed Path **53%**
+                  + Interactivity: Very limited Integrity **60%**
+                  + Messaging: Captions/Headlines **84%**               
+                </div>
+
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  <h5>#6.1 What is your favorite genre of narrative visualization? Why?</h5>                  
+                  dsa
+                </div>
+
+                <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+                  <h5>#6.2 What is your least favorite genre? Why?</h5>
+                  dsa
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+
+
+
+          <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+            <div class="mdl-card mdl-cell mdl-cell--12-col">
+              <div class="mdl-card__supporting-text mdl-grid">
+                <h2 class="mdl-cell mdl-cell--12-col">Part 2</h2>
+
+                <div class="section__text mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+
+                  <h4 class="mdl-cell mdl-cell--12-col">Visualizing Murders over Time</h4>
+                  <div class = "mdl-cell mdl-cell--12-col graybox">
+                    
+                    <div id="content">
+                      <div style="background-color: white; display: inline-block">
+                        <svg width="650px" height="600px" style: "fill: white;">
+                          <g class="map"></g>
+                        </svg>
+                      </div>
+                    </div>
+
+                  </div>                
+                </div>
+              </div>
+            </div>
+          </section>
+
+      </main>
+    </div>
+  </body>
 </html>
