@@ -21,7 +21,7 @@
   stroke: black;
 }
 
-.map {
+#map {
   background-color: gray;
   display: inline-block
 }
