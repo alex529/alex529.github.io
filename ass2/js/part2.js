@@ -2,11 +2,11 @@ const width = 800
 const height = 700
 
 const boroughColors = {
-    "StatenIsland": "#edf8fb",
-    "Queens": "#b3cde3",
-    "Bronx": "#8c96c6",
-    "Manhattan": "#8856a7",
-    "Brooklyn": "#810f7c"
+    "StatenIsland": "#f2f0f7",
+    "Queens": "#cbc9e2",
+    "Bronx": "#939ac8",
+    "Manhattan": "#756bb1",
+    "Brooklyn": "#54178f"
 };
 
 const loadChart = (geoJson) => {
@@ -43,9 +43,9 @@ const loadChart = (geoJson) => {
             .attr('cy', (d) => {
                 return projection([d.lon, d.lat])[1];
             })
-            .attr('r', 2)
-            .style('fill', 'green')
-            .attr('id', (d) => {return d.lat+"|"+d.lon})
+            .attr('r', 3)
+            .style('fill', 'rgba(255, 0, 0, 0.2)')
+            .attr('id', (d) => { return d.lat + "|" + d.lon })
     })
 };
 

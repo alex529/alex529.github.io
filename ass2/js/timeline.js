@@ -97,7 +97,6 @@ d3.csv("data/all_murder.csv", function (data) {
       //this is normal behavior, but inefficient, it is used only the first time
       //after the first change the else block gets executed looks uglier but 
       //much more efficient
-      console.log('x', oldti1, oldti2);
       let s1 = true, s2 = true
       for (let i = 0; i < data.length; i++) {
         const id = data[i].lat + "|" + data[i].lon
@@ -117,7 +116,6 @@ d3.csv("data/all_murder.csv", function (data) {
         }
       }
     } else {
-      console.log('x1', oldti1, oldti2);
       let j
       if (oldti1[0] < t1) {
         //left edge of the brushed moved ->
