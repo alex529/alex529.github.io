@@ -1,21 +1,4 @@
 /* todo: change colors */
-
-#Figure1 path:nth-child(2) {
-  fill: orange;
-}
-
-#Figure1 path:nth-child(3) {
-  fill: blue;
-}
-
-#Figure1 path:nth-child(4) {
-  fill: red;
-}
-
-#Figure1 path:nth-child(5) {
-  fill: purple;
-}
-
 #Figure1 path {
   fill: green;
   stroke: black;
