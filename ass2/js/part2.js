@@ -45,7 +45,7 @@ const loadChart = (geoJson) => {
             })
             .attr('r', 2)
             .style('fill', 'green')
-            .attr('id', "x" + d.lon + d.lat)
+            .attr('id', (d) => {return d.lat+"|"+d.lon})
     })
 };
 
