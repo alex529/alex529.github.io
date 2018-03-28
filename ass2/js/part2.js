@@ -2,7 +2,7 @@ const width = 650
 const height = 600
 
 const loadChart = (geoJson) => {
-    
+
     const projection = d3.geoMercator()
                         .fitExtent([[0, 0], [width, height]], geoJson);
 
@@ -23,7 +23,7 @@ const loadChart = (geoJson) => {
 };
 
 window.onload = () => {
-    d3.json("boroughs.geojson", (err, geoJson) => {
+    d3.json("data/boroughs.geojson", (err, geoJson) => {
         loadChart(geoJson);
     });
 };

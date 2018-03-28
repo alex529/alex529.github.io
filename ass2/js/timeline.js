@@ -3,7 +3,7 @@ var w = 800 - margin.left - margin.right
 var h = 200 - margin.top - margin.bottom;        
 var padding = 30;
 
-d3.csv("all_murder.csv", function(data){
+d3.csv("data/all_murder.csv", function(data){
     
   let entries = d3.nest()
     .key(function(d) { return d.RPT_DT; })
