@@ -1,12 +1,17 @@
 var margin = { top: 10, right: 50, bottom: 60, left: 60 };
 var w = 800 - margin.left - margin.right
 var h = 200 - margin.top - margin.bottom;
+var padding = 30;
 var startDate, endDate;
 var isAnimationToggled = false;
+var dataset;
+var xScale, yScale;
+var brush;
 
 let oldti1 = 0, oldti2 = 0
 
 d3.csv("data/all_murder.csv", function (data) {
+  dataset = data;
   let entries = d3.nest()
     .key(function (d) { return d.RPT_DT; })
     .entries(data);
@@ -25,11 +30,11 @@ d3.csv("data/all_murder.csv", function (data) {
   startDate = d3.min(entries, function (d) { return parseTime(d.key); });
   endDate = d3.max(entries, function (d) { return parseTime(d.key); });
 
-  let xScale = d3.scaleTime()
+  xScale = d3.scaleTime()
     .domain([startDate, endDate])
     .rangeRound([0, w]);
 
-  let yScale = d3.scaleLinear()
+  yScale = d3.scaleLinear()
     .domain([0, d3.max(entries, function (d) { return d.values.length; })])
     .range([h, 0]);
 
@@ -85,7 +90,7 @@ d3.csv("data/all_murder.csv", function (data) {
     .attr("transform", "translate(" + -(padding) + "," + (h / 2) + ")rotate(-90)")
     .text("# of Murders Committed");
 
-  x = d3.scaleTime().range([0, w])
+  x = d3.scaleTime().range([0, w]);
 
   const brushed = () => {
     var s = d3.event.selection || x.range();
@@ -150,7 +155,7 @@ d3.csv("data/all_murder.csv", function (data) {
     }
   }
 
-  const brush = d3.brushX()
+  brush = d3.brushX()
     .extent([[0, 0], [w, h]])
     .on("brush end", brushed);
 
@@ -163,14 +168,25 @@ d3.csv("data/all_murder.csv", function (data) {
 });
 
 var toggleAnimation = function(d){
-  if(isAnimationToggled){
-    isAnimationToggled = !isAnimationToggled;
+  var timeDiff = getTimeDiffInDays(startDate, endDate)
+  const iterations = 11;
+  var adjustment = timeDiff/iterations;
+
+  let nextEndDate = addDays(startDate, adjustment);
+  d3.select("g .brush")
+    .transition()
+    .duration(500)
+    .call(brush.move, [xScale(startDate), xScale(nextEndDate)]);  
+
+  for(let i = 1; i < iterations; i++){
+    let nextStartDate = addDays(startDate, adjustment * i);
+    let nextEndDate = addDays(nextStartDate, adjustment);
+    d3.select("g .brush")
+      .transition()
+      .duration(1000)
+      .delay(1500 * i)
+      .call(brush.move, [xScale(nextStartDate), xScale(nextEndDate)]);  
   }
-  else{
-    
-  }
-  let brush = d3.selectAll(".brush");
-  brush.extent
 }
 
 function getTimeDiffInDays(d1, d2){
