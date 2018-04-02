@@ -159,7 +159,6 @@ d3.csv("data/all_murder.csv", function (data) {
     .extent([[0, 0], [w, h]])
     .on("brush end", brushed);
 
-
   svg.append("g")
     .attr("class", "brush")
     .call(brush)

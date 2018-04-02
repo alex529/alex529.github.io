@@ -58,7 +58,7 @@ const loadChart = (geoJson) => {
             .attr('cy', (d) => {
                 return projection([d.lon, d.lat])[1];
             })
-            .attr('r', 3)
+            .attr('r', 4)
             // .style('fill', 'rgba(255, 0, 0, 0.2)')
             .style('fill', 'url(#radial-gradient)')
             .attr('id', (d) => { return d.lat + "|" + d.lon })
