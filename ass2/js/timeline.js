@@ -1,12 +1,12 @@
 var margin = { top: 10, right: 50, bottom: 60, left: 60 };
 var w = 800 - margin.left - margin.right
 var h = 200 - margin.top - margin.bottom;
-var padding = 30;
+var startDate, endDate;
+var isAnimationToggled = false;
 
 d3.csv("data/all_murder.csv", function (data) {
   let entries = d3.nest()
     .key(function (d) { return d.RPT_DT; })
-    .key(function (d) { return d.BORO_NM; })
     .entries(data);
 
   let parseTime = d3.timeParse("%m/%d/%Y");
@@ -20,8 +20,8 @@ d3.csv("data/all_murder.csv", function (data) {
     return d3.ascending(x.RPT_DT, y.RPT_DT)
   })
 
-  let startDate = d3.min(entries, function (d) { return parseTime(d.key); });
-  let endDate = d3.max(entries, function (d) { return parseTime(d.key); });
+  startDate = d3.min(entries, function (d) { return parseTime(d.key); });
+  endDate = d3.max(entries, function (d) { return parseTime(d.key); });
 
   let xScale = d3.scaleTime()
     .domain([startDate, endDate])
@@ -36,7 +36,7 @@ d3.csv("data/all_murder.csv", function (data) {
 
   let yAxis = d3.axisLeft()
     .scale(yScale)
-    .ticks(5);
+    .ticks(10);
 
   let svg = d3.select("#timeline")
     .append("svg")
@@ -112,3 +112,25 @@ d3.csv("data/all_murder.csv", function (data) {
     .call(brush.move, x.range());
 
 });
+
+var toggleAnimation = function(d){
+  if(isAnimationToggled){
+    isAnimationToggled = !isAnimationToggled;
+  }
+  else{
+    
+  }
+  let brush = d3.selectAll(".brush");
+  brush.extent
+}
+
+function getTimeDiffInDays(d1, d2){
+  var timeDiff = Math.abs(d2.getTime() - d1.getTime());
+  return Math.ceil(timeDiff / (1000 * 3600 * 24));
+}
+
+function addDays(date, days) {
+  var result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
