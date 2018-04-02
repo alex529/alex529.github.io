@@ -4,6 +4,8 @@ var h = 200 - margin.top - margin.bottom;
 var startDate, endDate;
 var isAnimationToggled = false;
 
+let oldti1 = 0, oldti2 = 0
+
 d3.csv("data/all_murder.csv", function (data) {
   let entries = d3.nest()
     .key(function (d) { return d.RPT_DT; })
@@ -91,12 +93,59 @@ d3.csv("data/all_murder.csv", function (data) {
     const t1 = (xScale.invert(s[0]))
     const t2 = (xScale.invert(s[1]))
 
-    for (let i = 0; i < data.length; i++) {
-      const id = data[i].lat + "|" + data[i].lon
-      if (data[i].RPT_DT < t1 || data[i].RPT_DT > t2) {
-        document.getElementById(id).style.display = 'none';
+    if (oldti1 == 0 || oldti2 == 0) {
+      //this is normal behavior, but inefficient, it is used only the first time
+      //after the first change the else block gets executed looks uglier but 
+      //much more efficient
+      let s1 = true, s2 = true
+      for (let i = 0; i < data.length; i++) {
+        const id = data[i].lat + "|" + data[i].lon
+        if (data[i].RPT_DT >= t1 && s1) {
+          oldti1 = [t1, i]
+          s1 =false
+        }
+        if (data[i].RPT_DT >= t2 && s2) {
+          oldti2 = [t2, i]
+          s2 = false
+        }
+
+        if (data[i].RPT_DT < t1 || data[i].RPT_DT > t2) {
+          document.getElementById(id).style.display = 'none';
+        } else {
+          document.getElementById(id).style.display = 'initial';
+        }
+      }
+    } else {
+      let j
+      if (oldti1[0] < t1) {
+        //left edge of the brushed moved ->
+        for (j = oldti1[1]; data[j].RPT_DT < t1; j++) {
+          const id = data[j].lat + "|" + data[j].lon
+          document.getElementById(id).style.display = 'none';
+        }
+        oldti1 = [t1, j]
       } else {
-        document.getElementById(id).style.display = 'initial';
+        //left edge of the brushed moved <-
+        for (j = oldti1[1]; data[j].RPT_DT > t1; j--) {
+          const id = data[j].lat + "|" + data[j].lon
+          document.getElementById(id).style.display = 'initial';
+        }
+        oldti1 = [t1, j]
+      }
+      if (oldti2[0] < t2) {
+        //right edge of the brushed moved ->
+        for (j = oldti2[1]; data[j].RPT_DT < t2; j++) {
+          const id = data[j].lat + "|" + data[j].lon
+          document.getElementById(id).style.display = 'initial';
+        }
+        oldti2 = [t2, j]
+      } else {
+        //right edge of the brushed moved <-
+        for (j = oldti2[1]; data[j].RPT_DT > t2; j--) {
+          const id = data[j].lat + "|" + data[j].lon
+          document.getElementById(id).style.display = 'none';
+        }
+        oldti2 = [t2, j]
       }
     }
   }

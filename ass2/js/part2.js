@@ -2,11 +2,11 @@ const width = 800
 const height = 700
 
 const boroughColors = {
-    "StatenIsland": "#edf8fb",
-    "Queens": "#b3cde3",
-    "Bronx": "#8c96c6",
-    "Manhattan": "#8856a7",
-    "Brooklyn": "#810f7c"
+    "StatenIsland": "#f2f0f7",
+    "Queens": "#cbc9e2",
+    "Bronx": "#939ac8",
+    "Manhattan": "#756bb1",
+    "Brooklyn": "#54178f"
 };
 
 const loadChart = (geoJson) => {
@@ -21,6 +21,7 @@ const loadChart = (geoJson) => {
         .attr('width', width)
         .attr('height', height)
         .attr('id', 'Figure1');
+
     // plot paths
     svg.selectAll('path')
         .data(geoJson.features)
@@ -30,6 +31,20 @@ const loadChart = (geoJson) => {
         .style('fill', (d) => {
             return boroughColors[d.properties.BoroName]
         });
+
+    const radialGradient = svg.append("defs")
+        .append("radialGradient")
+        .attr("id", "radial-gradient");
+
+    radialGradient.append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", "red")
+        .attr("stop-opacity", 0.4);
+
+    radialGradient.append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", "rgba(255, 0, 0, 0)")
+        .attr("stop-opacity", 0);
 
     //add points
     d3.csv("data/all_murder.csv", (data) => {
@@ -43,9 +58,10 @@ const loadChart = (geoJson) => {
             .attr('cy', (d) => {
                 return projection([d.lon, d.lat])[1];
             })
-            .attr('r', 2)
-            .style('fill', 'green')
-            .attr('id', (d) => {return d.lat+"|"+d.lon})
+            .attr('r', 3)
+            // .style('fill', 'rgba(255, 0, 0, 0.2)')
+            .style('fill', 'url(#radial-gradient)')
+            .attr('id', (d) => { return d.lat + "|" + d.lon })
     })
 };
 
