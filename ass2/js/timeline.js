@@ -183,7 +183,7 @@ var toggleAnimation = function(d){
     d3.select("g .brush")
       .transition()
       .duration(1000)
-      .delay(1500 * i)
+      .delay(1000 * i)
       .call(brush.move, [xScale(nextStartDate), xScale(nextEndDate)]);  
   }
 }
