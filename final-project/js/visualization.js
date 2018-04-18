@@ -24,9 +24,10 @@ var Visualization = (function(){
     };
 
     var setupBrush = function(data){
+        
         let entries = d3.nest()
-        .key(function (d) { return d.arst_date; })
-        .entries(data);
+            .key(function (d) { return d.arst_date; })
+            .entries(data);
 
         let parseTime = d3.timeParse("%m/%d/%Y");
         
@@ -46,8 +47,8 @@ var Visualization = (function(){
         });
 
         xScale = d3.scaleTime()
-        .domain([startDate, endDate])
-        .rangeRound([0, w]);
+            .domain([startDate, endDate])
+            .rangeRound([0, w]);
     
         yScale = d3.scaleLinear()
             .domain([0, d3.max(entries, function (d) { return d.values.length; })])
@@ -61,25 +62,25 @@ var Visualization = (function(){
             .ticks(10); // check how many
 
         let svg = d3.select("#timeline")
-        .append("svg")
-        .attr("width", w + margin.left + margin.right)
-        .attr("height", h + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            .append("svg")
+            .attr("width", w + margin.left + margin.right)
+            .attr("height", h + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         svg.selectAll("rect")
             .data(entries)
             .enter()
             .append("rect")
             .attr("x", function (d) {
-            return xScale(parseTime(d.key));
+                return xScale(parseTime(d.key));
             })
             .attr("y", function (d) {
-            return yScale(d.values.length);
+                return yScale(d.values.length);
             })
             .attr("width", w / entries.length)
             .attr("height", function (d) {
-            return h - yScale(d.values.length);
+                return h - yScale(d.values.length);
             })
             .attr("fill", "darkslateblue");
 
@@ -105,7 +106,8 @@ var Visualization = (function(){
             .attr("transform", "translate(" + -(padding) + "," + (h / 2) + ")rotate(-90)")
             .text("# of Arrests Conducted");
 
-        x = d3.scaleTime().range([0, w]);
+        x = d3.scaleTime()
+            .range([0, w]);
     };
 
     var setupDoughnut = function(){
