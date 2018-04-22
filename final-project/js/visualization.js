@@ -19,7 +19,7 @@ const Visualization = (() => {
     };
 
     var setupMap = function () {
-        d3.json("data/la.geojson", (err, geoJson) => {
+        d3.json("./data/la.geojson", (err, geoJson) => {
             drawMap(geoJson);
         });
     };
