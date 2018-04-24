@@ -15,29 +15,33 @@ const map = {
         padding: 30,
     }
 }
-const colors = [
-    '#D8E5E5',
-    '#90D1D1',
-    '#B1EDED',
-    '#63B5B5',
-    '#E2F1F1',
-    '#A0F4F4',
-    '#7BCECE',
-    '#CAC6D1',
-    '#EBE7F3',
-    '#C4C4C5',
-    '#F0E9FF',
-    '#BCB6C6',
-    '#E3E0EA',
-    '#DBD5E6',
-    '#D5CDE4',
-    '#9C99A1',
-    '#B1A5CB',
-    '#C8B8E9',
-    '#DFD4F3',
-    '#9F9CA4',
-    '#ABA6B5'
-];
+const colors = {
+    hover : 'rgba(47, 93, 102, 0.5)',
+    click : 'rgba(47, 93, 102, 1)',
+    basemap : [
+        '#D8E5E5',
+        '#90D1D1',
+        '#B1EDED',
+        '#63B5B5',
+        '#E2F1F1',
+        '#A0F4F4',
+        '#7BCECE',
+        '#CAC6D1',
+        '#EBE7F3',
+        '#C4C4C5',
+        '#F0E9FF',
+        '#BCB6C6',
+        '#E3E0EA',
+        '#DBD5E6',
+        '#D5CDE4',
+        '#9C99A1',
+        '#B1A5CB',
+        '#C8B8E9',
+        '#DFD4F3',
+        '#9F9CA4',
+        '#ABA6B5'
+    ]
+};
 
 const setupTimeline = (data) => {
 
@@ -146,8 +150,14 @@ const drawMap = (geoJson) => {
         .enter()
         .append('path')
         .attr('d', geoGenerator)
-        .style("fill", (d,i) => {
-            return colors[i];
+        .on("mouseover", function(d, i) {
+            d3.select(this).style('fill', colors.hover);
+        })
+        .on("mouseout", function(d, i) {
+            d3.select(this).style('fill', colors.basemap[i]);
+        })
+        .style("fill", (d, i) => {
+            return colors.basemap[i];
         });
 
     const radialGradient = svg.append("defs")
