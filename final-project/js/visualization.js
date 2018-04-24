@@ -12,7 +12,7 @@ const Visualization = (() => {
     /* --------- MAP AND TIMELINE ----------  */
 
     var setupMap = function () {
-        const width = 600;
+        const width = 1000;
         const height = 800;
         var margin = { top: 40, right: 50, bottom: 40, left: 50 };
 
@@ -43,7 +43,10 @@ const Visualization = (() => {
                 .data(geoJson.features)
                 .enter()
                 .append('path')
-                .attr('d', geoGenerator);
+                .attr('d', geoGenerator)
+                .on("click", function(d, i) {
+                    redrawTimeline(i);
+                });
                 /*.on("mouseover", function(d, i) {
                     d3.select(this).style('fill', config.colors.hover);
                 })
@@ -85,14 +88,12 @@ const Visualization = (() => {
                 .attr("stop-color", "rgba(255, 0, 0, 0)")
                 .attr("stop-opacity", 0);
         
-            //create title 
             svg.append("text")
                 .attr("x", (width / 2))             
                 .attr("y", map.height)
                 .attr("text-anchor", "middle")   
                 .text("LAPD Divisons");
                 
-            // add labels to divisions
             svg.selectAll('text.divison-label')
                 .data(geoJson.features)
                 .enter()
@@ -141,118 +142,116 @@ const Visualization = (() => {
 
     const setupTimeline = () => {
 
-        const width = 600;
+        const width = 1000;
         const height = 800;
-        var margin = { top: 40, right: 50, bottom: 40, left: 50 };
-        var timeline = {
+        const margin = { top: 20, right: 50, bottom: 40, left: 50 };
+        const timeline = {
             width: width - margin.left - margin.right,
             height: height * 3 / 10 - margin.top - margin.bottom,
             padding: 30
         }
 
-        const drawTimeline = (data) => {
-            /*const entries = d3.nest()
-                .key(function (d) { return d.time; })
-                .entries(data);*/
-        
-            //const parseTime = d3.timeParse('%m/%d/%Y');
-        
-            /*for (let i = 0; i < data.length; i++) {
-                data[i].time = parseTime(data[i].time);
-            }*/
-        
-            /*data.sort((x, y) => {
-                return d3.ascending(x.time, y.time);
-            });*/
-
-            /*var parseUTCDate = d3.utcParse("%Y-%m-%dT%H:%M:%S");
-
-            var dataWithDates = data.map(function(d) {
-                d.time = parseUTCDate(d.time).setHours(0,0,0,0);
-                return d;
-            });*/
-
-            var utcParse = d3.utcParse("%Y-%m-%dT%H:%M:%S");
-
-            var parseUTCDate = d3.utcParse("%Y-%m-%dT%H:%M:%S");
-            var dataWithDates = data.map(function(d) {
-                d.time = parseUTCDate(d.time).setHours(0,0,0,0);
-                return d;
-            });
-        
-            const startDate = d3.min(data, function (d) {
-                return d.time;
-            });
-            const endDate = d3.max(data, function (d) {
-                return d.time;
-            });
-        
-            const xScale = d3.scaleTime()
-                .domain([startDate, endDate])
-                .rangeRound([0, timeline.width]);
-        
-            const yScale = d3.scaleLinear()
-                .domain([0, d3.max(data, function (d) { return d.Locations.length; })])
-                .range([timeline.height, 0]);
-        
-            const xAxis = d3.axisBottom()
-                .scale(xScale);
-        
-            const yAxis = d3.axisLeft()
-                .scale(yScale)
-                .ticks(10); // check how many
-        
-            const svg = d3.select('#timeline')
-                .append('svg')
-                .attr('width', timeline.width + margin.left + margin.right)
-                .attr('height', timeline.height + margin.top + margin.bottom)
-                .append('g')
-                .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-        
-            svg.selectAll('rect')
-                .data(data)
-                .enter()
-                .append('rect')
-                .attr('x', function (d) {
-                    return xScale(d.time);
-                })
-                .attr('y', function (d) {
-                    return yScale(d.Locations.length);
-                })
-                .attr('width', timeline.width / data.length)
-                .attr('height', function (d) {
-                    return timeline.height - yScale(d.Locations.length);
-                })
-                .attr('fill', 'darkslateblue');
-        
-            svg.append('g')
-                .attr('class', 'axis')
-                .attr('transform', 'translate(0,' + (timeline.height) + ')')
-                .call(xAxis);
-        
-            svg.append('g')
-                .attr('class', 'axis')
-                .attr('transform', 'translate(0,0)')
-                .call(yAxis);
-        
-            svg.append('text')
-                .attr('class', 'label')
-                .attr('text-anchor', 'middle')
-                .attr('x', timeline.width / 2)
-                .attr('y', timeline.height + timeline.padding)
-                .text('Day');
-        
-            svg.append('text')
-                .attr('text-anchor', 'middle')
-                .attr('transform', 'translate(' + -(timeline.padding) + ',' + (timeline.height / 2) + ')rotate(-90)')
-                .text('# of Arrests');
-        
-            const x = d3.scaleTime()
-                .range([0, timeline.width]);
-        };
+        const svg = d3.select('#timeline')
+            .append('svg')
+            .attr('width', timeline.width + margin.left + margin.right)
+            .attr('height', timeline.height + margin.top + margin.bottom)
+            .append('g')
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
         d3.json('./data/districts/d1.json', (err, data) => {
-            drawTimeline(data);
+            populateTimeline(data);
+            hideLoader('timeline');
+        });
+    };
+
+    const populateTimeline = (data) => {
+        const width = 1000;
+        const height = 800;
+        const margin = { top: 20, right: 50, bottom: 40, left: 50 };
+        const timeline = {
+            width: width - margin.left - margin.right,
+            height: height * 3 / 10 - margin.top - margin.bottom,
+            padding: 30
+        }
+
+        const svg = d3.selectAll('#timeline svg g');
+        let parseTime = d3.timeParse("%m/%d/%Y");
+
+        var dataWithDates = data.map(function(d) {
+            d.time = parseTime(d.time);
+            return d;
+        });
+    
+        const startDate = d3.min(data, function (d) {
+            return d.time;
+        });
+
+        const endDate = d3.max(data, function (d) {
+            return d.time;
+        });
+    
+        const xScale = d3.scaleTime()
+            .domain([startDate, endDate])
+            .rangeRound([0, timeline.width]);
+    
+        const yScale = d3.scaleLinear()
+            .domain([0, d3.max(data, function (d) { return d.Locations.length; })])
+            .range([timeline.height, 0]);
+    
+        const xAxis = d3.axisBottom()
+            .scale(xScale);
+    
+        const yAxis = d3.axisLeft()
+            .scale(yScale)
+            .ticks(10);
+       
+        svg.selectAll('rect')
+            .data(data)
+            .enter()
+            .append('rect')
+            .attr('x', function (d) {
+                return xScale(d.time);
+            })
+            .attr('y', function (d) {
+                return yScale(d.Locations.length);
+            })
+            .attr('width', timeline.width / data.length)
+            .attr('height', function (d) {
+                return timeline.height - yScale(d.Locations.length);
+            })
+            .attr('fill', 'darkslateblue');
+    
+        svg.append('g')
+            .attr('class', 'axis')
+            .attr('transform', 'translate(0,' + (timeline.height) + ')')
+            .call(xAxis);
+    
+        svg.append('g')
+            .attr('class', 'axis')
+            .attr('transform', 'translate(0,0)')
+            .call(yAxis);
+    
+        svg.append('text')
+            .attr('class', 'label')
+            .attr('text-anchor', 'middle')
+            .attr('x', timeline.width / 2)
+            .attr('y', timeline.height + timeline.padding)
+            .text('Day');
+    
+        svg.append('text')
+            .attr('text-anchor', 'middle')
+            .attr('transform', 'translate(' + -(timeline.padding) + ',' + (timeline.height / 2) + ')rotate(-90)')
+            .text('# of Arrests');
+    
+        const x = d3.scaleTime()
+            .range([0, timeline.width]);
+    };
+
+    const redrawTimeline = (id) => {
+        d3.json('./data/districts/d' + id + '.json', (err, data) => {
+            const g = d3.selectAll('#timeline svg g');
+            g.selectAll("*").remove();
+            populateTimeline(data);
             hideLoader('timeline');
         });
     };
@@ -353,7 +352,8 @@ const Visualization = (() => {
     
 
     return {
-        load: load
+        load: load,
+        redrawTimeline: redrawTimeline
     }
 
 })();
