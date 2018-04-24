@@ -14,7 +14,7 @@ const Visualization = (() => {
     var setupMap = function () {
         const width = 600;
         const height = 800;
-        margin = { top: 40, right: 50, bottom: 40, left: 50 };
+        var margin = { top: 40, right: 50, bottom: 40, left: 50 };
 
         var isAnimationToggled = false;
         var dataset;
@@ -23,11 +23,6 @@ const Visualization = (() => {
         const map = {
             width: width,
             height: height * 8 / 10,
-            timeline: {
-                width: width - margin.left - margin.right,
-                height: height * 3 / 10 - margin.top - margin.bottom,
-                padding: 30,
-            }
         };
 
         const drawMap = (geoJson) => {
@@ -70,10 +65,7 @@ const Visualization = (() => {
                         .range(config.colors.scaleColors);
 
                     svg.selectAll('path')
-                        .style("fill", (d, i) => {
-                            console.log(data.Districts[i].count);
-                            console.log(colorScale(data.Districts[i].count));
-                            
+                        .style("fill", (d, i) => {                            
                             return colorScale(data.Districts[i].count);
                         });
 
@@ -114,7 +106,7 @@ const Visualization = (() => {
                 })
                 .text(function(d) {
                     return d.properties.name;  
-                });	
+                });
         
             /*//add points
             d3.json('./data/agr.json', (data) => {
@@ -149,35 +141,59 @@ const Visualization = (() => {
 
     const setupTimeline = () => {
 
+        const width = 600;
+        const height = 800;
+        var margin = { top: 40, right: 50, bottom: 40, left: 50 };
+        var timeline = {
+            width: width - margin.left - margin.right,
+            height: height * 3 / 10 - margin.top - margin.bottom,
+            padding: 30
+        }
+
         const drawTimeline = (data) => {
-            const entries = d3.nest()
-                .key(function (d) { return d["Arrest Date"]; })
-                .entries(data);
+            /*const entries = d3.nest()
+                .key(function (d) { return d.time; })
+                .entries(data);*/
         
-            const parseTime = d3.timeParse('%m/%d/%Y');
+            //const parseTime = d3.timeParse('%m/%d/%Y');
         
-            for (let i = 0; i < data.length; i++) {
-                data[i]["Arrest Date"] = parseTime(data[i]["Arrest Date"]);
-            }
+            /*for (let i = 0; i < data.length; i++) {
+                data[i].time = parseTime(data[i].time);
+            }*/
         
-            data.sort((x, y) => {
-                return d3.ascending(x["Arrest Date"], y["Arrest Date"]);
+            /*data.sort((x, y) => {
+                return d3.ascending(x.time, y.time);
+            });*/
+
+            /*var parseUTCDate = d3.utcParse("%Y-%m-%dT%H:%M:%S");
+
+            var dataWithDates = data.map(function(d) {
+                d.time = parseUTCDate(d.time).setHours(0,0,0,0);
+                return d;
+            });*/
+
+            var utcParse = d3.utcParse("%Y-%m-%dT%H:%M:%S");
+
+            var parseUTCDate = d3.utcParse("%Y-%m-%dT%H:%M:%S");
+            var dataWithDates = data.map(function(d) {
+                d.time = parseUTCDate(d.time).setHours(0,0,0,0);
+                return d;
             });
         
-            const startDate = d3.min(entries, function (d) {
-                return parseTime(d.key);
+            const startDate = d3.min(data, function (d) {
+                return d.time;
             });
-            const endDate = d3.max(entries, function (d) {
-                return parseTime(d.key);
+            const endDate = d3.max(data, function (d) {
+                return d.time;
             });
         
             const xScale = d3.scaleTime()
                 .domain([startDate, endDate])
-                .rangeRound([0, map.timeline.width]);
+                .rangeRound([0, timeline.width]);
         
             const yScale = d3.scaleLinear()
-                .domain([0, d3.max(entries, function (d) { return d.values.length; })])
-                .range([map.timeline.height, 0]);
+                .domain([0, d3.max(data, function (d) { return d.Locations.length; })])
+                .range([timeline.height, 0]);
         
             const xAxis = d3.axisBottom()
                 .scale(xScale);
@@ -188,30 +204,30 @@ const Visualization = (() => {
         
             const svg = d3.select('#timeline')
                 .append('svg')
-                .attr('width', map.timeline.width + margin.left + margin.right)
-                .attr('height', map.timeline.height + margin.top + margin.bottom)
+                .attr('width', timeline.width + margin.left + margin.right)
+                .attr('height', timeline.height + margin.top + margin.bottom)
                 .append('g')
                 .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
         
             svg.selectAll('rect')
-                .data(entries)
+                .data(data)
                 .enter()
                 .append('rect')
                 .attr('x', function (d) {
-                    return xScale(parseTime(d.key));
+                    return xScale(d.time);
                 })
                 .attr('y', function (d) {
-                    return yScale(d.values.length);
+                    return yScale(d.Locations.length);
                 })
-                .attr('width', map.timeline.width / entries.length)
+                .attr('width', timeline.width / data.length)
                 .attr('height', function (d) {
-                    return map.timeline.height - yScale(d.values.length);
+                    return timeline.height - yScale(d.Locations.length);
                 })
                 .attr('fill', 'darkslateblue');
         
             svg.append('g')
                 .attr('class', 'axis')
-                .attr('transform', 'translate(0,' + (map.timeline.height) + ')')
+                .attr('transform', 'translate(0,' + (timeline.height) + ')')
                 .call(xAxis);
         
             svg.append('g')
@@ -222,21 +238,21 @@ const Visualization = (() => {
             svg.append('text')
                 .attr('class', 'label')
                 .attr('text-anchor', 'middle')
-                .attr('x', map.timeline.width / 2)
-                .attr('y', map.timeline.height + map.timeline.padding)
+                .attr('x', timeline.width / 2)
+                .attr('y', timeline.height + timeline.padding)
                 .text('Day');
         
             svg.append('text')
                 .attr('text-anchor', 'middle')
-                .attr('transform', 'translate(' + -(map.timeline.padding) + ',' + (map.timeline.height / 2) + ')rotate(-90)')
+                .attr('transform', 'translate(' + -(timeline.padding) + ',' + (timeline.height / 2) + ')rotate(-90)')
                 .text('# of Arrests');
         
             const x = d3.scaleTime()
-                .range([0, map.timeline.width]);
+                .range([0, timeline.width]);
         };
 
-        d3.json('./data/all-arrests.json', (err, data) => {
-            //drawTimeline(data);
+        d3.json('./data/districts/d1.json', (err, data) => {
+            drawTimeline(data);
             hideLoader('timeline');
         });
     };
