@@ -1,6 +1,6 @@
-const width = 1200
-const height = 500
-margin = { top: 10, right: 50, bottom: 60, left: 60 }
+const width = 600
+const height = 800
+margin = { top: 40, right: 50, bottom: 40, left: 50 }
 
 var isAnimationToggled = false;
 var dataset;
