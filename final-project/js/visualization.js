@@ -1,9 +1,15 @@
 const Visualization = (() => {
 
     var loadDataAndSetupVisualizations = function () {
-        d3.csv("/data/placeholder.csv", function (data) {
-            setupMap();
+
+        /*d3.csv('./data/all-data.csv', (data) => {
             setupTimeline(data);
+            hideLoader('timeline');
+        });*/
+
+        d3.csv('/data/placeholder.csv', function (data) {
+            setupMap();
+            //setupTimeline(data);
             setupDoughnut()
             setupCalendar();
             setupScatterPlot();
@@ -12,32 +18,37 @@ const Visualization = (() => {
 
         /* we can make different csv imports for each viz depending on the preprocessing e.g.
         
-        d3.csv("/data/mapData.csv", function(data){
+        d3.csv('/data/mapData.csv', function(data){
             setupMap(data);
         })
         */
     };
 
     var setupMap = function () {
-        d3.json("./data/la.geojson", (err, geoJson) => {
+        d3.json('./data/la.geojson', (err, geoJson) => {
             drawMap(geoJson);
+            hideLoader('map');
         });
     };
 
     var setupDoughnut = function () {
-        console.log("init doughnut");
+        console.log('init doughnut');
     };
 
     var setupCalendar = function () {
-        console.log("init calendar");
+        console.log('init calendar');
     };
 
     var setupScatterPlot = function () {
-        console.log("init scatter plot");
+        console.log('init scatter plot');
     };
 
     var setupTreemap = function () {
-        console.log("init treemap");
+        console.log('init treemap');
+    };
+
+    var hideLoader = function (parentId) {
+        $('#' + parentId).find('.loader').hide()
     };
 
     var load = function () {

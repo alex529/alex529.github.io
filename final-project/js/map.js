@@ -1,4 +1,4 @@
-const width = 600
+const width = 1200
 const height = 500
 margin = { top: 10, right: 50, bottom: 60, left: 60 }
 
@@ -15,21 +15,44 @@ const map = {
         padding: 30,
     }
 }
+const colors = [
+    '#D8E5E5',
+    '#90D1D1',
+    '#B1EDED',
+    '#63B5B5',
+    '#E2F1F1',
+    '#A0F4F4',
+    '#7BCECE',
+    '#CAC6D1',
+    '#EBE7F3',
+    '#C4C4C5',
+    '#F0E9FF',
+    '#BCB6C6',
+    '#E3E0EA',
+    '#DBD5E6',
+    '#D5CDE4',
+    '#9C99A1',
+    '#B1A5CB',
+    '#C8B8E9',
+    '#DFD4F3',
+    '#9F9CA4',
+    '#ABA6B5'
+];
 
 const setupTimeline = (data) => {
 
     const entries = d3.nest()
-        .key(function (d) { return d.arst_date; })
+        .key(function (d) { return d["Arrest Date"]; })
         .entries(data);
 
     const parseTime = d3.timeParse('%m/%d/%Y');
 
     for (let i = 0; i < data.length; i++) {
-        data[i].arst_date = parseTime(data[i].arst_date);
+        data[i]["Arrest Date"] = parseTime(data[i]["Arrest Date"]);
     }
 
     data.sort((x, y) => {
-        return d3.ascending(x.arst_date, y.arst_date);
+        return d3.ascending(x["Arrest Date"], y["Arrest Date"]);
     });
 
     const startDate = d3.min(entries, function (d) {
@@ -122,7 +145,10 @@ const drawMap = (geoJson) => {
         .data(geoJson.features)
         .enter()
         .append('path')
-        .attr('d', geoGenerator);
+        .attr('d', geoGenerator)
+        .style("fill", (d,i) => {
+            return colors[i];
+        });
 
     const radialGradient = svg.append("defs")
         .append("radialGradient")
@@ -138,16 +164,39 @@ const drawMap = (geoJson) => {
         .attr("stop-color", "rgba(255, 0, 0, 0)")
         .attr("stop-opacity", 0);
 
+    //create title 
+    svg.append("text")
+        .attr("x", (width / 2))             
+        .attr("y", map.height)
+        .attr("text-anchor", "middle")   
+        .text("LAPD Divisons");
+        
+    // add labels to divisions
+    svg.selectAll('text.divison-label')
+        .data(geoJson.features)
+        .enter()
+        .append('text')
+        .attr('class', 'divison-label')
+        .attr("x", function(d) {
+            return geoGenerator.centroid(d)[0];
+        })
+        .attr("y", function(d) {
+            return geoGenerator.centroid(d)[1];
+        })
+        .text(function(d) {
+            return d.properties.name;  
+        });	
+
     //add points
     d3.json('./data/agr.json', (data) => {
-        console.log(data);
+        //console.log(data);
 
         svg.selectAll('circle')
             .data(data)
             .enter()
             .append('circle')
             .attr('cx', (d) => {
-                console.log(d);
+                //console.log(d);
 
                 return projection([d.location.y, d.location.x])[0];
             })
