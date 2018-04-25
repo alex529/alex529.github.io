@@ -1,5 +1,10 @@
 const Visualization = (() => {
 
+    var activeFeature = d3.select(null);
+    var geoGenerator;
+
+    const mapTransitionTime = 1000;
+
     var loadDataAndSetupVisualizations = function () {
         setupMap();
         setupTimeline();
@@ -23,13 +28,13 @@ const Visualization = (() => {
         const map = {
             width: width,
             height: height * 8 / 10,
-        };
+        };      
 
         const drawMap = (geoJson) => {
 
             const projection = d3.geoMercator()
                 .fitExtent([[0, 0], [map.width, map.height]], geoJson);
-            const geoGenerator = d3.geoPath(projection);
+            geoGenerator = d3.geoPath(projection);
         
             //create svg
             const svg = d3.select('#map')
@@ -37,19 +42,23 @@ const Visualization = (() => {
                 .attr('width', map.width)
                 .attr('height', map.height)
                 .attr('id', 'Figure1');
+
+            var g = svg.append('g');
         
             // plot paths
-            svg.selectAll('path')
+            g.selectAll('path')
                 .data(geoJson.features)
                 .enter()
                 .append('path')
                 .attr('d', geoGenerator)
+                .attr('class', 'path')
                 .on("click", function(d, i) {
+                    zoomToFeature(d, this);
                     redrawTimeline(i);
-                });
+                })
                 /*.on("mouseover", function(d, i) {
                     d3.select(this).style('fill', config.colors.hover);
-                })
+                });
                 .on("mouseout", function(d, i) {
                     d3.select(this).style('fill', config.colors.basemap[i]);
                 })*/
@@ -88,13 +97,13 @@ const Visualization = (() => {
                 .attr("stop-color", "rgba(255, 0, 0, 0)")
                 .attr("stop-opacity", 0);
         
-            svg.append("text")
+            g.append("text")
                 .attr("x", (width / 2))             
                 .attr("y", map.height)
                 .attr("text-anchor", "middle")   
                 .text("LAPD Divisons");
                 
-            svg.selectAll('text.divison-label')
+            g.selectAll('text.divison-label')
                 .data(geoJson.features)
                 .enter()
                 .append('text')
@@ -229,7 +238,7 @@ const Visualization = (() => {
         svg.append('g')
             .attr('class', 'axis')
             .attr('transform', 'translate(0,0)')
-            .call(yAxis);
+            .call(yAxis);         
     
         svg.append('text')
             .attr('class', 'label')
@@ -254,6 +263,61 @@ const Visualization = (() => {
             populateTimeline(data);
             hideLoader('timeline');
         });
+    };
+
+    const reset = () => {
+        activeFeature.classed("active", false);
+        activeFeature = d3.select(null);
+
+        d3.selectAll('#map svg')
+            .transition()
+            .duration(mapTransitionTime)
+            .call(zoom.transform, d3.zoomIdentity);
+    };
+
+    const zoomed = () => {
+        var g = d3.selectAll('#map svg g');
+        g.style("stroke-width", 1.5 / d3.event.transform.k + "px");
+        g.attr("transform", d3.event.transform);
+    };
+
+    const zoom = d3.zoom()
+        .scaleExtent([1, 10])
+        .on("zoom", zoomed); 
+
+    const zoomToFeature = (d, that) => {
+        const width = 1000;
+        const height = 800;
+        var margin = { top: 40, right: 50, bottom: 40, left: 50 };
+
+        var isAnimationToggled = false;
+        var dataset;
+        var xScale, yScale;
+        var brush;
+        const map = {
+            width: width,
+            height: height * 8 / 10,
+        }; 
+
+        if (activeFeature.node() === that){
+            return reset();
+        } 
+        activeFeature.classed("active", false);
+        activeFeature = d3.select(that)
+            .classed("active", true);
+      
+        var bounds = geoGenerator.bounds(d),
+            dx = bounds[1][0] - bounds[0][0],
+            dy = bounds[1][1] - bounds[0][1],
+            x = (bounds[0][0] + bounds[1][0]) / 2,
+            y = (bounds[0][1] + bounds[1][1]) / 2,
+            scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / width, dy / height))),
+            translate = [map.width / 2 - scale * x, map.height / 2 - scale * y];
+      
+        const svg = d3.selectAll('#map svg');
+        svg.transition()
+            .duration(mapTransitionTime)
+            .call(zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale));
     };
 
 

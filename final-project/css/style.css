@@ -10,7 +10,11 @@
     fill: darkslategrey;
     text-anchor: middle;
     z-index: 100;
-    
+    pointer-events: none;   
+}
+
+.path{
+    cursor: pointer;
 }
 
 /* LOADER */
