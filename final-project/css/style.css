@@ -38,3 +38,253 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+
+/*Marathon graph CSS attributes*/
+
+.lgWomen {
+    stroke: black;
+    stroke-dasharray: 4, 4;
+    stroke-width: 3;
+  }
+  
+  .lgMen {
+    stroke: black;
+    stroke-dasharray: 4, 4;
+    stroke-width: 3;
+  }
+  
+  circle {
+    stroke: red;
+    stroke-width: 1;
+    fill: white;
+  }
+  
+  circle:hover {
+    fill: rgb(255, 136, 0);
+  }
+  
+  rect.womenDataRects {
+    stroke: green;
+    stroke-width: 1;
+    fill: white;
+  }
+  
+  rect.womenDataRects:hover {
+    fill: blue;
+  }
+  
+  .legendMen {
+    stroke: red;
+    fill: red;
+  }
+  
+  .legendWomen {
+    stroke: green;
+    fill: green;
+  }
+  
+  .legendLr {
+    stroke: black;
+    fill: black;
+    stroke-dasharray: 3, 3;
+  }
+  
+  .legendLrText {
+    stroke: black;
+    fill: black;
+  }
+  
+  .menAndWomenButton {
+    border: 1px solid rgb(255, 136, 0);
+    align-self: end;
+  }
+  
+  .menAndWomenButton:hover {
+    background-color: rgba(255, 136, 0, 0.2);
+    color: white;
+  }
+  
+  .womenButton {
+    border: 1px solid green;
+  }
+  
+  .womenButton:hover {
+    background-color: green;
+    background-color: rgba(0, 255, 0, 0.2);
+  }
+  
+  .menButton {
+    border: 1px solid red;
+    align-self: start;
+  }
+  
+  .menButton:hover {
+    background-color: rgba(255, 0, 0, 0.2);
+  }
+  
+  .buttonsMarathon {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: minmax(20px, auto);
+    grid-gap: 1em;
+    align-items: center;
+  }
+  
+  .line {
+    fill: none;
+    stroke: blue;
+    stroke-width: 1;
+  }
+  
+  .line1 {
+    fill: none;
+    stroke: red;
+    stroke-width: 1;
+  }
+  
+  .line2 {
+    fill: none;
+    stroke: green;
+    stroke-width: 1;
+  }
+  
+/*doughnut*/
+
+.text {
+        font-family: sans-serif;
+		font-size: 12px;
+        font-weight: bolder;
+		fill: white;
+		}
+.legend {
+    font-size: 13px;
+  }        
+  
+/* Scatter plot */  
+
+.lineMale {
+    fill: none;
+    stroke: blue;
+    stroke-width: 1;
+  }
+  
+.lineFemale {
+    fill: none;
+    stroke: red;
+    stroke-width: 1;
+  }
+.lineBlacks {
+    fill: none;
+    stroke: black;
+    stroke-width: 1;
+  }
+.lineHispanic {
+    fill: none;
+    stroke: yellow;
+    stroke-width: 1;
+  }
+.lineWhite {
+    fill: none;
+    stroke: green;
+    stroke-width: 1;
+  }
+.lineAsians {
+    fill: none;
+    stroke: aqua;
+    stroke-width: 1;
+  }
+.lineOthers {
+    fill: none;
+    stroke: brown;
+    stroke-width: 1;
+  }  
+.circleMale {
+     stroke: blue;   
+}  
+.circleFemale {
+     stroke: red;   
+}  
+.circleBlacks {
+     stroke: black;   
+}  
+.circleHispanic {
+     stroke: yellow;   
+}  
+.circleWhite {
+     stroke: green;   
+}  
+.circleAsians {
+     stroke: aqua;   
+}  
+.circleOthers {
+     stroke: brown;   
+}  
+
+/* buttons graph*/
+.btn {
+  background-color: white;
+  color: black;
+  text-align: center;
+  display: inline-block;
+  font-size: 11px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  width: 95px;
+}
+
+.buttonClearAll {
+    border: 1px solid rgb(255, 136, 0);
+    align-self: end;
+  }
+  
+.buttonClearAll:hover {
+    background-color: rgba(255, 136, 0, 0.2);
+    color: white;
+  } 
+.buttonMale {
+    border: 1px solid blue;
+  } 
+.buttonMale:hover {
+    background-color: blue;
+  } 
+.buttonFemale {
+    border: 1px solid red;
+  }  
+.buttonFemale:hover {
+    background-color: red;
+  }  
+.buttonBlacks {
+    border: 1px solid black;
+  }  
+.buttonBlacks:hover {
+    background-color: grey;
+  }  
+.buttonHispanic {
+    border: 1px solid yellow;
+  }  
+.buttonHispanic:hover {
+    background-color: yellow;
+  }  
+.buttonWhite {
+    border: 1px solid green;
+  }  
+.buttonWhite:hover {
+    background-color: green;
+  }  
+.buttonAsians {
+    border: 1px solid aqua;
+  }  
+.buttonAsians:hover {
+    background-color: aqua;
+  }  
+.buttonOthers {
+    border: 1px solid brown;
+  }  
+.buttonOthers:hover {
+    background-color: brown;
+  }    
+
+    
