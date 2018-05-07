@@ -2,7 +2,8 @@ const Visualization = (() => {
 
     var activeFeature = d3.select(null);
     var geoGenerator;
-
+    var geoGenerator, projection;
+    
     const mapTransitionTime = 1000;
 
     var loadDataAndSetupVisualizations = function () {
@@ -32,7 +33,7 @@ const Visualization = (() => {
 
         const drawMap = (geoJson) => {
 
-            const projection = d3.geoMercator()
++            projection = d3.geoMercator()
                 .fitExtent([[0, 0], [map.width, map.height]], geoJson);
             geoGenerator = d3.geoPath(projection);
         
@@ -53,8 +54,14 @@ const Visualization = (() => {
                 .attr('d', geoGenerator)
                 .attr('class', 'path')
                 .on("click", function(d, i) {
-                    zoomToFeature(d, this);
-                    redrawTimeline(i);
+                    let id = d.properties.external_id;
+                    if (activeFeature.node() === this){
+                        resetZoom();
+                        resetCharts();
+                    }
+                    else{
+                        redrawCharts(d, id, this);
+                    }
                 })
                 /*.on("mouseover", function(d, i) {
                     d3.select(this).style('fill', config.colors.hover);
@@ -256,16 +263,57 @@ const Visualization = (() => {
             .range([0, timeline.width]);
     };
 
-    const redrawTimeline = (id) => {
+    const redrawCharts = (d, id, that) => {
         d3.json('./data/districts/d' + id + '.json', (err, data) => {
-            const g = d3.selectAll('#timeline svg g');
-            g.selectAll("*").remove();
-            populateTimeline(data);
-            hideLoader('timeline');
+            zoomToFeature(d, that);
+            window.setTimeout(() => {
+                resetCharts();
+                redrawTimeline(data);
+                redrawMapPoints(data);
+            }, mapTransitionTime - 500);
         });
     };
 
-    const reset = () => {
+    const redrawTimeline = (data) => {
+        populateTimeline(data);
+        hideLoader('timeline');
+    }
+
+    const redrawMapPoints = (data) => {
+        d3.select('#map svg')
+            .selectAll('circle')
+            .data(data)
+            .enter()
+            .append('circle')
+            .attr('cx', (d, i) => {
+                return projection([d.Locations[0].location.y, d.Locations[0].location.x])[0];
+            })
+            .attr('cy', (d, i) => {
+                return projection([d.Locations[0].location.y, d.Locations[0].location.x])[1];
+            })
+            .attr('r', (d, i) => {
+                return 2
+            })
+            .style('fill', 'url(#radial-gradient)')
+            .attr('id', (d) => { return d.lat + '|' + d.lon });
+    }
+
+    const resetCharts = () => {
+        resetMap();
+        resetTimeline();
+    }
+
+    const resetMap = () => {
+        d3.selectAll('#map svg circle')
+            .remove();
+    }
+     const resetTimeline = () => {
+        d3.selectAll('#timeline svg g')
+            .selectAll("*")
+            .remove();        
+    }
+
+    const resetZoom = () => {
         activeFeature.classed("active", false);
         activeFeature = d3.select(null);
 
@@ -276,9 +324,13 @@ const Visualization = (() => {
     };
 
     const zoomed = () => {
-        var g = d3.selectAll('#map svg g');
-        g.style("stroke-width", 1.5 / d3.event.transform.k + "px");
-        g.attr("transform", d3.event.transform);
+        d3.selectAll('#map svg g')
+            .style("stroke-width", 1.5 / d3.event.transform.k + "px")
+            .attr("transform", d3.event.transform);
+
+        d3.selectAll('circle')
+            .style("r", 0.5 / d3.event.transform.k)
+            .attr("transform", d3.event.transform);
     };
 
     const zoom = d3.zoom()
@@ -299,9 +351,6 @@ const Visualization = (() => {
             height: height * 8 / 10,
         }; 
 
-        if (activeFeature.node() === that){
-            return reset();
-        } 
         activeFeature.classed("active", false);
         activeFeature = d3.select(that)
             .classed("active", true);
