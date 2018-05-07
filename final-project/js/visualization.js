@@ -1,7 +1,7 @@
 const Visualization = (() => {
 
     var activeFeature = d3.select(null);
-    var geoGenerator;
+    var geoGenerator, projection;
 
     const mapTransitionTime = 1000;
 
@@ -32,7 +32,7 @@ const Visualization = (() => {
 
         const drawMap = (geoJson) => {
 
-            const projection = d3.geoMercator()
+            projection = d3.geoMercator()
                 .fitExtent([[0, 0], [map.width, map.height]], geoJson);
             geoGenerator = d3.geoPath(projection);
         
@@ -53,8 +53,16 @@ const Visualization = (() => {
                 .attr('d', geoGenerator)
                 .attr('class', 'path')
                 .on("click", function(d, i) {
-                    zoomToFeature(d, this);
-                    redrawTimeline(i);
+                    if (activeFeature.node() === this){
+                        resetZoom();
+                        resetCharts();
+                    }
+                    else{
+                        zoomToFeature(d, this);
+                        redrawCharts(i);
+                    }
+
+                    
                 })
                 /*.on("mouseover", function(d, i) {
                     d3.select(this).style('fill', config.colors.hover);
@@ -256,16 +264,44 @@ const Visualization = (() => {
             .range([0, timeline.width]);
     };
 
-    const redrawTimeline = (id) => {
+    const redrawCharts = (id) => {
         d3.json('./data/districts/d' + id + '.json', (err, data) => {
-            const g = d3.selectAll('#timeline svg g');
-            g.selectAll("*").remove();
-            populateTimeline(data);
-            hideLoader('timeline');
+            redrawTimeline(data);
+            redrawMapPoints(data);
         });
     };
 
-    const reset = () => {
+    const redrawTimeline = (data) => {
+        const g = d3.selectAll('#timeline svg g');
+        g.selectAll("*").remove();
+        populateTimeline(data);
+        hideLoader('timeline');
+    }
+
+    const redrawMapPoints = (data) => {
+        d3.select('#map svg')
+            .selectAll('circle')
+            .data(data)
+            .enter()
+            .append('circle')
+            .attr('cx', (d, i) => {
+                return projection([d.Locations[0].location.y, d.Locations[0].location.x])[0];
+            })
+            .attr('cy', (d, i) => {
+                return projection([d.Locations[0].location.y, d.Locations[0].location.x])[1];
+            })
+            .attr('r', (d, i) => {
+                return 2
+            })
+            .style('fill', 'url(#radial-gradient)')
+            .attr('id', (d) => { return d.lat + '|' + d.lon });
+    }
+
+    const resetCharts = () => {
+        
+    }
+
+    const resetZoom = () => {
         activeFeature.classed("active", false);
         activeFeature = d3.select(null);
 
@@ -298,10 +334,6 @@ const Visualization = (() => {
             width: width,
             height: height * 8 / 10,
         }; 
-
-        if (activeFeature.node() === that){
-            return reset();
-        } 
         activeFeature.classed("active", false);
         activeFeature = d3.select(that)
             .classed("active", true);
