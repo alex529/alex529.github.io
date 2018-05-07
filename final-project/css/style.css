@@ -5,7 +5,7 @@
 
 .divison-label{
 	font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
-    font-size: 8px;
+    font-size: 10px;
     font-weight: lighter;
     fill: darkslategrey;
     text-anchor: middle;
@@ -198,7 +198,12 @@
     fill: none;
     stroke: brown;
     stroke-width: 1;
-  }  
+  } 
+.lineSum {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+  }   
 .circleMale {
      stroke: blue;   
 }  
@@ -219,6 +224,9 @@
 }  
 .circleOthers {
      stroke: brown;   
+} 
+.circleSum {
+     stroke: grey;   
 }  
 
 /* buttons graph*/
@@ -285,6 +293,12 @@
   }  
 .buttonOthers:hover {
     background-color: brown;
-  }    
+  }   
+.buttonSum {
+    border: 1px solid grey;
+  }  
+.buttonSum:hover {
+    background-color: white;
+  }     
 
     
