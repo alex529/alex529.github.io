@@ -53,13 +53,13 @@ const Visualization = (() => {
                 .attr('d', geoGenerator)
                 .attr('class', 'path')
                 .on("click", function(d, i) {
+                    let id = d.properties.external_id;
                     if (activeFeature.node() === this){
                         resetZoom();
                         resetCharts();
                     }
                     else{
-                        zoomToFeature(d, this);
-                        redrawCharts(i);
+                        redrawCharts(d, id, this);
                     }
 
                     
@@ -264,16 +264,18 @@ const Visualization = (() => {
             .range([0, timeline.width]);
     };
 
-    const redrawCharts = (id) => {
+    const redrawCharts = (d, id, that) => {
         d3.json('./data/districts/d' + id + '.json', (err, data) => {
-            redrawTimeline(data);
-            redrawMapPoints(data);
+            zoomToFeature(d, that);
+            window.setTimeout(() => {
+                resetCharts();
+                redrawTimeline(data);
+                redrawMapPoints(data);
+            }, mapTransitionTime - 500);
         });
     };
 
     const redrawTimeline = (data) => {
-        const g = d3.selectAll('#timeline svg g');
-        g.selectAll("*").remove();
         populateTimeline(data);
         hideLoader('timeline');
     }
@@ -298,7 +300,19 @@ const Visualization = (() => {
     }
 
     const resetCharts = () => {
-        
+        resetMap();
+        resetTimeline();
+    }
+
+    const resetMap = () => {
+        d3.selectAll('#map svg circle')
+            .remove();
+    }
+
+    const resetTimeline = () => {
+        d3.selectAll('#timeline svg g')
+            .selectAll("*")
+            .remove();
     }
 
     const resetZoom = () => {
@@ -312,9 +326,13 @@ const Visualization = (() => {
     };
 
     const zoomed = () => {
-        var g = d3.selectAll('#map svg g');
-        g.style("stroke-width", 1.5 / d3.event.transform.k + "px");
-        g.attr("transform", d3.event.transform);
+        d3.selectAll('#map svg g')
+            .style("stroke-width", 1.5 / d3.event.transform.k + "px")
+            .attr("transform", d3.event.transform);
+
+        d3.selectAll('circle')
+            .style("r", 0.5 / d3.event.transform.k)
+            .attr("transform", d3.event.transform);
     };
 
     const zoom = d3.zoom()
