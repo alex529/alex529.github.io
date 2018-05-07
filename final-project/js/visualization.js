@@ -704,7 +704,8 @@ const Visualization = (() => {
                         Hispanic: parseInt(d.Hispanic),
                         White: parseInt(d.White),
                         Asians: parseInt(d.Asians),
-                        Others: parseInt(d.Others)    
+                        Others: parseInt(d.Others),
+                        Sum: parseInt(d.Sum)
                     };
                 }            
             
@@ -726,7 +727,7 @@ const Visualization = (() => {
                              .range([0, width]);
                 
                 yScale = d3.scaleLinear()
-                           .domain([0, d3.max(dataSet, function(d) { return d.Males;})])
+                           .domain([0, d3.max(dataSet, function(d) { return d.Sum;})])
                            .range([height, 0]);
                 
                 //Define X axis
@@ -809,6 +810,7 @@ const Visualization = (() => {
                 whitePoints = (function(d) { return yScale(d.White); })
                 asiansPoints = (function(d) { return yScale(d.Asians); })
                 othersPoints = (function(d) { return yScale(d.Others); })
+                sumPoints = (function(d) { return yScale(d.Sum); })
                 //draw points
                 drawPoints("circle", femalePoints, "circleFemale")  
                 drawPoints("circle", malePoints, "circleMale") 
@@ -816,14 +818,15 @@ const Visualization = (() => {
                 drawPoints("circle", hispanicPoints, "circleHispanic")
                 drawPoints("circle", whitePoints, "circleWhite")
                 drawPoints("circle", asiansPoints, "circleAsians")
-                drawPoints("circle", othersPoints, "circleOthers")                
+                drawPoints("circle", othersPoints, "circleOthers") 
+                drawPoints("circle", sumPoints, "circleSum") 
                 
                 
                 //draw lines between dots
-                function drawLinesBetweenDots(dataSetType, type_class){ 
+                function drawLinesBetweenDots(dataSetType, typeClass){ 
                     svg.append("path")
                         .datum(dataSet, dataSetType)
-                        .attr("class", type_class)
+                        .attr("class", typeClass)
                         .attr("d", line);                    
                 }
                 //gender datasets
@@ -835,6 +838,7 @@ const Visualization = (() => {
                 whiteDataSet = function(d) { return d.White;}
                 asiansDataSet = function(d) { return d.Asians;}
                 othersDataSet = function(d) { return d.Others;}
+                sumDataSet = function(d) { return d.Sum;}
                 
                 //generate lines and draw lines between dots
                 generate_line(femalePoints)
@@ -851,6 +855,8 @@ const Visualization = (() => {
                 drawLinesBetweenDots(asiansDataSet, "lineAsians")
                 generate_line(othersPoints)
                 drawLinesBetweenDots(othersDataSet, "lineOthers")
+                generate_line(sumPoints)
+                drawLinesBetweenDots(sumDataSet, "lineSum")                
 
                 //remove men and women data functions
                 function removeData(circleType, lineType){    
@@ -869,6 +875,7 @@ const Visualization = (() => {
                 clearWhite = 0 
                 clearAsians = 0
                 clearOthers = 0
+                clearSum = 0
                 //update axis
                 function update_axis(){ 
                     svg.select(".y.axis")
@@ -880,11 +887,60 @@ const Visualization = (() => {
                        .duration(500)
                        .call(xAxis); 
                 }
+                
+                function transition(typePoints, typeLine, typeDataSet, typeCircle){
+                    //transition path
+                    generate_line(typePoints);
+                    svg.select("path." + typeLine)   
+                        .datum(dataSet, typeDataSet)
+                        .transition()
+                        .duration(1000)
+                        .attr("d", line);
+                //points transitions data transition
+                    svg.selectAll("circle."+typeCircle)
+                        .data(dataSet)
+                        .transition()
+                        .duration(1000)
+                        .attr("cx", function(d) {
+                            return xScale(d.Date);
+                        })                        
+                        .attr("cy",  typePoints)                                               
+                }
+                function all_transitions(){
+                    transition(malePoints, "lineMale", maleDataSet, "circleMale")
+                    transition(femalePoints, "lineFemale", femaleDataSet, "circleFemale")
+                    transition(sumPoints, "lineSum", sumDataSet, "circleSum")
+                    
+                    transition(hispanicPoints, "lineHispanic", hispanicDataSet, "circleHispanic")
+                    transition(blacksPoints, "lineBlacks", blacksDataSet, "circleBlacks")
+                    transition(whitePoints, "lineWhite", whiteDataSet, "circleWhite")
+                    transition(asiansPoints, "lineAsians", asiansDataSet, "circleAsians")
+                    transition(othersPoints, "lineOthers", othersDataSet, "circleOthers")
+                    
+                }
+                function scale(){
+                    if(clearSum == 0){
+                        yScale.domain([0, d3.max(dataSet, sumDataSet) ]);
+                    } else if(clearSum ==1 && clearMale == 0) {
+                        yScale.domain([0, d3.max(dataSet, maleDataSet) ]);
+                    } else if(clearSum ==1 && clearMale == 1 && clearHispanic == 0)   {  
+                        yScale.domain([0, d3.max(dataSet, hispanicDataSet) ]);
+                    } else if(clearSum ==1 && clearMale == 1 && clearHispanic == 1 && clearBlacks == 0)   {   
+                        yScale.domain([0, d3.max(dataSet, blacksDataSet) ]);
+                    } else if(clearSum ==1 && clearMale == 1 && clearHispanic == 1 && clearBlacks == 1 && clearFemale == 0)   {   
+                        yScale.domain([0, d3.max(dataSet, femaleDataSet) ]);
+                    } else if(clearSum ==1 && clearMale == 1 && clearHispanic == 1 && clearBlacks == 1 && clearFemale == 1 && clearWhite == 0)   {   
+                        yScale.domain([0, d3.max(dataSet, whiteDataSet) ]);                    
+                    } else {
+                        yScale.domain([0, d3.max(dataSet, othersDataSet) ]);
+                    }                    
+                        
+                }
                 //Transitions                      
                 d3.select("div.buttonClearAll")
                     .on("click", function() {
                     //scale domain    
-                    yScale.domain([0, d3.max(dataSet, function(d) { return d.Males;}) ]);
+                    yScale.domain([0, d3.max(dataSet, function(d) { return d.Sum;}) ]);
                     xScale.domain([d3.min(dataSet, function(d) { return d.Date; }), d3.max(dataSet, function(d) { return d.Date; }) ]);                       
                     //remove function
                     removeData("circle.circleMale", "path.lineMale") 
@@ -894,6 +950,7 @@ const Visualization = (() => {
                     removeData("circle.circleWhite", "path.lineWhite") 
                     removeData("circle.circleAsians", "path.lineAsians") 
                     removeData("circle.circleOthers", "path.lineOthers") 
+                    removeData("circle.circleSum", "path.lineSum") 
                     //update axis   
                     update_axis(); 
                     //set the triggers that everythin was cleared
@@ -904,11 +961,12 @@ const Visualization = (() => {
                     clearWhite = 1 
                     clearAsians = 1
                     clearOthers = 1
+                    clearSum = 1
                 });
                 d3.select("div.buttonMale")
                     .on("click", function() {
-                    //scale domain    
-                    yScale.domain([0, d3.max(dataSet, function(d) { return d.Males;}) ]);                       
+                    //scale domain 
+                    //scale()
                     //draw new line  
                     if(clearMale==1){
                         malePoints = (function(d) { return yScale(d.Males); })
@@ -916,10 +974,14 @@ const Visualization = (() => {
                         generate_line(malePoints)
                         drawLinesBetweenDots(maleDataSet, "lineMale")
                         clearMale = 0
+                        scale()
+                        all_transitions()                        
                     } else{
                     //remove function
                         removeData("circle.circleMale", "path.lineMale")
                         clearMale = 1
+                        scale()
+                        all_transitions()
                     }
                     //update axis   
                     update_axis(); 
@@ -927,8 +989,6 @@ const Visualization = (() => {
                 });
                 d3.select("div.buttonFemale")
                     .on("click", function() {
-                    //scale domain  
-                    yScale.domain([0, d3.max(dataSet, function(d) { return d.Males;}) ]); 
                     //draw new line    
                     if(clearFemale==1){
                         femalePoints = (function(d) { return yScale(d.Females); })
@@ -936,10 +996,14 @@ const Visualization = (() => {
                         generate_line(femalePoints)
                         drawLinesBetweenDots(femaleDataSet, "lineFemale")
                         clearFemale = 0
+                        scale()
+                        all_transitions()
                     } else{
                     //remove function
                         removeData("circle.circleFemale", "path.lineFemale")
                         clearFemale = 1
+                        scale()
+                        all_transitions()
                     }
                     //update axis   
                     update_axis(); 
@@ -947,8 +1011,6 @@ const Visualization = (() => {
                 
                 d3.select("div.buttonBlacks")
                     .on("click", function() {
-                    //scale domain  
-                    yScale.domain([0, d3.max(dataSet, function(d) { return d.Males;}) ]); 
                     //draw new line    
                     if(clearBlacks==1){
                         blacksPoints = (function(d) { return yScale(d.Blacks); })
@@ -956,10 +1018,14 @@ const Visualization = (() => {
                         generate_line(blacksPoints)
                         drawLinesBetweenDots(blacksDataSet, "lineBlacks")
                         clearBlacks = 0
+                        scale()
+                        all_transitions()
                     } else{
                     //remove function
                         removeData("circle.circleBlacks", "path.lineBlacks")
                         clearBlacks = 1
+                        scale()
+                        all_transitions()                        
                     }
                     //update axis   
                     update_axis(); 
@@ -967,8 +1033,6 @@ const Visualization = (() => {
                 
                 d3.select("div.buttonHispanic")
                     .on("click", function() {
-                    //scale domain  
-                    yScale.domain([0, d3.max(dataSet, function(d) { return d.Males;}) ]); 
                     //draw new line    
                     if(clearHispanic==1){
                         hispanicPoints = (function(d) { return yScale(d.Hispanic); })
@@ -976,19 +1040,20 @@ const Visualization = (() => {
                         generate_line(hispanicPoints)
                         drawLinesBetweenDots(hispanicDataSet, "lineHispanic")
                         clearHispanic = 0
+                        scale()
+                        all_transitions()                        
                     } else{
                     //remove function
                         removeData("circle.circleHispanic", "path.lineHispanic")
                         clearHispanic = 1
+                        scale()
+                        all_transitions()                        
                     }
                     //update axis   
                     update_axis(); 
                 });
                 d3.select("div.buttonWhite")
                     .on("click", function() {
-                    //scale domain  
-                    yScale.domain([0, d3.max(dataSet, function(d) { return d.Males;}) ]); 
-
                     //draw new line    
                     if(clearWhite==1){
                         whitePoints = (function(d) { return yScale(d.White); })
@@ -996,19 +1061,20 @@ const Visualization = (() => {
                         generate_line(whitePoints)
                         drawLinesBetweenDots(whiteDataSet, "lineWhite")
                         clearWhite = 0
+                        scale()
+                        all_transitions()                        
                     } else{
                     //remove function
                         removeData("circle.circleWhite", "path.lineWhite")
                         clearWhite = 1
+                        scale()
+                        all_transitions()                       
                     }
                     //update axis   
                     update_axis(); 
                 });
                 d3.select("div.buttonAsians")
                     .on("click", function() {
-                    //scale domain  
-                    yScale.domain([0, d3.max(dataSet, function(d) { return d.Males;}) ]); 
-
                     //draw new line    
                     if(clearAsians==1){
                         asiansPoints = (function(d) { return yScale(d.Asians); })
@@ -1016,19 +1082,20 @@ const Visualization = (() => {
                         generate_line(asiansPoints)
                         drawLinesBetweenDots(asiansDataSet, "lineAsians")
                         clearAsians = 0
+                        scale()
+                        all_transitions()
                     } else{
                     //remove function
                         removeData("circle.circleAsians", "path.lineAsians")
                         clearAsians = 1
+                        scale()
+                        all_transitions()                    
                     }
                     //update axis   
                     update_axis(); 
                 });
                 d3.select("div.buttonOthers")
                     .on("click", function() {
-                    //scale domain  
-                    yScale.domain([0, d3.max(dataSet, function(d) { return d.Males;}) ]); 
-
                     //draw new line    
                     if(clearOthers==1){
                         othersPoints = (function(d) { return yScale(d.Others); })
@@ -1036,13 +1103,39 @@ const Visualization = (() => {
                         generate_line(othersPoints)
                         drawLinesBetweenDots(othersDataSet, "lineOthers")
                         clearOthers = 0
+                        scale()
+                        all_transitions()         
                     } else{
                     //remove function
                         removeData("circle.circleOthers", "path.lineOthers")
                         clearOthers = 1
+                        scale()
+                        all_transitions()                        
                     }
                     //update axis   
                     update_axis(); 
+                }); 
+                d3.select("div.buttonSum")
+                    .on("click", function() {                     
+                    //draw new line  
+                    if(clearSum==1){
+                        sumPoints = (function(d) { return yScale(d.Sum); })
+                        drawPoints("circle", sumPoints, "circleSum") 
+                        generate_line(sumPoints)
+                        drawLinesBetweenDots(sumDataSet, "lineSum")
+                        clearSum = 0
+                        scale()
+                        all_transitions()
+                    } else{
+                    //remove function
+                        removeData("circle.circleSum", "path.lineSum")
+                        clearSum = 1
+                        scale()
+                        all_transitions()
+                    }
+                    //update axis   
+                    update_axis(); 
+  
                 });                
                 
                                        
