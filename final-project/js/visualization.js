@@ -3,7 +3,7 @@ const Visualization = (() => {
     var activeFeature = d3.select(null);
     var geoGenerator, projection;
 
-    const mapTransitionTime = 1000;
+    
 
     var loadDataAndSetupVisualizations = function () {
         setupMap();
@@ -21,7 +21,7 @@ const Visualization = (() => {
         const height = 800;
         var margin = { top: 40, right: 50, bottom: 40, left: 50 };
 
-        var isAnimationToggled = false;
+        
         var dataset;
         var xScale, yScale;
         var brush;
@@ -63,7 +63,7 @@ const Visualization = (() => {
                     }
 
                     
-                })
+                });
                 /*.on("mouseover", function(d, i) {
                     d3.select(this).style('fill', config.colors.hover);
                 });
@@ -271,7 +271,7 @@ const Visualization = (() => {
                 resetCharts();
                 redrawTimeline(data);
                 redrawMapPoints(data);
-            }, mapTransitionTime - 500);
+            }, config.mapTransitionTime - 500);
         });
     };
 
@@ -321,7 +321,7 @@ const Visualization = (() => {
 
         d3.selectAll('#map svg')
             .transition()
-            .duration(mapTransitionTime)
+            .duration(config.mapTransitionTime)
             .call(zoom.transform, d3.zoomIdentity);
     };
 
@@ -344,7 +344,6 @@ const Visualization = (() => {
         const height = 800;
         var margin = { top: 40, right: 50, bottom: 40, left: 50 };
 
-        var isAnimationToggled = false;
         var dataset;
         var xScale, yScale;
         var brush;
@@ -366,7 +365,7 @@ const Visualization = (() => {
       
         const svg = d3.selectAll('#map svg');
         svg.transition()
-            .duration(mapTransitionTime)
+            .duration(config.mapTransitionTime)
             .call(zoom.transform, d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale));
     };
 

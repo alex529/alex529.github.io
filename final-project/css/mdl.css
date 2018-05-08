@@ -185,7 +185,7 @@ html, body {
 .mdl-demo .mdl-card .mdl-card__supporting-text > h3:first-child {
   margin-bottom: 24px;
 }
-.mdl-demo .mdl-layout__tab-panel:not(#overview) {
+.mdl-demo .mdl-layout__tab-panel:not(#project) {
   background-color: white;
 }
 .mdl-demo #features section {
