@@ -281,7 +281,7 @@ const Visualization = (() => {
     }
 
     const redrawMapPoints = (data) => {
-        let circles = d3.select('#map svg')
+        d3.select('#map svg')
             .selectAll('circle')
             .data(data)
             .enter()
@@ -297,8 +297,6 @@ const Visualization = (() => {
             })
             .style('fill', 'url(#radial-gradient)')
             .attr('id', (d) => { return d.lat + '|' + d.lon });
-
-        return circles;
     }
 
     const resetCharts = () => {
@@ -375,8 +373,10 @@ const Visualization = (() => {
     /* --------- CALENDAR ----------  */
 
     var setupCalendar = function () {
-        drawCalendar();
-        hideLoader();
+        d3.json('data/calendar/arrests_per_date.json', (err, data) => {
+            drawCalendar(data);
+            hideLoader('calendar');
+        });
     };
 
     var drawCalendar = function(data){
@@ -386,25 +386,21 @@ const Visualization = (() => {
 
         var formatPercent = d3.format(".1%");
 
-        var color = d3.scaleQuantize()
-            .domain([-0.05, 0.05])
-            .range(["#a50026", "#d73027", "#f46d43", "#fdae61", "#fee08b", "#ffffbf", "#d9ef8b", "#a6d96a", "#66bd63", "#1a9850", "#006837"]);
-
         var svg = d3.select("#calendar")
             .selectAll("svg")
-            .data(d3.range(2016, 2017))
+            .data(d3.range(2006, 2007))
             .enter().append("svg")
             .attr("width", width)
             .attr("height", height)
             .append("g")
             .attr("transform", "translate(" + ((width - cellSize * 53) / 2) + "," + (height - cellSize * 7 - 1) + ")");
 
-        svg.append("text")
+/*        svg.append("text")
             .attr("transform", "translate(-6," + cellSize * 3.5 + ")rotate(-90)")
             .attr("font-family", "sans-serif")
             .attr("font-size", 10)
             .attr("text-anchor", "middle")
-            .text(function(d) { return d; });
+            .text(function(d) { return d; });*/
 
         var rect = svg.append("g")
             .attr("fill", "none")
@@ -416,7 +412,7 @@ const Visualization = (() => {
             .attr("height", cellSize)
             .attr("x", function(d) { return d3.timeWeek.count(d3.timeYear(d), d) * cellSize; })
             .attr("y", function(d) { return d.getDay() * cellSize; })
-            .datum(d3.timeFormat("%Y-%m-%d"));
+            .datum(d3.timeFormat("%d-%m"));
 
         svg.append("g")
             .attr("fill", "none")
@@ -425,6 +421,20 @@ const Visualization = (() => {
             .data(function(d) { return d3.timeMonths(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
             .enter().append("path")
             .attr("d", pathMonth);
+
+        delete data['29-02'];
+
+        let minCount = d3.min(d3.values(data));
+        let maxCount = d3.max(d3.values(data));
+
+        var color = d3.scaleQuantize()
+            .domain([minCount, maxCount])
+            .range(config.colors.scaleColors);
+
+        rect.filter(function(d) { return d in data; })
+            .attr("fill", function(d) {
+                 return color(data[d]); 
+            });
 
         function pathMonth(t0) {
             var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
