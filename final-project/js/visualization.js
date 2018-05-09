@@ -280,7 +280,7 @@ const Visualization = (() => {
         hideLoader('timeline');
     }
 
-    const ln5 = Math.log(5)
+    const ln5 = Math.log(50)
 
     const redrawMapPoints = (data) => {
         const svg = d3.select('#map svg')
