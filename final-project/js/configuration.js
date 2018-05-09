@@ -41,6 +41,17 @@ var config = {
             '#D8404E'
         ]
 
+    },
+
+    celebrationDays: {
+        '25-12' : 'Christmas',
+        '04-07' : 'Independence Day (4th of July)',
+        '31-10' : 'Halloween',
+        '14-02' : "Valentine's Day",
+        '17-03' : "Saint Patrick's Day",
+        '01-01' : "New Year's Day",
+        '11-11' : "Veteran's Day"
     }
+        
 
 }

@@ -436,6 +436,12 @@ const Visualization = (() => {
                  return color(data[d]); 
             });
 
+        rect.filter(function(d) { return d in config.celebrationDays})
+            //.attr('class', 'highlight-date');
+            .attr('stroke', 'purple')
+            .attr('stroke-width', '3')
+            .attr('shape-rendering', "crispEdges");
+
         function pathMonth(t0) {
             var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
                 d0 = t0.getDay(), w0 = d3.timeWeek.count(d3.timeYear(t0), t0),
