@@ -511,7 +511,7 @@ const Visualization = (() => {
             var color = d3.scaleOrdinal(d3.schemeCategory10);
 
             //Create SVG element
-            var svg = d3.select("#doughnut").append("svg")
+            var svg = d3.select("#doughnut1").append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
@@ -627,7 +627,7 @@ const Visualization = (() => {
             var color = d3.scaleOrdinal(d3.schemeCategory10);
 
             //Create SVG element
-            var svg = d3.select("#doughnut").append("svg")
+            var svg = d3.select("#doughnut2").append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
                 .append("g")
