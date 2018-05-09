@@ -53,12 +53,12 @@
     stroke-dasharray: 4, 4;
     stroke-width: 3;
   }
-  
+/*   
   circle {
     stroke: red;
     stroke-width: 1;
     fill: white;
-  }
+  } */
   
   circle:hover {
     fill: rgb(255, 136, 0);
