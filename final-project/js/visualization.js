@@ -3,7 +3,7 @@ const Visualization = (() => {
     var activeFeature = d3.select(null);
     var geoGenerator, projection;
 
-
+    
 
     var loadDataAndSetupVisualizations = function () {
         setupMap();
@@ -64,33 +64,33 @@ const Visualization = (() => {
 
 
                 });
-            /*.on("mouseover", function(d, i) {
-                d3.select(this).style('fill', config.colors.hover);
-            });
-            .on("mouseout", function(d, i) {
-                d3.select(this).style('fill', config.colors.basemap[i]);
-            })*/
-
-            d3.json('./data/district-agr.json', (err, data) => {
-
-                var min = d3.min(data.Districts, (d) => {
-                    return d.count;
+                /*.on("mouseover", function(d, i) {
+                    d3.select(this).style('fill', config.colors.hover);
                 });
-                var max = d3.max(data.Districts, (d) => {
-                    return d.count;
-                });
+                .on("mouseout", function(d, i) {
+                    d3.select(this).style('fill', config.colors.basemap[i]);
+                })*/
 
-                var colorScale = d3.scaleQuantize()
-                    .domain([min, max])
-                    .range(config.colors.scaleColors);
-
-                svg.selectAll('path')
-                    .style("fill", (d, i) => {
-                        return colorScale(data.Districts[i].count);
+                d3.json('./data/district-agr.json', (err, data) => {
+                                    
+                    var min = d3.min(data.Districts, (d) => {
+                        return d.count;
                     });
+                    var max = d3.max(data.Districts, (d) => {
+                        return d.count;
+                    });
+                
+                    var colorScale = d3.scaleQuantize()
+                        .domain([min, max])
+                        .range(config.colors.scaleColors);
 
-            });
+                    svg.selectAll('path')
+                        .style("fill", (d, i) => {                            
+                            return colorScale(data.Districts[i].count);
+                        });
 
+                });
+        
             const radialGradient = svg.append("defs")
                 .append("radialGradient")
                 .attr("id", "radial-gradient");
@@ -389,8 +389,10 @@ const Visualization = (() => {
     /* --------- CALENDAR ----------  */
 
     var setupCalendar = function () {
-        drawCalendar();
-        hideLoader();
+        d3.json('data/calendar/arrests_per_date.json', (err, data) => {
+            drawCalendar(data);
+            hideLoader('calendar');
+        });
     };
 
     var drawCalendar = function (data) {
@@ -400,37 +402,33 @@ const Visualization = (() => {
 
         var formatPercent = d3.format(".1%");
 
-        var color = d3.scaleQuantize()
-            .domain([-0.05, 0.05])
-            .range(["#a50026", "#d73027", "#f46d43", "#fdae61", "#fee08b", "#ffffbf", "#d9ef8b", "#a6d96a", "#66bd63", "#1a9850", "#006837"]);
-
         var svg = d3.select("#calendar")
             .selectAll("svg")
-            .data(d3.range(2016, 2017))
+            .data(d3.range(2006, 2007))
             .enter().append("svg")
             .attr("width", width)
             .attr("height", height)
             .append("g")
             .attr("transform", "translate(" + ((width - cellSize * 53) / 2) + "," + (height - cellSize * 7 - 1) + ")");
 
-        svg.append("text")
+/*        svg.append("text")
             .attr("transform", "translate(-6," + cellSize * 3.5 + ")rotate(-90)")
             .attr("font-family", "sans-serif")
             .attr("font-size", 10)
             .attr("text-anchor", "middle")
-            .text(function (d) { return d; });
+            .text(function(d) { return d; });*/
 
         var rect = svg.append("g")
             .attr("fill", "none")
             .attr("stroke", "#ccc")
             .selectAll("rect")
-            .data(function (d) { return d3.timeDays(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
+            .data(function(d) { return d3.timeDays(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
             .enter().append("rect")
             .attr("width", cellSize)
             .attr("height", cellSize)
             .attr("x", function (d) { return d3.timeWeek.count(d3.timeYear(d), d) * cellSize; })
             .attr("y", function (d) { return d.getDay() * cellSize; })
-            .datum(d3.timeFormat("%Y-%m-%d"));
+            .datum(d3.timeFormat("%d-%m"));
 
         svg.append("g")
             .attr("fill", "none")
@@ -439,6 +437,20 @@ const Visualization = (() => {
             .data(function (d) { return d3.timeMonths(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
             .enter().append("path")
             .attr("d", pathMonth);
+
+        delete data['29-02'];
+
+        let minCount = d3.min(d3.values(data));
+        let maxCount = d3.max(d3.values(data));
+
+        var color = d3.scaleQuantize()
+            .domain([minCount, maxCount])
+            .range(config.colors.scaleColors);
+
+        rect.filter(function(d) { return d in data; })
+            .attr("fill", function(d) {
+                 return color(data[d]); 
+            });
 
         function pathMonth(t0) {
             var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
@@ -693,416 +705,416 @@ const Visualization = (() => {
 
     /* --------- SCATTER PLOT ----------  */
     var setupScatterPlot = function () {
-        //1st SCATTER PLOT           
-        //Width and height
-        var margin = { top: 10, right: 50, bottom: 60, left: 100 };
-        var width = 650 - margin.left - margin.right,
-            height = 300 - margin.top - margin.bottom;
-        padding = 100;
-        var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
-        var startDate, endDate;
-        var parseTime = d3.timeParse("%d-%m-%y");
-        //2nd SCATTER PLOT
-        var dataset, xScale, yScale2, xAxis, yAxis2;  //Empty, for now 
-        var startDate2, endDate2;
-        //covert data from CSV
-        // var rowConverter = function (d) {
-        function rowConverter(d) {
-            return {
-                Date: parseTime(d.Date),
-                //genders
-                Males: parseInt(d.Males),
-                Females: parseInt(d.Females),
-                //races
-                Blacks: parseInt(d.Blacks),
-                Hispanic: parseInt(d.Hispanic),
-                White: parseInt(d.White),
-                Asians: parseInt(d.Asians),
-                Others: parseInt(d.Others),
-                Sum: parseInt(d.Sum),
-                Per_Males: parseFloat(d.Per_Males).toFixed(5) * 1000,
-                Per_Females: parseFloat(d.Per_Females).toFixed(5) * 1000,
-                Per_Hispanic: parseFloat(d.Per_Hispanic).toFixed(5) * 1000,
-                Per_Blacks: parseFloat(d.Per_Blacks).toFixed(5) * 1000,
-                Per_White: parseFloat(d.Per_White).toFixed(5) * 1000,
-                Per_Asians: parseFloat(d.Per_Asians).toFixed(5) * 1000,
-                Per_Others: parseFloat(d.Per_Others).toFixed(5) * 1000
-            };
-        }
-
-        //read from CSV 
-        d3.csv("./data/excel/arrests_races_and_sex_resampled_percentage.csv", rowConverter, function (error, rawData) {
-            if (error) {
-                console.log("Please check if the CSV file is present");
-            }
-            //assign raw data to datesets 
-            dataSet = rawData;
-
-            //1st SCATTER PLOT
-            //x-axis starting and ending points
-            startDate = d3.min(dataSet, function (d) { return d.Date; });
-            endDate = d3.max(dataSet, function (d) { return d.Date; });
-
-            //x and y scales
-            xScale = d3.scaleTime()
-                .domain([startDate, endDate])
-                .range([0, width]);
-
-            yScale = d3.scaleLinear()
-                .domain([0, d3.max(dataSet, function (d) { return d.Sum; })])
-                .range([height, 0]);
-
-            //Define X axis
-            var xAxis = d3.axisBottom()
-                .scale(xScale)
-                .tickFormat(function (date) {
-                    if (d3.timeYear(date) < date) {
-                        return d3.timeFormat('%b')(date);
-                    } else {
-                        return d3.timeFormat('%Y')(date);
-                    }
-                });
-
-            //Define Y axis
-            var yAxis = d3.axisLeft()
-                .scale(yScale)
-                .ticks(10);
-            //Define line generator
-            function generate_line(type_line) {
-                line = d3.line()
-                    .x(function (d) { return xScale(d.Date); })
-                    .y(type_line);
-            }
-
-            //Create SVG element
-            var svg = d3.select("#scatter").append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-            var circlePoints = svg.selectAll("g");
-
-            //Create x-axis
-            svg.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + height + ")")
-                .call(xAxis);
-
-            //Create y-axis
-            svg.append("g")
-                .attr("class", "y axis")
-                .call(yAxis);
-
-            //axes labels
-            svg.append("text")
-                .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-                .attr("transform", "translate(" + -(padding / 3) + "," + (height / 2) + ")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
-                .text("Number of Arrests");
-
-            svg.append("text")
-                .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-                .attr("transform", "translate(" + (width / 2) + "," + (height + (padding / 3)) + ")")  // centre below axis
-                .text("Year");
-
-            //draw points(dots) function
-            function drawPoints(type, Points, class_type) {
-                svg.selectAll(type + "." + class_type)
-                    .data(dataSet)
-                    .enter()
-                    .append(type)
-                    .attr("cx", function (d) {
-                        return xScale(d.Date);
-                    })
-                    .attr("cy", Points)
-                    .attr("r", 2)
-                    .attr("class", class_type)
-                    .append("title")
-                //.text(function(d) {
-                // return  "Type: "+ d.Athlete +"\n" + "Number:" + parseInt(d.Time) +" min " + ", Date:" + d.Date; 
-                //});   
-            }
-            //gender yScaled points
-            malePoints = (function (d) { return yScale(d.Males); })
-            femalePoints = (function (d) { return yScale(d.Females); })
-            //races yScaled points
-            blacksPoints = (function (d) { return yScale(d.Blacks); })
-            hispanicPoints = (function (d) { return yScale(d.Hispanic); })
-            whitePoints = (function (d) { return yScale(d.White); })
-            asiansPoints = (function (d) { return yScale(d.Asians); })
-            othersPoints = (function (d) { return yScale(d.Others); })
-            sumPoints = (function (d) { return yScale(d.Sum); })
-            //draw points
-            drawPoints("circle", femalePoints, "circleFemale")
-            drawPoints("circle", malePoints, "circleMale")
-            drawPoints("circle", blacksPoints, "circleBlacks")
-            drawPoints("circle", hispanicPoints, "circleHispanic")
-            drawPoints("circle", whitePoints, "circleWhite")
-            drawPoints("circle", asiansPoints, "circleAsians")
-            drawPoints("circle", othersPoints, "circleOthers")
-            drawPoints("circle", sumPoints, "circleSum")
-
-
-            //draw lines between dots
-            function drawLinesBetweenDots(dataSetType, typeClass) {
-                svg.append("path")
-                    .datum(dataSet, dataSetType)
-                    .attr("class", typeClass)
-                    .attr("d", line);
-            }
-            //gender datasets
-            maleDataSet = function (d) { return d.Males; }
-            femaleDataSet = function (d) { return d.Females; }
-            //races datasets
-            blacksDataSet = function (d) { return d.Blacks; }
-            hispanicDataSet = function (d) { return d.Hispanic; }
-            whiteDataSet = function (d) { return d.White; }
-            asiansDataSet = function (d) { return d.Asians; }
-            othersDataSet = function (d) { return d.Others; }
-            sumDataSet = function (d) { return d.Sum; }
-
-            //generate lines and draw lines between dots
-            generate_line(femalePoints)
-            drawLinesBetweenDots(femaleDataSet, "lineFemale")
-            generate_line(malePoints)
-            drawLinesBetweenDots(maleDataSet, "lineMale")
-            generate_line(blacksPoints)
-            drawLinesBetweenDots(blacksDataSet, "lineBlacks")
-            generate_line(hispanicPoints)
-            drawLinesBetweenDots(hispanicDataSet, "lineHispanic")
-            generate_line(whitePoints)
-            drawLinesBetweenDots(whiteDataSet, "lineWhite")
-            generate_line(asiansPoints)
-            drawLinesBetweenDots(asiansDataSet, "lineAsians")
-            generate_line(othersPoints)
-            drawLinesBetweenDots(othersDataSet, "lineOthers")
-            generate_line(sumPoints)
-            drawLinesBetweenDots(sumDataSet, "lineSum")
-
-            //remove men and women data functions
-            function removeData(circleType, lineType) {
-                //remove data     
-                svg.selectAll(circleType).remove();
-                svg.selectAll(lineType).remove();
-            }
-            //flags for cleared data
-            clearMale = 0
-            clearFemale = 0
-            clearBlacks = 0
-            clearHispanic = 0
-            clearWhite = 0
-            clearAsians = 0
-            clearOthers = 0
-            clearSum = 0
-            //update axis
-            function update_axis() {
-                svg.select(".y.axis")
-                    .transition()
-                    .duration(500)
-                    .call(yAxis);
-                svg.select(".x.axis")
-                    .transition()
-                    .duration(500)
-                    .call(xAxis);
-            }
-
-            function transition(typePoints, typeLine, typeDataSet, typeCircle) {
-                //transition path
-                generate_line(typePoints);
-                svg.select("path." + typeLine)
-                    .datum(dataSet, typeDataSet)
-                    .transition()
-                    .duration(1000)
-                    .attr("d", line);
-                //points transitions data transition
-                svg.selectAll("circle." + typeCircle)
-                    .data(dataSet)
-                    .transition()
-                    .duration(1000)
-                    .attr("cx", function (d) {
-                        return xScale(d.Date);
-                    })
-                    .attr("cy", typePoints)
-            }
-            function all_transitions() {
-                transition(malePoints, "lineMale", maleDataSet, "circleMale")
-                transition(femalePoints, "lineFemale", femaleDataSet, "circleFemale")
-                transition(sumPoints, "lineSum", sumDataSet, "circleSum")
-
-                transition(hispanicPoints, "lineHispanic", hispanicDataSet, "circleHispanic")
-                transition(blacksPoints, "lineBlacks", blacksDataSet, "circleBlacks")
-                transition(whitePoints, "lineWhite", whiteDataSet, "circleWhite")
-                transition(asiansPoints, "lineAsians", asiansDataSet, "circleAsians")
-                transition(othersPoints, "lineOthers", othersDataSet, "circleOthers")
-
-            }
-            function scale() {
-                if (clearSum == 0) {
-                    yScale.domain([0, d3.max(dataSet, sumDataSet)]);
-                } else if (clearSum == 1 && clearMale == 0) {
-                    yScale.domain([0, d3.max(dataSet, maleDataSet)]);
-                } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 0) {
-                    yScale.domain([0, d3.max(dataSet, hispanicDataSet)]);
-                } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 1 && clearBlacks == 0) {
-                    yScale.domain([0, d3.max(dataSet, blacksDataSet)]);
-                } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 1 && clearBlacks == 1 && clearFemale == 0) {
-                    yScale.domain([0, d3.max(dataSet, femaleDataSet)]);
-                } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 1 && clearBlacks == 1 && clearFemale == 1 && clearWhite == 0) {
-                    yScale.domain([0, d3.max(dataSet, whiteDataSet)]);
-                } else {
-                    yScale.domain([0, d3.max(dataSet, othersDataSet)]);
-                }
-
-            }
-
+            //1st SCATTER PLOT           
+            //Width and height
+			var margin = {top: 10, right: 50, bottom: 60, left: 100};
+            var width = 650 - margin.left - margin.right,
+                height = 300 - margin.top - margin.bottom;        
+                padding = 100;
+			var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
+			var startDate, endDate;
+            var parseTime = d3.timeParse("%d-%m-%y"); 
             //2nd SCATTER PLOT
-            //scale %
-            yScale2 = d3.scaleLinear()
-                .domain([0, d3.max(dataSet, function (d) { return d.Per_Blacks; })])
-                .range([height, 0]);
-            //Define % Y axis
-            var yAxis2 = d3.axisLeft()
-                .scale(yScale2)
-                .ticks(10);
+			var dataset, xScale, yScale2, xAxis, yAxis2;  //Empty, for now 
+			var startDate2, endDate2;            
+           //covert data from CSV
+           // var rowConverter = function (d) {
+            function rowConverter(d) {
+                return {
+                        Date: parseTime(d.Date),  
+                        //genders
+                        Males: parseInt(d.Males),
+                        Females: parseInt(d.Females),
+                        //races
+                        Blacks: parseInt(d.Blacks),
+                        Hispanic: parseInt(d.Hispanic),
+                        White: parseInt(d.White),
+                        Asians: parseInt(d.Asians),
+                        Others: parseInt(d.Others),
+                        Sum: parseInt(d.Sum),
+                        Per_Males: parseFloat(d.Per_Males).toFixed(5)*1000,
+                        Per_Females: parseFloat(d.Per_Females).toFixed(5)*1000,
+                        Per_Hispanic: parseFloat(d.Per_Hispanic).toFixed(5)*1000,
+                        Per_Blacks: parseFloat(d.Per_Blacks).toFixed(5)*1000,
+                        Per_White: parseFloat(d.Per_White).toFixed(5)*1000,
+                        Per_Asians: parseFloat(d.Per_Asians).toFixed(5)*1000,
+                        Per_Others: parseFloat(d.Per_Others).toFixed(5)*1000
+                    };
+                }            
+            
+            //read from CSV 
+            d3.csv("./data/excel/arrests_races_and_sex_resampled_percentage.csv", rowConverter, function(error, rawData){
+               if (error){
+                    console.log("Please check if the CSV file is present");
+                    }
+                    //assign raw data to datesets 
+                    dataSet = rawData;
+                    
+                    //1st SCATTER PLOT
+                    //x-axis starting and ending points
+                    startDate = d3.min(dataSet, function(d) { return d.Date; });
+                    endDate = d3.max(dataSet, function(d) { return d.Date; });
+                    
+                    //x and y scales
+                    xScale = d3.scaleTime()
+                                 .domain([startDate, endDate])
+                                 .range([0, width]);
+                    
+                    yScale = d3.scaleLinear()
+                               .domain([0, d3.max(dataSet, function(d) { return d.Sum;})])
+                               .range([height, 0]);
+  
+                    //Define X axis
+                    var xAxis = d3.axisBottom()
+                                  .scale(xScale)
+                                  .tickFormat(function(date){
+                                    if (d3.timeYear(date) < date) {
+                                      return d3.timeFormat('%b')(date);
+                                    } else {
+                                      return d3.timeFormat('%Y')(date);
+                                    }
+                                  });
+                    
+                    //Define Y axis
+                    var yAxis = d3.axisLeft()
+                                      .scale(yScale)
+                                          .ticks(10);
+                    //Define line generator
+                    function generate_line(type_line){
+                        line = d3.line()
+                                    .x(function(d) { return xScale(d.Date); })
+                                    .y(type_line);                    
+                    }
+                    
+                    //Create SVG element
+                    var svg = d3.select("#scatter").append("svg")
+                                .attr("width", width + margin.left + margin.right)
+                                .attr("height", height + margin.top + margin.bottom)
+                                .append("g")
+                                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");                
+                    
+                    var circlePoints = svg.selectAll("g");
+                    
+                    //Create x-axis
+                    svg.append("g")
+                        .attr("class", "x axis")    
+                        .attr("transform", "translate(0," + height + ")")
+                        .call(xAxis);
+                        
+                    //Create y-axis
+                    svg.append("g")
+                        .attr("class", "y axis")    
+                        .call(yAxis);
+                        
+                    //axes labels
+                    svg.append("text")
+                        .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+                        .attr("transform", "translate("+ -(padding/3) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+                        .text("Total Number of Arrests");
 
-            //Define line generator
-            function generate_line2(type_line) {
-                line = d3.line()
-                    .x(function (d) { return xScale(d.Date); })
-                    .y(type_line);
-            }
-            //Create svg2 element
-            var svg2 = d3.select("#scatter2").append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
-                .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                    svg.append("text")
+                        .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+                        .attr("transform", "translate("+ (width/2) +","+(height+(padding/3))+")")  // centre below axis
+                        .text("Year");
+                    
+                    //draw points(dots) function
+                    function drawPoints(type, Points, class_type){
+                    svg.selectAll(type+"."+class_type)
+                           .data(dataSet)
+                           .enter()
+                           .append(type)
+                           .attr("cx", function(d){
+                                return xScale(d.Date);
+                            })
+                           .attr("cy", Points)
+                           .attr("r", 2 )
+                           .attr("class", class_type)
+                           .append("title")
+                           //.text(function(d) {
+                           // return  "Type: "+ d.Athlete +"\n" + "Number:" + parseInt(d.Time) +" min " + ", Date:" + d.Date; 
+                           //});   
+                    }
+                    //gender yScaled points
+                    malePoints = (function(d) { return yScale(d.Males); })
+                    femalePoints = (function(d) { return yScale(d.Females); })                
+                    //races yScaled points
+                    blacksPoints = (function(d) { return yScale(d.Blacks); })
+                    hispanicPoints = (function(d) { return yScale(d.Hispanic); })
+                    whitePoints = (function(d) { return yScale(d.White); })
+                    asiansPoints = (function(d) { return yScale(d.Asians); })
+                    othersPoints = (function(d) { return yScale(d.Others); })
+                    sumPoints = (function(d) { return yScale(d.Sum); })
+                    //draw points
+                    drawPoints("circle", femalePoints, "circleFemale")  
+                    drawPoints("circle", malePoints, "circleMale") 
+                    drawPoints("circle", blacksPoints, "circleBlacks")
+                    drawPoints("circle", hispanicPoints, "circleHispanic")
+                    drawPoints("circle", whitePoints, "circleWhite")
+                    drawPoints("circle", asiansPoints, "circleAsians")
+                    drawPoints("circle", othersPoints, "circleOthers") 
+                    drawPoints("circle", sumPoints, "circleSum") 
+                    
+                    
+                    //draw lines between dots
+                    function drawLinesBetweenDots(dataSetType, typeClass){ 
+                        svg.append("path")
+                            .datum(dataSet, dataSetType)
+                            .attr("class", typeClass)
+                            .attr("d", line);                    
+                    }
+                    //gender datasets
+                    maleDataSet = function(d) { return d.Males;}
+                    femaleDataSet = function(d) { return d.Females;}
+                    //races datasets
+                    blacksDataSet = function(d) { return d.Blacks;}
+                    hispanicDataSet = function(d) { return d.Hispanic;}
+                    whiteDataSet = function(d) { return d.White;}
+                    asiansDataSet = function(d) { return d.Asians;}
+                    othersDataSet = function(d) { return d.Others;}
+                    sumDataSet = function(d) { return d.Sum;}
+                    
+                    //generate lines and draw lines between dots
+                    generate_line(femalePoints)
+                    drawLinesBetweenDots(femaleDataSet, "lineFemale")
+                    generate_line(malePoints)
+                    drawLinesBetweenDots(maleDataSet, "lineMale")
+                    generate_line(blacksPoints)
+                    drawLinesBetweenDots(blacksDataSet, "lineBlacks")
+                    generate_line(hispanicPoints)
+                    drawLinesBetweenDots(hispanicDataSet, "lineHispanic")
+                    generate_line(whitePoints)
+                    drawLinesBetweenDots(whiteDataSet, "lineWhite")
+                    generate_line(asiansPoints)
+                    drawLinesBetweenDots(asiansDataSet, "lineAsians")
+                    generate_line(othersPoints)
+                    drawLinesBetweenDots(othersDataSet, "lineOthers")
+                    generate_line(sumPoints)
+                    drawLinesBetweenDots(sumDataSet, "lineSum")                
 
-
-            //Create x-axis
-            svg2.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + height + ")")
-                .call(xAxis);
-
-            //Create y-axis
-            svg2.append("g")
-                .attr("class", "y axis")
-                .call(yAxis2);
-
-            //axes labels
-            svg2.append("text")
-                .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-                .attr("transform", "translate(" + -(padding / 3) + "," + (height / 2) + ")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
-                .text("Number of Arrests per 1000");
-
-            svg2.append("text")
-                .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
-                .attr("transform", "translate(" + (width / 2) + "," + (height + (padding / 3)) + ")")  // centre below axis
-                .text("Year");
-
-            //draw points(dots) function
-            function drawPoints2(type, Points, class_type) {
-                svg2.selectAll(type + "." + class_type)
-                    .data(dataSet)
-                    .enter()
-                    .append(type)
-                    .attr("cx", function (d) {
-                        return xScale(d.Date);
-                    })
-                    .attr("cy", Points)
-                    .attr("r", 2)
-                    .attr("class", class_type)
-                    .append("title")
-                //.text(function(d) {
-                // return  "Type: "+ d.Athlete +"\n" + "Number:" + parseInt(d.Time) +" min " + ", Date:" + d.Date; 
-                //});   
-            }
-            //gender yScale2d points
-            malePoints2 = (function (d) { return yScale2(d.Per_Males); })
-            femalePoints2 = (function (d) { return yScale2(d.Per_Females); })
-            //races yScale2d points
-            blacksPoints2 = (function (d) { return yScale2(d.Per_Blacks); })
-            hispanicPoints2 = (function (d) { return yScale2(d.Per_Hispanic); })
-            whitePoints2 = (function (d) { return yScale2(d.Per_White); })
-            asiansPoints2 = (function (d) { return yScale2(d.Per_Asians); })
-            othersPoints2 = (function (d) { return yScale2(d.Per_Others); })
-            //draw points
-            drawPoints2("circle", femalePoints2, "circleFemale")
-            drawPoints2("circle", malePoints2, "circleMale")
-            drawPoints2("circle", blacksPoints2, "circleBlacks")
-            drawPoints2("circle", hispanicPoints2, "circleHispanic")
-            drawPoints2("circle", whitePoints2, "circleWhite")
-            drawPoints2("circle", asiansPoints2, "circleAsians")
-            drawPoints2("circle", othersPoints2, "circleOthers")
-
-            //draw lines between dots
-            function drawLinesBetweenDots2(dataSetType, typeClass) {
-                svg2.append("path")
-                    .datum(dataSet, dataSetType)
-                    .attr("class", typeClass)
-                    .attr("d", line);
-            }
-            //gender datasets
-            maleDataSet2 = function (d) { return d.Per_Males; }
-            femaleDataSet2 = function (d) { return d.Per_Females; }
-            //races datasets
-            blacksDataSet2 = function (d) { return d.Per_Blacks; }
-            hispanicDataSet2 = function (d) { return d.Per_Hispanic; }
-            whiteDataSet2 = function (d) { return d.Per_White; }
-            asiansDataSet2 = function (d) { return d.Per_Asians; }
-            othersDataSet2 = function (d) { return d.Per_Others; }
-
-            //generate lines and draw lines between dots
-            generate_line2(femalePoints2)
-            drawLinesBetweenDots2(femaleDataSet2, "lineFemale")
-            generate_line2(malePoints2)
-            drawLinesBetweenDots2(maleDataSet2, "lineMale")
-            generate_line2(blacksPoints2)
-            drawLinesBetweenDots2(blacksDataSet2, "lineBlacks")
-            generate_line2(hispanicPoints2)
-            drawLinesBetweenDots2(hispanicDataSet2, "lineHispanic")
-            generate_line2(whitePoints2)
-            drawLinesBetweenDots2(whiteDataSet2, "lineWhite")
-            generate_line2(asiansPoints2)
-            drawLinesBetweenDots2(asiansDataSet2, "lineAsians")
-            generate_line2(othersPoints2)
-            drawLinesBetweenDots2(othersDataSet2, "lineOthers")
-
-            //remove men and women data functions
-            function removeData2(circleType, lineType) {
-                //remove data     
-                svg2.selectAll(circleType).remove();
-                svg2.selectAll(lineType).remove();
-            }
-            //flags for cleared data
-            clearMale2 = 0
-            clearFemale2 = 0
-            clearBlacks2 = 0
-            clearHispanic2 = 0
-            clearWhite2 = 0
-            clearAsians2 = 0
-            clearOthers2 = 0
-            //update axis
-            function update_axis2() {
-                svg2.select(".y.axis")
-                    .transition()
-                    .duration(500)
-                    .call(yAxis2);
-                svg2.select(".x.axis")
-                    .transition()
-                    .duration(500)
+                    //remove men and women data functions
+                    function removeData(circleType, lineType){    
+                        //remove data     
+                        svg.selectAll(circleType).remove();
+                        svg.selectAll(lineType).remove();
+                    }             
+                    //flags for cleared data
+                    clearMale = 0 
+                    clearFemale = 0
+                    clearBlacks = 0
+                    clearHispanic = 0 
+                    clearWhite = 0 
+                    clearAsians = 0
+                    clearOthers = 0
+                    clearSum = 0
+                    //update axis
+                    function update_axis(){ 
+                        svg.select(".y.axis")
+                           .transition()
+                           .duration(500)
+                           .call(yAxis);
+                        svg.select(".x.axis")
+                           .transition()
+                           .duration(500)
+                           .call(xAxis); 
+                    }
+                    
+                    function transition(typePoints, typeLine, typeDataSet, typeCircle){
+                        //transition path
+                        generate_line(typePoints);
+                        svg.select("path." + typeLine)   
+                            .datum(dataSet, typeDataSet)
+                            .transition()
+                            .duration(1000)
+                            .attr("d", line);
+                    //points transitions data transition
+                        svg.selectAll("circle."+typeCircle)
+                            .data(dataSet)
+                            .transition()
+                            .duration(1000)
+                            .attr("cx", function(d) {
+                                return xScale(d.Date);
+                            })                        
+                            .attr("cy",  typePoints)                                               
+                    }
+                    function all_transitions(){
+                        transition(malePoints, "lineMale", maleDataSet, "circleMale")
+                        transition(femalePoints, "lineFemale", femaleDataSet, "circleFemale")
+                        transition(sumPoints, "lineSum", sumDataSet, "circleSum")
+                        
+                        transition(hispanicPoints, "lineHispanic", hispanicDataSet, "circleHispanic")
+                        transition(blacksPoints, "lineBlacks", blacksDataSet, "circleBlacks")
+                        transition(whitePoints, "lineWhite", whiteDataSet, "circleWhite")
+                        transition(asiansPoints, "lineAsians", asiansDataSet, "circleAsians")
+                        transition(othersPoints, "lineOthers", othersDataSet, "circleOthers")
+                        
+                    }
+                    function scale(){
+                        if(clearSum == 0){
+                            yScale.domain([0, d3.max(dataSet, sumDataSet) ]);
+                        } else if(clearSum ==1 && clearMale == 0) {
+                            yScale.domain([0, d3.max(dataSet, maleDataSet) ]);
+                        } else if(clearSum ==1 && clearMale == 1 && clearHispanic == 0)   {  
+                            yScale.domain([0, d3.max(dataSet, hispanicDataSet) ]);
+                        } else if(clearSum ==1 && clearMale == 1 && clearHispanic == 1 && clearBlacks == 0)   {   
+                            yScale.domain([0, d3.max(dataSet, blacksDataSet) ]);
+                        } else if(clearSum ==1 && clearMale == 1 && clearHispanic == 1 && clearBlacks == 1 && clearFemale == 0)   {   
+                            yScale.domain([0, d3.max(dataSet, femaleDataSet) ]);
+                        } else if(clearSum ==1 && clearMale == 1 && clearHispanic == 1 && clearBlacks == 1 && clearFemale == 1 && clearWhite == 0)   {   
+                            yScale.domain([0, d3.max(dataSet, whiteDataSet) ]);                    
+                        } else {
+                            yScale.domain([0, d3.max(dataSet, othersDataSet) ]);
+                        }                    
+                            
+                    }                                      
+				                                
+                    //2nd SCATTER PLOT
+                    //scale %
+                    yScale2 = d3.scaleLinear()
+                               .domain([0, d3.max(dataSet, function(d) { return d.Per_Blacks;})])
+                               .range([height, 0]);  
+                    //Define % Y axis
+                    var yAxis2 = d3.axisLeft()
+                                      .scale(yScale2)
+                                          .ticks(10);                               
+                
+                //Define line generator
+                function generate_line2(type_line){
+                    line = d3.line()
+                                .x(function(d) { return xScale(d.Date); })
+                                .y(type_line);                    
+                }
+                //Create svg2 element
+                var svg2 = d3.select("#scatter2").append("svg")
+                            .attr("width", width + margin.left + margin.right)
+                            .attr("height", height + margin.top + margin.bottom)
+                            .append("g")
+                            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");                
+                
+                
+                //Create x-axis
+                svg2.append("g")
+                    .attr("class", "x axis")    
+                    .attr("transform", "translate(0," + height + ")")
                     .call(xAxis);
-            }
+                    
+                //Create y-axis
+                svg2.append("g")
+                    .attr("class", "y axis")    
+                    .call(yAxis2);
+                    
+                //axes labels
+                svg2.append("text")
+                    .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+                    .attr("transform", "translate("+ -(padding/3) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
+                    .text("Number of Arrests per 1000");
 
-            function transition2(typePoints, typeLine, typeDataSet, typeCircle) {
-                //transition2 path
-                generate_line2(typePoints);
-                svg2.select("path." + typeLine)
-                    .datum(dataSet, typeDataSet)
-                    .transition()
-                    .duration(1000)
-                    .attr("d", line);
+                svg2.append("text")
+                    .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
+                    .attr("transform", "translate("+ (width/2) +","+(height+(padding/3))+")")  // centre below axis
+                    .text("Year");
+                
+                //draw points(dots) function
+                function drawPoints2(type, Points, class_type){
+                svg2.selectAll(type+"."+class_type)
+                       .data(dataSet)
+                       .enter()
+                       .append(type)
+                       .attr("cx", function(d){
+                            return xScale(d.Date);
+                        })
+                       .attr("cy", Points)
+                       .attr("r", 2 )
+                       .attr("class", class_type)
+                       .append("title")
+                       //.text(function(d) {
+                       // return  "Type: "+ d.Athlete +"\n" + "Number:" + parseInt(d.Time) +" min " + ", Date:" + d.Date; 
+                       //});   
+                }
+                //gender yScale2d points
+                malePoints2 = (function(d) { return yScale2(d.Per_Males); })
+                femalePoints2 = (function(d) { return yScale2(d.Per_Females); })                
+                //races yScale2d points
+                blacksPoints2 = (function(d) { return yScale2(d.Per_Blacks); })
+                hispanicPoints2 = (function(d) { return yScale2(d.Per_Hispanic); })
+                whitePoints2 = (function(d) { return yScale2(d.Per_White); })
+                asiansPoints2 = (function(d) { return yScale2(d.Per_Asians); })
+                othersPoints2 = (function(d) { return yScale2(d.Per_Others); })
+                //draw points
+                drawPoints2("circle", femalePoints2, "circleFemale")  
+                drawPoints2("circle", malePoints2, "circleMale") 
+                drawPoints2("circle", blacksPoints2, "circleBlacks")
+                drawPoints2("circle", hispanicPoints2, "circleHispanic")
+                drawPoints2("circle", whitePoints2, "circleWhite")
+                drawPoints2("circle", asiansPoints2, "circleAsians")
+                drawPoints2("circle", othersPoints2, "circleOthers") 
+
+                //draw lines between dots
+                function drawLinesBetweenDots2(dataSetType, typeClass){ 
+                    svg2.append("path")
+                        .datum(dataSet, dataSetType)
+                        .attr("class", typeClass)
+                        .attr("d", line);                    
+                }
+                //gender datasets
+                maleDataSet2 = function(d) { return d.Per_Males;}
+                femaleDataSet2 = function(d) { return d.Per_Females;}
+                //races datasets
+                blacksDataSet2 = function(d) { return d.Per_Blacks;}
+                hispanicDataSet2 = function(d) { return d.Per_Hispanic;}
+                whiteDataSet2 = function(d) { return d.Per_White;}
+                asiansDataSet2 = function(d) { return d.Per_Asians;}
+                othersDataSet2 = function(d) { return d.Per_Others;}
+                
+                //generate lines and draw lines between dots
+                generate_line2(femalePoints2)
+                drawLinesBetweenDots2(femaleDataSet2, "lineFemale")
+                generate_line2(malePoints2)
+                drawLinesBetweenDots2(maleDataSet2, "lineMale")
+                generate_line2(blacksPoints2)
+                drawLinesBetweenDots2(blacksDataSet2, "lineBlacks")
+                generate_line2(hispanicPoints2)
+                drawLinesBetweenDots2(hispanicDataSet2, "lineHispanic")
+                generate_line2(whitePoints2)
+                drawLinesBetweenDots2(whiteDataSet2, "lineWhite")
+                generate_line2(asiansPoints2)
+                drawLinesBetweenDots2(asiansDataSet2, "lineAsians")
+                generate_line2(othersPoints2)
+                drawLinesBetweenDots2(othersDataSet2, "lineOthers")               
+
+                //remove men and women data functions
+                function removeData2(circleType, lineType){    
+                    //remove data     
+                    svg2.selectAll(circleType).remove();
+                    svg2.selectAll(lineType).remove();
+                }             
+                //flags for cleared data
+                clearMale2 = 0 
+                clearFemale2 = 0
+                clearBlacks2 = 0
+                clearHispanic2 = 0 
+                clearWhite2 = 0 
+                clearAsians2 = 0
+                clearOthers2 = 0
+                //update axis
+                function update_axis2(){ 
+                    svg2.select(".y.axis")
+                       .transition()
+                       .duration(500)
+                       .call(yAxis2);
+                    svg2.select(".x.axis")
+                       .transition()
+                       .duration(500)
+                       .call(xAxis); 
+                }
+                
+                function transition2(typePoints, typeLine, typeDataSet, typeCircle){
+                    //transition2 path
+                    generate_line2(typePoints);
+                    svg2.select("path." + typeLine)   
+                        .datum(dataSet, typeDataSet)
+                        .transition()
+                        .duration(1000)
+                        .attr("d", line);
                 //points transitions data transition2
                 svg2.selectAll("circle." + typeCircle)
                     .data(dataSet)
@@ -1394,7 +1406,6 @@ const Visualization = (() => {
                     }
                     //update axis   
                     update_axis2();
-
                 });
             d3.select("div.buttonAsians")
                 .on("click", function () {
@@ -1435,7 +1446,6 @@ const Visualization = (() => {
                     }
                     //update axis   
                     update_axis2();
-
                 });
             d3.select("div.buttonOthers")
                 .on("click", function () {
@@ -1498,12 +1508,8 @@ const Visualization = (() => {
                     }
                     //update axis   
                     update_axis();
-
                 });
-
-
         });
-
     };
 
 
