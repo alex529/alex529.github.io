@@ -2,6 +2,7 @@ const Visualization = (() => {
 
     var activeFeature = d3.select(null);
     var geoGenerator, projection;
+    let oldti1 = 0, oldti2 = 0
 
 
 
@@ -125,30 +126,6 @@ const Visualization = (() => {
                 .text(function (d) {
                     return d.properties.name;
                 });
-
-            /*//add points
-            d3.json('./data/agr.json', (data) => {
-                //console.log(data);
-        
-                svg.selectAll('circle')
-                    .data(data)
-                    .enter()
-                    .append('circle')
-                    .attr('cx', (d) => {
-                        //console.log(d);
-        
-                        return projection([d.location.y, d.location.x])[0];
-                    })
-                    .attr('cy', (d) => {
-                        return projection([d.location.y, d.location.x])[1];
-                    })
-                    .attr('r', (d) => {
-                        return d.count / 1000
-                    })
-                    // .style('fill', 'rgba(255, 0, 0, 0.2)')
-                    .style('fill', 'url(#radial-gradient)')
-                    .attr('id', (d) => { return d.lat + '|' + d.lon })
-            })*/
         };
 
         d3.json('./data/la.geojson', (err, geoJson) => {
@@ -158,6 +135,8 @@ const Visualization = (() => {
     };
 
     const setupTimeline = () => {
+
+        hideLoader('timeline');
 
         const width = 1000;
         const height = 600;
@@ -173,12 +152,8 @@ const Visualization = (() => {
             .attr('width', timeline.width + margin.left + margin.right)
             .attr('height', timeline.height + margin.top + margin.bottom)
             .append('g')
-            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-        d3.json('./data/districts/d1.json', (err, data) => {
-            populateTimeline(data);
-            hideLoader('timeline');
-        });
+            .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+        // .style('display', 'none');
     };
 
     const populateTimeline = (data) => {
@@ -262,6 +237,82 @@ const Visualization = (() => {
 
         const x = d3.scaleTime()
             .range([0, timeline.width]);
+
+
+        const brushed = () => {
+            var s = d3.event.selection || x.range();
+
+            const t1 = (xScale.invert(s[0]))
+            const t2 = (xScale.invert(s[1]))
+
+            console.log(t1, t2);
+
+            let j = 0
+            if (oldti1 === 0) {
+                oldti1 = [t1, j]
+            }
+            if (oldti2 === 0) {
+                oldti2 = [t2, j]
+            }
+            if (oldti1[0] < t1) {
+                //left edge of the brushed moved ->
+                for (j = oldti1[1]; data[j].time < t1; j++) {
+                    for (let i = 0; i < data[j].Locations.length; i++) {
+                        const e = data[j].Locations[i];
+                        if (e.location.x !== 0) {
+                            const id = e.location.y + "|" + e.location.x;
+                            document.getElementById(id).style.display = 'none';
+                        }
+                    }
+                }
+            } else if (oldti1[0].getTime() !== t1.getTime()) {
+                //left edge of the brushed moved <-
+                for (j = oldti1[1]; data[j].time > t1; j--) {
+                    for (let i = 0; i < data[j].Locations.length; i++) {
+                        const e = data[j].Locations[i];
+                        if (e.location.x !== 0) {
+                            const id = e.location.y + "|" + e.location.x;
+                            document.getElementById(id).style.display = 'initial';
+                        }
+                    }
+                }
+            }
+            oldti1 = [t1, j]
+            if (oldti2[0] > t2) {
+                //right edge of the brushed moved ->
+                for (j = oldti2[1]; data[j].time > t2; j--) {
+                    for (let i = 0; i < data[j].Locations.length; i++) {
+                        const e = data[j].Locations[i];
+                        if (e.location.x !== 0) {
+                            const id = e.location.y + "|" + e.location.x;
+                            document.getElementById(id).style.display = 'none';
+                        }
+                    }
+                }
+            } else if (oldti2[0].getTime() !== t2.getTime()) {
+                //right edge of the brushed moved <-
+                for (j = oldti2[1]; data[j].time < t2; j++) {
+                    for (let i = 0; i < data[j].Locations.length; i++) {
+                        const e = data[j].Locations[i];
+                        if (e.location.x !== 0) {
+                            const id = e.location.y + "|" + e.location.x
+                            document.getElementById(id).style.display = 'initial';
+                        }
+                    }
+                }
+            }
+            oldti2 = [t2, j]
+        }
+
+        brush = d3.brushX()
+            .extent([[0, 0], [timeline.width, timeline.height]])
+            .on("brush end", brushed);
+
+        svg.append("g")
+            .attr("class", "brush")
+            .call(brush)
+            .call(brush.move, x.range());
+
     };
 
     const redrawCharts = (d, id, that) => {
