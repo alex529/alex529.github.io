@@ -21,21 +21,21 @@ const Visualization = (() => {
         const height = 800;
         var margin = { top: 40, right: 50, bottom: 40, left: 50 };
 
-        
+
         var dataset;
         var xScale, yScale;
         var brush;
         const map = {
             width: width,
             height: height * 8 / 10,
-        };      
+        };
 
         const drawMap = (geoJson) => {
 
             projection = d3.geoMercator()
                 .fitExtent([[0, 0], [map.width, map.height]], geoJson);
             geoGenerator = d3.geoPath(projection);
-        
+
             //create svg
             const svg = d3.select('#map')
                 .append('svg')
@@ -44,7 +44,7 @@ const Visualization = (() => {
                 .attr('id', 'Figure1');
 
             var g = svg.append('g');
-        
+
             // plot paths
             g.selectAll('path')
                 .data(geoJson.features)
@@ -52,17 +52,17 @@ const Visualization = (() => {
                 .append('path')
                 .attr('d', geoGenerator)
                 .attr('class', 'path')
-                .on("click", function(d, i) {
+                .on("click", function (d, i) {
                     let id = d.properties.external_id;
-                    if (activeFeature.node() === this){
+                    if (activeFeature.node() === this) {
                         resetZoom();
                         resetCharts();
                     }
-                    else{
+                    else {
                         redrawCharts(d, id, this);
                     }
 
-                    
+
                 });
                 /*.on("mouseover", function(d, i) {
                     d3.select(this).style('fill', config.colors.hover);
@@ -94,38 +94,38 @@ const Visualization = (() => {
             const radialGradient = svg.append("defs")
                 .append("radialGradient")
                 .attr("id", "radial-gradient");
-        
+
             radialGradient.append("stop")
                 .attr("offset", "0%")
-                .attr("stop-color", "red")
-                .attr("stop-opacity", 0.5);
-        
+                .attr("stop-color", "rgba(136,0,69, 1)")
+                .attr("stop-opacity", 0.2);
+
             radialGradient.append("stop")
                 .attr("offset", "100%")
-                .attr("stop-color", "rgba(255, 0, 0, 0)")
+                .attr("stop-color", "rgba(136,0,69, 0)")
                 .attr("stop-opacity", 0);
-        
+
             g.append("text")
-                .attr("x", (width / 2))             
+                .attr("x", (width / 2))
                 .attr("y", map.height)
-                .attr("text-anchor", "middle")   
+                .attr("text-anchor", "middle")
                 .text("LAPD Divisons");
-                
+
             g.selectAll('text.divison-label')
                 .data(geoJson.features)
                 .enter()
                 .append('text')
                 .attr('class', 'divison-label')
-                .attr("x", function(d) {
+                .attr("x", function (d) {
                     return geoGenerator.centroid(d)[0];
                 })
-                .attr("y", function(d) {
+                .attr("y", function (d) {
                     return geoGenerator.centroid(d)[1];
                 })
-                .text(function(d) {
-                    return d.properties.name;  
+                .text(function (d) {
+                    return d.properties.name;
                 });
-        
+
             /*//add points
             d3.json('./data/agr.json', (data) => {
                 //console.log(data);
@@ -194,11 +194,11 @@ const Visualization = (() => {
         const svg = d3.selectAll('#timeline svg g');
         let parseTime = d3.timeParse("%m/%d/%Y");
 
-        var dataWithDates = data.map(function(d) {
+        var dataWithDates = data.map(function (d) {
             d.time = parseTime(d.time);
             return d;
         });
-    
+
         const startDate = d3.min(data, function (d) {
             return d.time;
         });
@@ -206,22 +206,22 @@ const Visualization = (() => {
         const endDate = d3.max(data, function (d) {
             return d.time;
         });
-    
+
         const xScale = d3.scaleTime()
             .domain([startDate, endDate])
             .rangeRound([0, timeline.width]);
-    
+
         const yScale = d3.scaleLinear()
             .domain([0, d3.max(data, function (d) { return d.Locations.length; })])
             .range([timeline.height, 0]);
-    
+
         const xAxis = d3.axisBottom()
             .scale(xScale);
-    
+
         const yAxis = d3.axisLeft()
             .scale(yScale)
             .ticks(10);
-       
+
         svg.selectAll('rect')
             .data(data)
             .enter()
@@ -237,29 +237,29 @@ const Visualization = (() => {
                 return timeline.height - yScale(d.Locations.length);
             })
             .attr('fill', 'darkslateblue');
-    
+
         svg.append('g')
             .attr('class', 'axis')
             .attr('transform', 'translate(0,' + (timeline.height) + ')')
             .call(xAxis);
-    
+
         svg.append('g')
             .attr('class', 'axis')
             .attr('transform', 'translate(0,0)')
-            .call(yAxis);         
-    
+            .call(yAxis);
+
         svg.append('text')
             .attr('class', 'label')
             .attr('text-anchor', 'middle')
             .attr('x', timeline.width / 2)
             .attr('y', timeline.height + timeline.padding)
             .text('Day');
-    
+
         svg.append('text')
             .attr('text-anchor', 'middle')
             .attr('transform', 'translate(' + -(timeline.padding) + ',' + (timeline.height / 2) + ')rotate(-90)')
             .text('# of Arrests');
-    
+
         const x = d3.scaleTime()
             .range([0, timeline.width]);
     };
@@ -280,23 +280,39 @@ const Visualization = (() => {
         hideLoader('timeline');
     }
 
+    const ln5 = Math.log(5)
+
     const redrawMapPoints = (data) => {
-        d3.select('#map svg')
-            .selectAll('circle')
+        const svg = d3.select('#map svg')
+        var groups = svg.selectAll('g')
             .data(data)
             .enter()
+
+        var circles = groups.selectAll('circle')
+            .data(function (d) {
+                return d.Locations;
+            })
+            .enter()
             .append('circle')
-            .attr('cx', (d, i) => {
-                return projection([d.Locations[0].location.y, d.Locations[0].location.x])[0];
+            .attr('cx', (d) => {
+                // console.log(d);
+                if (d.location.y != 0) {
+                    return projection([d.location.y, d.location.x])[0];
+                }
+
             })
-            .attr('cy', (d, i) => {
-                return projection([d.Locations[0].location.y, d.Locations[0].location.x])[1];
+            .attr('cy', (d) => {
+                if (d.location.y != 0) {
+                    return projection([d.location.y, d.location.x])[1];
+                }
             })
-            .attr('r', (d, i) => {
-                return 2
+            .attr('r', (d) => {
+                return Math.log(d.count)/ln5
             })
             .style('fill', 'url(#radial-gradient)')
-            .attr('id', (d) => { return d.lat + '|' + d.lon });
+            .attr('id', (d) => { return d.location.y + '|' +d.location.x });
+
+        return circles;
     }
 
     const resetCharts = () => {
@@ -337,7 +353,7 @@ const Visualization = (() => {
 
     const zoom = d3.zoom()
         .scaleExtent([1, 10])
-        .on("zoom", zoomed); 
+        .on("zoom", zoomed);
 
     const zoomToFeature = (d, that) => {
         const width = 1000;
@@ -350,11 +366,11 @@ const Visualization = (() => {
         const map = {
             width: width,
             height: height * 8 / 10,
-        }; 
+        };
         activeFeature.classed("active", false);
         activeFeature = d3.select(that)
             .classed("active", true);
-      
+
         var bounds = geoGenerator.bounds(d),
             dx = bounds[1][0] - bounds[0][0],
             dy = bounds[1][1] - bounds[0][1],
@@ -362,7 +378,7 @@ const Visualization = (() => {
             y = (bounds[0][1] + bounds[1][1]) / 2,
             scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / width, dy / height))),
             translate = [map.width / 2 - scale * x, map.height / 2 - scale * y];
-      
+
         const svg = d3.selectAll('#map svg');
         svg.transition()
             .duration(config.mapTransitionTime)
@@ -379,10 +395,10 @@ const Visualization = (() => {
         });
     };
 
-    var drawCalendar = function(data){
+    var drawCalendar = function (data) {
         var width = 960,
-        height = 136,
-        cellSize = 17;
+            height = 136,
+            cellSize = 17;
 
         var formatPercent = d3.format(".1%");
 
@@ -410,15 +426,15 @@ const Visualization = (() => {
             .enter().append("rect")
             .attr("width", cellSize)
             .attr("height", cellSize)
-            .attr("x", function(d) { return d3.timeWeek.count(d3.timeYear(d), d) * cellSize; })
-            .attr("y", function(d) { return d.getDay() * cellSize; })
+            .attr("x", function (d) { return d3.timeWeek.count(d3.timeYear(d), d) * cellSize; })
+            .attr("y", function (d) { return d.getDay() * cellSize; })
             .datum(d3.timeFormat("%d-%m"));
 
         svg.append("g")
             .attr("fill", "none")
             .attr("stroke", "#000")
             .selectAll("path")
-            .data(function(d) { return d3.timeMonths(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
+            .data(function (d) { return d3.timeMonths(new Date(d, 0, 1), new Date(d + 1, 0, 1)); })
             .enter().append("path")
             .attr("d", pathMonth);
 
@@ -453,9 +469,9 @@ const Visualization = (() => {
                 + "H" + (w0 + 1) * cellSize + "Z";
         }
     }
-    
-    
-    
+
+
+
     /* --------- DOUGHNUT ----------  */
 
     var setupDoughnut = function () {
@@ -463,234 +479,234 @@ const Visualization = (() => {
         drawDescentDoughnut();
     };
     var drawDescentDoughnut = function () {
-            //Width and height
-			var margin = {top: 0, right: 50, bottom: 0, left: 60};
-            var width = 650 - margin.left - margin.right,
-                height = 400 - margin.top - margin.bottom;        
-                padding = 100;
-			var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
-			var startDate, endDate;        
-            
-            
-            function rowConverter(d) {
-                return {
-                        Races: d.Races,  
-                        SumRaces: d.Sum
-                    };
-                }            
-             
-            d3.csv("./data/excel/descent_code_pie_chart_resampled.csv", rowConverter, function(error, rawData){
-                           if (error){
-                                console.log("Please check if the CSV file is present");
-                             }
+        //Width and height
+        var margin = { top: 0, right: 50, bottom: 0, left: 60 };
+        var width = 650 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+        padding = 100;
+        var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
+        var startDate, endDate;
+
+
+        function rowConverter(d) {
+            return {
+                Races: d.Races,
+                SumRaces: d.Sum
+            };
+        }
+
+        d3.csv("./data/excel/descent_code_pie_chart_resampled.csv", rowConverter, function (error, rawData) {
+            if (error) {
+                console.log("Please check if the CSV file is present");
+            }
             dataSet = rawData;
             //Width and height
-			var w = 300;
-			var h = 300;
-			var outerRadius = w / 2;
-			var innerRadius = w / 3;
-			var arc = d3.arc()
-						.innerRadius(innerRadius)
-                        .cornerRadius(3) // sets how rounded the corners are on each slice                        
-						.outerRadius(outerRadius);
-			
-			var pie = d3.pie()
-                        .value(function(d) {return d.SumRaces;})
-                        .padAngle(0.01); 			
-			//Easy colors accessible via a 10-step ordinal scale
-			var color = d3.scaleOrdinal(d3.schemeCategory10);               
-                
-			//Create SVG element
-			var svg = d3.select("#doughnut").append("svg")
-                            .attr("width", width + margin.left + margin.right)
-                            .attr("height", height + margin.top + margin.bottom)
-                            .append("g")
-                            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-			
-			//Set up groups
-			var arcs = svg.selectAll("g.arc")
-						  .data(pie(dataSet))
-						  .enter()
-						  .append("g")
-						  .attr("class", "arc")
-						  .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
+            var w = 300;
+            var h = 300;
+            var outerRadius = w / 2;
+            var innerRadius = w / 3;
+            var arc = d3.arc()
+                .innerRadius(innerRadius)
+                .cornerRadius(3) // sets how rounded the corners are on each slice                        
+                .outerRadius(outerRadius);
+
+            var pie = d3.pie()
+                .value(function (d) { return d.SumRaces; })
+                .padAngle(0.01);
+            //Easy colors accessible via a 10-step ordinal scale
+            var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+            //Create SVG element
+            var svg = d3.select("#doughnut").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            //Set up groups
+            var arcs = svg.selectAll("g.arc")
+                .data(pie(dataSet))
+                .enter()
+                .append("g")
+                .attr("class", "arc")
+                .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
 
             //calculate total
-            var total = d3.sum(dataSet, function(d){return d.SumRaces});                        
-			
-			//Draw arc paths
-			arcs.append("path")
-			    .attr("fill", function(d, i) {
-			    	return color(i);
-			    })
-			    .attr("d", arc)
+            var total = d3.sum(dataSet, function (d) { return d.SumRaces });
+
+            //Draw arc paths
+            arcs.append("path")
+                .attr("fill", function (d, i) {
+                    return color(i);
+                })
+                .attr("d", arc)
                 .data(dataSet)
                 .append("title")
-                    .text(function(d) {
-                        return "The number of " + d.Races + " is: " + d.SumRaces + " or " + Math.round(d.SumRaces/total*100) + "%";
-                    });                       
-            
+                .text(function (d) {
+                    return "The number of " + d.Races + " is: " + d.SumRaces + " or " + Math.round(d.SumRaces / total * 100) + "%";
+                });
+
             //legend
             var legendRectSize = 18;
             var legendSpacing = 4;
-            
+
             var legend = svg.selectAll('.legend')
-              .data(color.domain())
-              .enter()
-              .append('g')
-              .attr('class', 'legend')
-              .attr('transform', function(d, i) {
-                var hLegend = legendRectSize + legendSpacing;
-                var horz = 7 * legendRectSize;
-                var vert = i * hLegend + h/2.8;
-                return 'translate(' + horz + ',' + vert + ')';
-              });
-                    
+                .data(color.domain())
+                .enter()
+                .append('g')
+                .attr('class', 'legend')
+                .attr('transform', function (d, i) {
+                    var hLegend = legendRectSize + legendSpacing;
+                    var horz = 7 * legendRectSize;
+                    var vert = i * hLegend + h / 2.8;
+                    return 'translate(' + horz + ',' + vert + ')';
+                });
+
             legend.append('rect')
-              .attr('width', legendRectSize)
-              .attr('height', legendRectSize)
-              .style('fill', color)
-              .style('stroke', color);
-                    
+                .attr('width', legendRectSize)
+                .attr('height', legendRectSize)
+                .style('fill', color)
+                .style('stroke', color);
+
             legend.append('text')
-              .data(dataSet)
-              .attr('x', legendRectSize + legendSpacing)
-              .attr('y', legendRectSize - legendSpacing)
-              .text(function(d) { return d.Races; });
-            
+                .data(dataSet)
+                .attr('x', legendRectSize + legendSpacing)
+                .attr('y', legendRectSize - legendSpacing)
+                .text(function (d) { return d.Races; });
+
 
             //Labels
-			arcs.append("text")
-			    .attr("text-anchor", "middle")
-                .attr("transform", function(d) {
+            arcs.append("text")
+                .attr("text-anchor", "middle")
+                .attr("transform", function (d) {
                     var _d = arc.centroid(d);
                     _d[0] *= 1.35;	//multiply by a constant factor
                     _d[1] *= 1.35;	//multiply by a constant factor
                     return "translate(" + _d + ")";
-                  })
+                })
                 .attr("dy", ".50em")
                 .data(dataSet)
-			    .text(function(d) {
-			    	return Math.round(d.SumRaces/total*100) + "%";
-			    });    
-              
-              
-            });      
-      
-    };    
+                .text(function (d) {
+                    return Math.round(d.SumRaces / total * 100) + "%";
+                });
+
+
+        });
+
+    };
     var drawGenderDoughnut = function () {
-            //Width and height
-			var margin = {top: 0, right: 50, bottom: 0, left: 60};
-            var width = 650 - margin.left - margin.right,
-                height = 400 - margin.top - margin.bottom;        
-                padding = 100;
-			var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
-			var startDate, endDate;        
-            
-            function rowConverter(d) {
-                return {
-                        Gender: d.Gender,  
-                        SumGender: d.Sum
-                    };
-                }            
-            
-            
-            d3.csv("./data/excel/sex_code_pie_chart.csv", rowConverter, function(error, rawData){
-                           if (error){
-                                console.log("Please check if the CSV file is present");
-                             }
+        //Width and height
+        var margin = { top: 0, right: 50, bottom: 0, left: 60 };
+        var width = 650 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+        padding = 100;
+        var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
+        var startDate, endDate;
+
+        function rowConverter(d) {
+            return {
+                Gender: d.Gender,
+                SumGender: d.Sum
+            };
+        }
+
+
+        d3.csv("./data/excel/sex_code_pie_chart.csv", rowConverter, function (error, rawData) {
+            if (error) {
+                console.log("Please check if the CSV file is present");
+            }
             dataSet = rawData;
             //Width and height
-			var w = 300;
-			var h = 300;
-			var outerRadius = w / 2;
-			var innerRadius = w / 3;
-			var arc = d3.arc()
-						.innerRadius(innerRadius)
-                        .cornerRadius(3) // sets how rounded the corners are on each slice
-						.outerRadius(outerRadius);
-			
-			var pie = d3.pie()
-                        .value(function(d) {return d.SumGender;})
-                        .padAngle(0.01); 
-			//Easy colors accessible via a 10-step ordinal scale
-			var color = d3.scaleOrdinal(d3.schemeCategory10);               
-                
-			//Create SVG element
-			var svg = d3.select("#doughnut").append("svg")
-                            .attr("width", width + margin.left + margin.right)
-                            .attr("height", height + margin.top + margin.bottom)
-                            .append("g")
-                            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-			
-			//Set up groups
-			var arcs = svg.selectAll("g.arc")
-						  .data(pie(dataSet))
-						  .enter()
-						  .append("g")
-						  .attr("class", "arc")
-						  .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
+            var w = 300;
+            var h = 300;
+            var outerRadius = w / 2;
+            var innerRadius = w / 3;
+            var arc = d3.arc()
+                .innerRadius(innerRadius)
+                .cornerRadius(3) // sets how rounded the corners are on each slice
+                .outerRadius(outerRadius);
+
+            var pie = d3.pie()
+                .value(function (d) { return d.SumGender; })
+                .padAngle(0.01);
+            //Easy colors accessible via a 10-step ordinal scale
+            var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+            //Create SVG element
+            var svg = d3.select("#doughnut").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            //Set up groups
+            var arcs = svg.selectAll("g.arc")
+                .data(pie(dataSet))
+                .enter()
+                .append("g")
+                .attr("class", "arc")
+                .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
 
             //calculate total
-            var total = d3.sum(dataSet, function(d){return d.SumGender});
-                          
-			//Draw arc paths
-			arcs.append("path")
-			    .attr("fill", function(d, i) {
-			    	return color(i);
-			    })
-			    .attr("d", arc)
+            var total = d3.sum(dataSet, function (d) { return d.SumGender });
+
+            //Draw arc paths
+            arcs.append("path")
+                .attr("fill", function (d, i) {
+                    return color(i);
+                })
+                .attr("d", arc)
                 .data(dataSet)
                 .append("title")
-                    .text(function(d) {
-                        return "The number of " + d.Gender + " is: " + d.SumGender + " or " + Math.round(d.SumGender/total*100) + "%";
-                    });
-                    
+                .text(function (d) {
+                    return "The number of " + d.Gender + " is: " + d.SumGender + " or " + Math.round(d.SumGender / total * 100) + "%";
+                });
+
             //legend
             var legendRectSize = 18;
             var legendSpacing = 4;
-            
+
             var legend = svg.selectAll('.legend')
-              .data(color.domain())
-              .enter()
-              .append('g')
-              .attr('class', 'legend')
-              .attr('transform', function(d, i) {
-                var hLegend = legendRectSize + legendSpacing;
-                //var offset2 =  h * color.domain().length / 2;
-                var horz = 7 * legendRectSize;
-                var vert = i * hLegend + h/2.2;
-                return 'translate(' + horz + ',' + vert + ')';
-              });
-                    
+                .data(color.domain())
+                .enter()
+                .append('g')
+                .attr('class', 'legend')
+                .attr('transform', function (d, i) {
+                    var hLegend = legendRectSize + legendSpacing;
+                    //var offset2 =  h * color.domain().length / 2;
+                    var horz = 7 * legendRectSize;
+                    var vert = i * hLegend + h / 2.2;
+                    return 'translate(' + horz + ',' + vert + ')';
+                });
+
             legend.append('rect')
-              .attr('width', legendRectSize)
-              .attr('height', legendRectSize)
-              .style('fill', color)
-              .style('stroke', color);
-                    
+                .attr('width', legendRectSize)
+                .attr('height', legendRectSize)
+                .style('fill', color)
+                .style('stroke', color);
+
             legend.append('text')
-              .data(dataSet)
-              .attr('x', legendRectSize + legendSpacing)
-              .attr('y', legendRectSize - legendSpacing)
-              .text(function(d) { return d.Gender; });
-             
+                .data(dataSet)
+                .attr('x', legendRectSize + legendSpacing)
+                .attr('y', legendRectSize - legendSpacing)
+                .text(function (d) { return d.Gender; });
+
             //Labels
-			arcs.append("text")
-			    .attr("text-anchor", "middle")
-                .attr("transform", function(d) {
+            arcs.append("text")
+                .attr("text-anchor", "middle")
+                .attr("transform", function (d) {
                     var _d = arc.centroid(d);
                     _d[0] *= 1.35;	//multiply by a constant factor
                     _d[1] *= 1.35;	//multiply by a constant factor
                     return "translate(" + _d + ")";
-                  })
+                })
                 .attr("dy", ".50em")
                 .data(dataSet)
-			    .text(function(d) {
-			    	return Math.round(d.SumGender/total*100) + "%";
-			    });  
-            
-            });        
+                .text(function (d) {
+                    return Math.round(d.SumGender / total * 100) + "%";
+                });
+
+        });
     };
 
     /* --------- SCATTER PLOT ----------  */
@@ -800,7 +816,7 @@ const Visualization = (() => {
                     svg.append("text")
                         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
                         .attr("transform", "translate("+ -(padding/3) +","+(height/2)+")rotate(-90)")  // text is drawn off the screen top left, move down and out and rotate
-                        .text("Number of Arrests");
+                        .text("Total Number of Arrests");
 
                     svg.append("text")
                         .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
@@ -1106,406 +1122,400 @@ const Visualization = (() => {
                         .duration(1000)
                         .attr("d", line);
                 //points transitions data transition2
-                    svg2.selectAll("circle."+typeCircle)
-                        .data(dataSet)
-                        .transition()
-                        .duration(1000)
-                        .attr("cx", function(d) {
-                            return xScale(d.Date);
-                        })                        
-                        .attr("cy",  typePoints)                                               
-                }
-                function all_transitions2(){
-                    transition2(malePoints2, "lineMale", maleDataSet2, "circleMale")
-                    transition2(femalePoints2, "lineFemale", femaleDataSet2, "circleFemale")
-                    
-                    transition2(hispanicPoints2, "lineHispanic", hispanicDataSet2, "circleHispanic")
-                    transition2(blacksPoints2, "lineBlacks", blacksDataSet2, "circleBlacks")
-                    transition2(whitePoints2, "lineWhite", whiteDataSet2, "circleWhite")
-                    transition2(asiansPoints2, "lineAsians", asiansDataSet2, "circleAsians")
-                    transition2(othersPoints2, "lineOthers", othersDataSet2, "circleOthers")
-                    
-                }
-                function scale2(){
-                    if(clearBlacks2 == 0){
-                        yScale2.domain([0, d3.max(dataSet, blacksDataSet2) ]);
-                    } else if(clearBlacks2 ==1 && clearOthers2 == 0) {
-                        yScale2.domain([0, d3.max(dataSet, othersDataSet2) ]);
-                    } else if(clearBlacks2 ==1 && clearOthers2 == 1 && clearMale2 == 0)   {  
-                        yScale2.domain([0, d3.max(dataSet, maleDataSet2) ]);
-                    } else if(clearBlacks2 ==1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 0)   {   
-                        yScale2.domain([0, d3.max(dataSet, hispanicDataSet2) ]);
-                    } else if(clearBlacks2 ==1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 1 && clearWhite2 == 0)   {   
-                        yScale2.domain([0, d3.max(dataSet, whiteDataSet2) ]);
-                    } else if(clearBlacks2 ==1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 1 && clearWhite2 == 1 && clearFemale2 == 0)   {   
-                        yScale2.domain([0, d3.max(dataSet, femaleDataSet2) ]);                    
-                    } else {
-                        yScale2.domain([0, d3.max(dataSet, asiansDataSet2) ]);
-                    }                    
-                        
+                svg2.selectAll("circle." + typeCircle)
+                    .data(dataSet)
+                    .transition()
+                    .duration(1000)
+                    .attr("cx", function (d) {
+                        return xScale(d.Date);
+                    })
+                    .attr("cy", typePoints)
+            }
+            function all_transitions2() {
+                transition2(malePoints2, "lineMale", maleDataSet2, "circleMale")
+                transition2(femalePoints2, "lineFemale", femaleDataSet2, "circleFemale")
+
+                transition2(hispanicPoints2, "lineHispanic", hispanicDataSet2, "circleHispanic")
+                transition2(blacksPoints2, "lineBlacks", blacksDataSet2, "circleBlacks")
+                transition2(whitePoints2, "lineWhite", whiteDataSet2, "circleWhite")
+                transition2(asiansPoints2, "lineAsians", asiansDataSet2, "circleAsians")
+                transition2(othersPoints2, "lineOthers", othersDataSet2, "circleOthers")
+
+            }
+            function scale2() {
+                if (clearBlacks2 == 0) {
+                    yScale2.domain([0, d3.max(dataSet, blacksDataSet2)]);
+                } else if (clearBlacks2 == 1 && clearOthers2 == 0) {
+                    yScale2.domain([0, d3.max(dataSet, othersDataSet2)]);
+                } else if (clearBlacks2 == 1 && clearOthers2 == 1 && clearMale2 == 0) {
+                    yScale2.domain([0, d3.max(dataSet, maleDataSet2)]);
+                } else if (clearBlacks2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 0) {
+                    yScale2.domain([0, d3.max(dataSet, hispanicDataSet2)]);
+                } else if (clearBlacks2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 1 && clearWhite2 == 0) {
+                    yScale2.domain([0, d3.max(dataSet, whiteDataSet2)]);
+                } else if (clearBlacks2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 1 && clearWhite2 == 1 && clearFemale2 == 0) {
+                    yScale2.domain([0, d3.max(dataSet, femaleDataSet2)]);
+                } else {
+                    yScale2.domain([0, d3.max(dataSet, asiansDataSet2)]);
                 }
 
-                //Transitions                      
-                d3.select("div.buttonClearAll")
-                    .on("click", function() {
+            }
+
+            //Transitions                      
+            d3.select("div.buttonClearAll")
+                .on("click", function () {
                     //scale domain    
-                    yScale.domain([0, d3.max(dataSet, function(d) { return d.Sum;}) ]);
-                    xScale.domain([d3.min(dataSet, function(d) { return d.Date; }), d3.max(dataSet, function(d) { return d.Date; }) ]);                       
+                    yScale.domain([0, d3.max(dataSet, function (d) { return d.Sum; })]);
+                    xScale.domain([d3.min(dataSet, function (d) { return d.Date; }), d3.max(dataSet, function (d) { return d.Date; })]);
                     //remove function
-                    removeData("circle.circleMale", "path.lineMale") 
-                    removeData("circle.circleFemale", "path.lineFemale") 
-                    removeData("circle.circleBlacks", "path.lineBlacks") 
-                    removeData("circle.circleHispanic", "path.lineHispanic") 
-                    removeData("circle.circleWhite", "path.lineWhite") 
-                    removeData("circle.circleAsians", "path.lineAsians") 
-                    removeData("circle.circleOthers", "path.lineOthers") 
-                    removeData("circle.circleSum", "path.lineSum") 
+                    removeData("circle.circleMale", "path.lineMale")
+                    removeData("circle.circleFemale", "path.lineFemale")
+                    removeData("circle.circleBlacks", "path.lineBlacks")
+                    removeData("circle.circleHispanic", "path.lineHispanic")
+                    removeData("circle.circleWhite", "path.lineWhite")
+                    removeData("circle.circleAsians", "path.lineAsians")
+                    removeData("circle.circleOthers", "path.lineOthers")
+                    removeData("circle.circleSum", "path.lineSum")
                     //update axis   
-                    update_axis(); 
+                    update_axis();
                     //set the triggers that everything was cleared
-                    clearMale = 1 
+                    clearMale = 1
                     clearFemale = 1
                     clearBlacks = 1
-                    clearHispanic = 1 
-                    clearWhite = 1 
+                    clearHispanic = 1
+                    clearWhite = 1
                     clearAsians = 1
                     clearOthers = 1
                     clearSum = 1
                     console.log("scatter test clearAll")
-                    
+
                     //2nd scatter plot
                     //scale
-                    yScale2.domain([0, d3.max(dataSet, function(d) { return d.Per_Blacks;}) ]);
+                    yScale2.domain([0, d3.max(dataSet, function (d) { return d.Per_Blacks; })]);
                     //remove
-                    removeData2("circle.circleMale", "path.lineMale") 
-                    removeData2("circle.circleFemale", "path.lineFemale") 
-                    removeData2("circle.circleBlacks", "path.lineBlacks") 
-                    removeData2("circle.circleHispanic", "path.lineHispanic") 
-                    removeData2("circle.circleWhite", "path.lineWhite") 
-                    removeData2("circle.circleAsians", "path.lineAsians") 
-                    removeData2("circle.circleOthers", "path.lineOthers") 
+                    removeData2("circle.circleMale", "path.lineMale")
+                    removeData2("circle.circleFemale", "path.lineFemale")
+                    removeData2("circle.circleBlacks", "path.lineBlacks")
+                    removeData2("circle.circleHispanic", "path.lineHispanic")
+                    removeData2("circle.circleWhite", "path.lineWhite")
+                    removeData2("circle.circleAsians", "path.lineAsians")
+                    removeData2("circle.circleOthers", "path.lineOthers")
                     //update axis   
-                    update_axis2(); 
+                    update_axis2();
                     //set the triggers that everything was cleared
-                    clearMale2 = 1 
+                    clearMale2 = 1
                     clearFemale2 = 1
                     clearBlacks2 = 1
-                    clearHispanic2 = 1 
-                    clearWhite2 = 1 
+                    clearHispanic2 = 1
+                    clearWhite2 = 1
                     clearAsians2 = 1
                     clearOthers2 = 1
                 });
-                d3.select("div.buttonMale")
-                    .on("click", function() {
+            d3.select("div.buttonMale")
+                .on("click", function () {
                     //draw new line  
-                    if(clearMale==1){
-                        malePoints = (function(d) { return yScale(d.Males); })
-                        drawPoints("circle", malePoints, "circleMale") 
+                    if (clearMale == 1) {
+                        malePoints = (function (d) { return yScale(d.Males); })
+                        drawPoints("circle", malePoints, "circleMale")
                         generate_line(malePoints)
                         drawLinesBetweenDots(maleDataSet, "lineMale")
                         clearMale = 0
                         scale()
-                        all_transitions()                        
-                    } else{
-                    //remove function
+                        all_transitions()
+                    } else {
+                        //remove function
                         removeData("circle.circleMale", "path.lineMale")
                         clearMale = 1
                         scale()
                         all_transitions()
                     }
                     //update axis   
-                    update_axis(); 
-                    
+                    update_axis();
+
                     //2nd scatter plot
-                    if(clearMale2==1){
-                        malePoints2 = (function(d) { return yScale2(d.Per_Males); })
-                        drawPoints2("circle", malePoints2, "circleMale") 
+                    if (clearMale2 == 1) {
+                        malePoints2 = (function (d) { return yScale2(d.Per_Males); })
+                        drawPoints2("circle", malePoints2, "circleMale")
                         generate_line2(malePoints2)
                         drawLinesBetweenDots2(maleDataSet2, "lineMale")
                         clearMale2 = 0
                         scale2()
-                        all_transitions2()                        
-                    } else{
-                    //remove function
+                        all_transitions2()
+                    } else {
+                        //remove function
                         removeData2("circle.circleMale", "path.lineMale")
                         clearMale2 = 1
                         scale2()
                         all_transitions2()
                     }
                     //update axis   
-                    update_axis2();                     
+                    update_axis2();
                 });
-                d3.select("div.buttonFemale")
-                    .on("click", function() {
+            d3.select("div.buttonFemale")
+                .on("click", function () {
                     //draw new line    
-                    if(clearFemale==1){
-                        femalePoints = (function(d) { return yScale(d.Females); })
-                        drawPoints("circle", femalePoints, "circleFemale") 
+                    if (clearFemale == 1) {
+                        femalePoints = (function (d) { return yScale(d.Females); })
+                        drawPoints("circle", femalePoints, "circleFemale")
                         generate_line(femalePoints)
                         drawLinesBetweenDots(femaleDataSet, "lineFemale")
                         clearFemale = 0
                         scale()
                         all_transitions()
-                    } else{
-                    //remove function
+                    } else {
+                        //remove function
                         removeData("circle.circleFemale", "path.lineFemale")
                         clearFemale = 1
                         scale()
                         all_transitions()
                     }
                     //update axis   
-                    update_axis(); 
-                    
+                    update_axis();
+
                     //2nd scatter plot
-                    if(clearFemale2==1){
-                        femalePoints2 = (function(d) { return yScale2(d.Per_Females); })
-                        drawPoints2("circle", femalePoints2, "circleFemale") 
+                    if (clearFemale2 == 1) {
+                        femalePoints2 = (function (d) { return yScale2(d.Per_Females); })
+                        drawPoints2("circle", femalePoints2, "circleFemale")
                         generate_line2(femalePoints2)
                         drawLinesBetweenDots2(femaleDataSet2, "lineFemale")
                         clearFemale2 = 0
                         scale2()
-                        all_transitions2()                        
-                    } else{
-                    //remove function
+                        all_transitions2()
+                    } else {
+                        //remove function
                         removeData2("circle.circleFemale", "path.lineFemale")
                         clearFemale2 = 1
                         scale2()
                         all_transitions2()
                     }
                     //update axis   
-                    update_axis2(); 
+                    update_axis2();
                 });
-                
-                d3.select("div.buttonBlacks")
-                    .on("click", function() {
+
+            d3.select("div.buttonBlacks")
+                .on("click", function () {
                     //draw new line    
-                    if(clearBlacks==1){
-                        blacksPoints = (function(d) { return yScale(d.Blacks); })
-                        drawPoints("circle", blacksPoints, "circleBlacks") 
+                    if (clearBlacks == 1) {
+                        blacksPoints = (function (d) { return yScale(d.Blacks); })
+                        drawPoints("circle", blacksPoints, "circleBlacks")
                         generate_line(blacksPoints)
                         drawLinesBetweenDots(blacksDataSet, "lineBlacks")
                         clearBlacks = 0
                         scale()
                         all_transitions()
-                    } else{
-                    //remove function
+                    } else {
+                        //remove function
                         removeData("circle.circleBlacks", "path.lineBlacks")
                         clearBlacks = 1
                         scale()
-                        all_transitions()                        
+                        all_transitions()
                     }
                     //update axis   
-                    update_axis(); 
+                    update_axis();
 
                     //2nd scatter plot
-                    if(clearBlacks2==1){
-                        blacksPoints2 = (function(d) { return yScale2(d.Per_Blacks); })
-                        drawPoints2("circle", blacksPoints2, "circleBlacks") 
+                    if (clearBlacks2 == 1) {
+                        blacksPoints2 = (function (d) { return yScale2(d.Per_Blacks); })
+                        drawPoints2("circle", blacksPoints2, "circleBlacks")
                         generate_line2(blacksPoints2)
                         drawLinesBetweenDots2(blacksDataSet2, "lineBlacks")
                         clearBlacks2 = 0
                         scale2()
-                        all_transitions2()                        
-                    } else{
-                    //remove function
+                        all_transitions2()
+                    } else {
+                        //remove function
                         removeData2("circle.circleBlacks", "path.lineBlacks")
                         clearBlacks2 = 1
                         scale2()
                         all_transitions2()
                     }
                     //update axis   
-                    update_axis2();                     
+                    update_axis2();
                 });
-                
-                d3.select("div.buttonHispanic")
-                    .on("click", function() {
+
+            d3.select("div.buttonHispanic")
+                .on("click", function () {
                     //draw new line    
-                    if(clearHispanic==1){
-                        hispanicPoints = (function(d) { return yScale(d.Hispanic); })
-                        drawPoints("circle", hispanicPoints, "circleHispanic") 
+                    if (clearHispanic == 1) {
+                        hispanicPoints = (function (d) { return yScale(d.Hispanic); })
+                        drawPoints("circle", hispanicPoints, "circleHispanic")
                         generate_line(hispanicPoints)
                         drawLinesBetweenDots(hispanicDataSet, "lineHispanic")
                         clearHispanic = 0
                         scale()
-                        all_transitions()                        
-                    } else{
-                    //remove function
+                        all_transitions()
+                    } else {
+                        //remove function
                         removeData("circle.circleHispanic", "path.lineHispanic")
                         clearHispanic = 1
                         scale()
-                        all_transitions()                        
+                        all_transitions()
                     }
                     //update axis   
                     update_axis();
 
                     //2nd scatter plot
-                    if(clearHispanic2==1){
-                        hispanicPoints2 = (function(d) { return yScale2(d.Per_Hispanic); })
-                        drawPoints2("circle", hispanicPoints2, "circleHispanic") 
+                    if (clearHispanic2 == 1) {
+                        hispanicPoints2 = (function (d) { return yScale2(d.Per_Hispanic); })
+                        drawPoints2("circle", hispanicPoints2, "circleHispanic")
                         generate_line2(hispanicPoints2)
                         drawLinesBetweenDots2(hispanicDataSet2, "lineHispanic")
                         clearHispanic2 = 0
                         scale2()
-                        all_transitions2()                        
-                    } else{
-                    //remove function
+                        all_transitions2()
+                    } else {
+                        //remove function
                         removeData2("circle.circleHispanic", "path.lineHispanic")
                         clearHispanic2 = 1
                         scale2()
                         all_transitions2()
                     }
                     //update axis   
-                    update_axis2();                       
+                    update_axis2();
                 });
-                d3.select("div.buttonWhite")
-                    .on("click", function() {
+            d3.select("div.buttonWhite")
+                .on("click", function () {
                     //draw new line    
-                    if(clearWhite==1){
-                        whitePoints = (function(d) { return yScale(d.White); })
-                        drawPoints("circle", whitePoints, "circleWhite") 
+                    if (clearWhite == 1) {
+                        whitePoints = (function (d) { return yScale(d.White); })
+                        drawPoints("circle", whitePoints, "circleWhite")
                         generate_line(whitePoints)
                         drawLinesBetweenDots(whiteDataSet, "lineWhite")
                         clearWhite = 0
                         scale()
-                        all_transitions()                        
-                    } else{
-                    //remove function
+                        all_transitions()
+                    } else {
+                        //remove function
                         removeData("circle.circleWhite", "path.lineWhite")
                         clearWhite = 1
                         scale()
-                        all_transitions()                       
+                        all_transitions()
                     }
                     //update axis   
                     update_axis();
-                    
+
                     //2nd scatter plot
-                    if(clearWhite2==1){
-                        whitePoints2 = (function(d) { return yScale2(d.Per_White); })
-                        drawPoints2("circle", whitePoints2, "circleWhite") 
+                    if (clearWhite2 == 1) {
+                        whitePoints2 = (function (d) { return yScale2(d.Per_White); })
+                        drawPoints2("circle", whitePoints2, "circleWhite")
                         generate_line2(whitePoints2)
                         drawLinesBetweenDots2(whiteDataSet2, "lineWhite")
                         clearWhite2 = 0
                         scale2()
-                        all_transitions2()                        
-                    } else{
-                    //remove function
+                        all_transitions2()
+                    } else {
+                        //remove function
                         removeData2("circle.circleWhite", "path.lineWhite")
                         clearWhite2 = 1
                         scale2()
                         all_transitions2()
                     }
                     //update axis   
-                    update_axis2();   
-                    
+                    update_axis2();
                 });
-                d3.select("div.buttonAsians")
-                    .on("click", function() {
+            d3.select("div.buttonAsians")
+                .on("click", function () {
                     //draw new line    
-                    if(clearAsians==1){
-                        asiansPoints = (function(d) { return yScale(d.Asians); })
-                        drawPoints("circle", asiansPoints, "circleAsians") 
+                    if (clearAsians == 1) {
+                        asiansPoints = (function (d) { return yScale(d.Asians); })
+                        drawPoints("circle", asiansPoints, "circleAsians")
                         generate_line(asiansPoints)
                         drawLinesBetweenDots(asiansDataSet, "lineAsians")
                         clearAsians = 0
                         scale()
                         all_transitions()
-                    } else{
-                    //remove function
+                    } else {
+                        //remove function
                         removeData("circle.circleAsians", "path.lineAsians")
                         clearAsians = 1
                         scale()
-                        all_transitions()                    
+                        all_transitions()
                     }
                     //update axis   
-                    update_axis(); 
-                    
+                    update_axis();
+
                     //2nd scatter plot
-                    if(clearAsians2==1){
-                        asiansPoints2 = (function(d) { return yScale2(d.Per_Asians); })
-                        drawPoints2("circle", asiansPoints2, "circleAsians") 
+                    if (clearAsians2 == 1) {
+                        asiansPoints2 = (function (d) { return yScale2(d.Per_Asians); })
+                        drawPoints2("circle", asiansPoints2, "circleAsians")
                         generate_line2(asiansPoints2)
                         drawLinesBetweenDots2(asiansDataSet2, "lineAsians")
                         clearAsians2 = 0
                         scale2()
-                        all_transitions2()                        
-                    } else{
-                    //remove function
+                        all_transitions2()
+                    } else {
+                        //remove function
                         removeData2("circle.circleAsians", "path.lineAsians")
                         clearAsians2 = 1
                         scale2()
                         all_transitions2()
                     }
                     //update axis   
-                    update_axis2();                       
-                    
+                    update_axis2();
                 });
-                d3.select("div.buttonOthers")
-                    .on("click", function() {
+            d3.select("div.buttonOthers")
+                .on("click", function () {
                     //draw new line    
-                    if(clearOthers==1){
-                        othersPoints = (function(d) { return yScale(d.Others); })
-                        drawPoints("circle", othersPoints, "circleOthers") 
+                    if (clearOthers == 1) {
+                        othersPoints = (function (d) { return yScale(d.Others); })
+                        drawPoints("circle", othersPoints, "circleOthers")
                         generate_line(othersPoints)
                         drawLinesBetweenDots(othersDataSet, "lineOthers")
                         clearOthers = 0
                         scale()
-                        all_transitions()         
-                    } else{
-                    //remove function
+                        all_transitions()
+                    } else {
+                        //remove function
                         removeData("circle.circleOthers", "path.lineOthers")
                         clearOthers = 1
                         scale()
-                        all_transitions()                        
+                        all_transitions()
                     }
                     //update axis   
-                    update_axis(); 
-                    
+                    update_axis();
+
                     //2nd scatter plot
-                    if(clearOthers2==1){
-                        othersPoints2 = (function(d) { return yScale2(d.Per_Others); })
-                        drawPoints2("circle", othersPoints2, "circleOthers") 
+                    if (clearOthers2 == 1) {
+                        othersPoints2 = (function (d) { return yScale2(d.Per_Others); })
+                        drawPoints2("circle", othersPoints2, "circleOthers")
                         generate_line2(othersPoints2)
                         drawLinesBetweenDots2(othersDataSet2, "lineOthers")
                         clearOthers2 = 0
                         scale2()
-                        all_transitions2()                        
-                    } else{
-                    //remove function
+                        all_transitions2()
+                    } else {
+                        //remove function
                         removeData2("circle.circleOthers", "path.lineOthers")
                         clearOthers2 = 1
                         scale2()
                         all_transitions2()
                     }
                     //update axis   
-                    update_axis2();                       
-                    
-                }); 
-                d3.select("div.buttonSum")
-                    .on("click", function() {                     
+                    update_axis2();
+
+                });
+            d3.select("div.buttonSum")
+                .on("click", function () {
                     //draw new line  
-                    if(clearSum==1){
-                        sumPoints = (function(d) { return yScale(d.Sum); })
-                        drawPoints("circle", sumPoints, "circleSum") 
+                    if (clearSum == 1) {
+                        sumPoints = (function (d) { return yScale(d.Sum); })
+                        drawPoints("circle", sumPoints, "circleSum")
                         generate_line(sumPoints)
                         drawLinesBetweenDots(sumDataSet, "lineSum")
                         clearSum = 0
                         scale()
                         all_transitions()
-                    } else{
-                    //remove function
+                    } else {
+                        //remove function
                         removeData("circle.circleSum", "path.lineSum")
                         clearSum = 1
                         scale()
                         all_transitions()
                     }
                     //update axis   
-                    update_axis(); 
-  
-                });                
-                
-                                       
-            });                   
- 
+                    update_axis();
+                });
+        });
     };
 
 
@@ -1523,7 +1533,7 @@ const Visualization = (() => {
         loadDataAndSetupVisualizations();
     };
 
-    
+
 
     return {
         load: load,
