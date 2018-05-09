@@ -160,7 +160,7 @@ const Visualization = (() => {
     const setupTimeline = () => {
 
         const width = 1000;
-        const height = 800;
+        const height = 600;
         const margin = { top: 20, right: 50, bottom: 40, left: 50 };
         const timeline = {
             width: width - margin.left - margin.right,
@@ -183,7 +183,7 @@ const Visualization = (() => {
 
     const populateTimeline = (data) => {
         const width = 1000;
-        const height = 800;
+        const height = 600;
         const margin = { top: 20, right: 50, bottom: 40, left: 50 };
         const timeline = {
             width: width - margin.left - margin.right,
@@ -266,11 +266,11 @@ const Visualization = (() => {
 
     const redrawCharts = (d, id, that) => {
         d3.json('./data/districts/d' + id + '.json', (err, data) => {
-            zoomToFeature(d, that);
             window.setTimeout(() => {
                 resetCharts();
                 redrawTimeline(data);
                 redrawMapPoints(data);
+                zoomToFeature(d, that);
             }, config.mapTransitionTime - 500);
         });
     };
@@ -281,7 +281,7 @@ const Visualization = (() => {
     }
 
     const redrawMapPoints = (data) => {
-        d3.select('#map svg')
+        let circles = d3.select('#map svg')
             .selectAll('circle')
             .data(data)
             .enter()
@@ -297,6 +297,8 @@ const Visualization = (() => {
             })
             .style('fill', 'url(#radial-gradient)')
             .attr('id', (d) => { return d.lat + '|' + d.lon });
+
+        return circles;
     }
 
     const resetCharts = () => {
@@ -681,7 +683,7 @@ const Visualization = (() => {
             //Width and height
 			var margin = {top: 10, right: 50, bottom: 60, left: 100};
             var width = 650 - margin.left - margin.right,
-                height = 400 - margin.top - margin.bottom;        
+                height = 300 - margin.top - margin.bottom;        
                 padding = 100;
 			var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
 			var startDate, endDate;

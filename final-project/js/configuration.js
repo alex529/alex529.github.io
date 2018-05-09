@@ -1,7 +1,7 @@
 var config = {
+    mapTransitionTime: 1000,
 
     colors : {
-        mapTransitionTime: 1000,
         hover : 'rgba(47, 93, 102, 0.5)',
         click : 'rgba(47, 93, 102, 1)',
         basemap : [
