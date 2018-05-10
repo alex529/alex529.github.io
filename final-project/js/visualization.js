@@ -239,69 +239,67 @@ const Visualization = (() => {
             .range([0, timeline.width]);
 
 
+        oldti1 = [xScale.domain()[0], 0]
+        oldti2 = [xScale.domain()[1], data.length - 1]
+
         const brushed = () => {
             var s = d3.event.selection || x.range();
 
-            const t1 = (xScale.invert(s[0]))
-            const t2 = (xScale.invert(s[1]))
+            const t1 = (xScale.invert(s[0]));
+            const t2 = (xScale.invert(s[1]));
 
-            console.log(t1, t2);
+            let j = 0;
 
-            let j = 0
-            if (oldti1 === 0) {
-                oldti1 = [t1, j]
-            }
-            if (oldti2 === 0) {
-                oldti2 = [t2, j]
-            }
+
+
             if (oldti1[0] < t1) {
                 //left edge of the brushed moved ->
+
                 for (j = oldti1[1]; data[j].time < t1; j++) {
                     for (let i = 0; i < data[j].Locations.length; i++) {
-                        const e = data[j].Locations[i];
-                        if (e.location.x !== 0) {
-                            const id = e.location.y + "|" + e.location.x;
-                            document.getElementById(id).style.display = 'none';
+                        const c = document.getElementById(data[j].Locations[i].id)
+                        if (c !== null) {
+                            c.style.display = 'none';
                         }
                     }
                 }
+                oldti1 = [t1, j]
             } else if (oldti1[0].getTime() !== t1.getTime()) {
                 //left edge of the brushed moved <-
                 for (j = oldti1[1]; data[j].time > t1; j--) {
                     for (let i = 0; i < data[j].Locations.length; i++) {
-                        const e = data[j].Locations[i];
-                        if (e.location.x !== 0) {
-                            const id = e.location.y + "|" + e.location.x;
-                            document.getElementById(id).style.display = 'initial';
+                        const c = document.getElementById(data[j].Locations[i].id)
+                        if (c !== null) {
+                            c.style.display = 'initial';
                         }
                     }
                 }
+                oldti1 = [t1, j]
             }
-            oldti1 = [t1, j]
+
             if (oldti2[0] > t2) {
                 //right edge of the brushed moved ->
                 for (j = oldti2[1]; data[j].time > t2; j--) {
                     for (let i = 0; i < data[j].Locations.length; i++) {
-                        const e = data[j].Locations[i];
-                        if (e.location.x !== 0) {
-                            const id = e.location.y + "|" + e.location.x;
-                            document.getElementById(id).style.display = 'none';
+                        const c = document.getElementById(data[j].Locations[i].id)
+                        if (c !== null) {
+                            c.style.display = 'none';
                         }
                     }
                 }
+                oldti2 = [t2, j];
             } else if (oldti2[0].getTime() !== t2.getTime()) {
                 //right edge of the brushed moved <-
                 for (j = oldti2[1]; data[j].time < t2; j++) {
                     for (let i = 0; i < data[j].Locations.length; i++) {
-                        const e = data[j].Locations[i];
-                        if (e.location.x !== 0) {
-                            const id = e.location.y + "|" + e.location.x
-                            document.getElementById(id).style.display = 'initial';
+                        const c = document.getElementById(data[j].Locations[i].id)
+                        if (c !== null) {
+                            c.style.display = 'initial';
                         }
                     }
                 }
+                oldti2 = [t2, j];
             }
-            oldti2 = [t2, j]
         }
 
         brush = d3.brushX()
@@ -346,7 +344,6 @@ const Visualization = (() => {
             .enter()
             .append('circle')
             .attr('cx', (d) => {
-                // console.log(d);
                 if (d.location.y != 0) {
                     return projection([d.location.y, d.location.x])[0];
                 }
@@ -359,10 +356,10 @@ const Visualization = (() => {
             })
             .attr('r', (d) => {
                 const r = Math.log(d.count) / ln5
-                return r < 0.5 ? 0.5 : r
+                return r < 0.3 ? 0.3 : r
             })
             .style('fill', 'url(#radial-gradient)')
-            .attr('id', (d) => { return d.location.y + '|' + d.location.x });
+            .attr('id', (d) => { return d.id });
 
         return circles;
     }
