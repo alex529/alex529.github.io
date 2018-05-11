@@ -39,116 +39,6 @@
     100% { transform: rotate(360deg); }
 }
 
-
-/*Marathon graph CSS attributes*/
-
-.lgWomen {
-    stroke: black;
-    stroke-dasharray: 4, 4;
-    stroke-width: 3;
-  }
-  
-  .lgMen {
-    stroke: black;
-    stroke-dasharray: 4, 4;
-    stroke-width: 3;
-  }
-/*   
-  circle {
-    stroke: red;
-    stroke-width: 1;
-    fill: white;
-  } */
-  
-  circle:hover {
-    fill: rgb(255, 136, 0);
-  }
-  
-  rect.womenDataRects {
-    stroke: green;
-    stroke-width: 1;
-    fill: white;
-  }
-  
-  rect.womenDataRects:hover {
-    fill: blue;
-  }
-  
-  .legendMen {
-    stroke: red;
-    fill: red;
-  }
-  
-  .legendWomen {
-    stroke: green;
-    fill: green;
-  }
-  
-  .legendLr {
-    stroke: black;
-    fill: black;
-    stroke-dasharray: 3, 3;
-  }
-  
-  .legendLrText {
-    stroke: black;
-    fill: black;
-  }
-  
-  .menAndWomenButton {
-    border: 1px solid rgb(255, 136, 0);
-    align-self: end;
-  }
-  
-  .menAndWomenButton:hover {
-    background-color: rgba(255, 136, 0, 0.2);
-    color: white;
-  }
-  
-  .womenButton {
-    border: 1px solid green;
-  }
-  
-  .womenButton:hover {
-    background-color: green;
-    background-color: rgba(0, 255, 0, 0.2);
-  }
-  
-  .menButton {
-    border: 1px solid red;
-    align-self: start;
-  }
-  
-  .menButton:hover {
-    background-color: rgba(255, 0, 0, 0.2);
-  }
-  
-  .buttonsMarathon {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-auto-rows: minmax(20px, auto);
-    grid-gap: 1em;
-    align-items: center;
-  }
-  
-  .line {
-    fill: none;
-    stroke: blue;
-    stroke-width: 1;
-  }
-  
-  .line1 {
-    fill: none;
-    stroke: red;
-    stroke-width: 1;
-  }
-  
-  .line2 {
-    fill: none;
-    stroke: green;
-    stroke-width: 1;
-  }
-  
 /*doughnut*/
 
 .text {
@@ -205,28 +95,36 @@
     stroke-width: 1;
   }   
 .circleMale {
-     stroke: blue;   
+     stroke: blue; 
+     fill: blue;     
 }  
 .circleFemale {
-     stroke: red;   
+     stroke: red;  
+     fill: red;     
 }  
 .circleBlacks {
-     stroke: black;   
+     stroke: black;  
+     fill: black;     
 }  
 .circleHispanic {
-     stroke: yellow;   
+     stroke: yellow;    
+     fill: yellow;
 }  
 .circleWhite {
-     stroke: green;   
+     stroke: green;
+     fill: green;     
 }  
 .circleAsians {
-     stroke: aqua;   
+     stroke: aqua;
+     fill: aqua;     
 }  
 .circleOthers {
      stroke: brown;   
+     fill: brown;
 } 
 .circleSum {
-     stroke: grey;   
+     stroke: grey;
+     fill: grey;     
 }  
 
 /* buttons graph*/
