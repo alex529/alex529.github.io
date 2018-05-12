@@ -347,7 +347,6 @@ const Visualization = (() => {
                 if (d.location.y != 0) {
                     return projection([d.location.y, d.location.x])[0];
                 }
-
             })
             .attr('cy', (d) => {
                 if (d.location.y != 0) {
@@ -502,9 +501,37 @@ const Visualization = (() => {
 
         rect.filter(function(d) { return d in config.celebrationDays})
             //.attr('class', 'highlight-date');
-            .attr('stroke', 'purple')
+            .attr('stroke', 'white')
             .attr('stroke-width', '3')
-            .attr('shape-rendering', "crispEdges");
+            .attr('stroke-dasharray', '5, 5, 1, 5')
+            .attr('shape-rendering', "crispEdges")
+            .on("mouseover", function(d) {
+
+                //Get this bar's x/y values, then augment for the tooltip
+                var xPosition = parseFloat(d3.select(this).attr("x"));
+                var yPosition = parseFloat(d3.select(this).attr("y")) + height - cellSize;
+
+                //Update the tooltip position and value
+                let tooltip = d3.select("#calendar-tooltip")
+                    .style("left", xPosition + "px")
+                    .style("top", yPosition + "px");
+                
+                tooltip.select("#day-desc")
+                    .text(config.celebrationDays[d]);
+                
+                tooltip.select("#date")
+                    .text(d);
+           
+                //Show the tooltip
+                d3.select("#calendar-tooltip").classed("hidden", false);
+
+           })
+           .on("mouseout", function() {
+           
+                //Hide the tooltip
+                d3.select("#calendar-tooltip").classed("hidden", true);
+                
+           })
 
         function pathMonth(t0) {
             var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
