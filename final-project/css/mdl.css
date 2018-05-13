@@ -23,6 +23,7 @@ html, body {
   padding-left: 40px;
 }
 .mdl-demo .mdl-layout.is-small-screen .mdl-layout__header-row h3 {
+  font-weight: lighter;
   font-size: inherit;
 }
 .mdl-demo .mdl-layout__tab-bar-button {
@@ -81,6 +82,7 @@ html, body {
 .mdl-demo.mdl-demo .mdl-card__supporting-text h4 {
   margin-top: 0;
   margin-bottom: 20px;
+  font-weight: lighter;
 }
 .mdl-demo .mdl-card__actions {
   margin: 0;
@@ -167,7 +169,7 @@ html, body {
   font-size: inherit;
   margin: 0;
   margin-bottom: 0.5em;
-  font-weight: 300;
+  font-weight: lighter;
   line-height: 130%;
 }
 .mdl-demo section .section__text a {
@@ -226,6 +228,7 @@ html, body {
 h1 {
   text-align: center;
   color: black;
+  font-weight: lighter;
 }
 
 .container {
@@ -313,4 +316,12 @@ h1 {
 
 .button4:hover {
   background-color: rgba(0, 255, 0, 0.2);
+}
+
+h2{
+  font-weight: 300;
+}
+
+.mdl-mega-footer {
+  margin-top: 40px !important;
 }

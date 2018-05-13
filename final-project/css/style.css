@@ -235,3 +235,11 @@
 #calendar-tooltip #day-desc{
   font-weight: bold;
 }
+
+.not-brushed{
+  display: none;
+}
+
+.brushed{
+  display: initial;
+}
