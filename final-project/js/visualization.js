@@ -258,7 +258,7 @@ const Visualization = (() => {
                 }
                 return timeline.height - yScale(count);
             })
-            .attr('fill', 'darkslateblue');
+            .attr('fill', 'rgb(216, 103, 119)');
 
         svg.append('g')
             .attr('class', 'axis')
@@ -870,7 +870,7 @@ const Visualization = (() => {
         //1st SCATTER PLOT           
         //Width and height
         var margin = { top: 10, right: 50, bottom: 60, left: 100 };
-        var width = 750 - margin.left - margin.right,
+        var width = 650 - margin.left - margin.right,
             height = 350 - margin.top - margin.bottom;
         padding = 100;
         var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
@@ -1512,7 +1512,7 @@ const Visualization = (() => {
                 btn.classed("btn-toggled", !btn.classed("btn-toggled"));
             }
             function unToggleAllBtns() {
-                d3.select('.grid-btn-container')
+                d3.selectAll('.grid-btn-container')
                     .selectAll('.btn')
                     .classed("btn-toggled", false);
             }
