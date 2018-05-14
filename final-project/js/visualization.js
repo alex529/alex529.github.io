@@ -3,6 +3,7 @@ const Visualization = (() => {
     var activeFeature = d3.select(null);
     var geoGenerator, projection;
     let oldti1 = 0, oldti2 = 0
+    var allCalendarsLoaded = false;
 
 
 
@@ -444,16 +445,40 @@ const Visualization = (() => {
         d3.json('data/calendar/calendar-agr.json', (err, data) => {
             drawCalendar(data, true);
             hideLoader('calendar');
-
-            d3.json('data/calendar/calendar-by-year.json', (err, data) => {
-                for(year in data){
-                    drawCalendar(data[year], false, year);
-                    hideLoader("calendar-" + year);                 
-                }
-            });
         });
-
     };
+
+    const toggleCalendars = function () {
+        let wrapper = $("#yearly-calendars");
+        wrapper.toggle();
+
+        let calendarBtn = $("#calendar-btn");
+
+        if($(wrapper).is(":visible"))
+            calendarBtn.html("- Collapse years");
+        else
+            calendarBtn.html("+ Expand years");
+
+        if(!allCalendarsLoaded)
+            loadAllCalendars();
+        
+    }
+
+    const loadAllCalendars = function () {
+        d3.json('data/calendar/calendar-by-year.json', (err, data) => {
+            for(year in data){
+                drawCalendar(data[year], false, year);
+                hideLoader("calendar-" + year);                 
+            }
+        });
+    }
+
+    d3.json('data/calendar/calendar-by-year.json', (err, data) => {
+        for(year in data){
+            drawCalendar(data[year], false, year);
+            hideLoader("calendar-" + year);                 
+        }
+    });
 
     var drawCalendar = function (data, groupedYears, year) {
         var width = 960,
@@ -1744,7 +1769,8 @@ const Visualization = (() => {
 
     return {
         load: load,
-        redrawTimeline: redrawTimeline
+        redrawTimeline: redrawTimeline,
+        toggleCalendars: toggleCalendars,
     }
 
 })();

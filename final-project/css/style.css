@@ -244,6 +244,9 @@
 .brushed{
   display: initial;
 }
+.center{
+  text-align: center;
+}
 
 .hor-vert-center{
   display: flex;
@@ -273,4 +276,8 @@
 
 .cal{
   margin-bottom: 40px;
+}
+
+#yearly-calendars{
+  display: none;
 }
