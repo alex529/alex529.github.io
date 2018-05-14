@@ -768,8 +768,8 @@ const Visualization = (() => {
         //1st SCATTER PLOT           
         //Width and height
         var margin = { top: 10, right: 50, bottom: 60, left: 100 };
-        var width = 650 - margin.left - margin.right,
-            height = 300 - margin.top - margin.bottom;
+        var width = 750 - margin.left - margin.right,
+            height = 350 - margin.top - margin.bottom;
         padding = 100;
         var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
         var startDate, endDate;
@@ -1215,9 +1215,21 @@ const Visualization = (() => {
 
             }
 
+            function toggleButtonClass(d) {
+                let btn = d3.select(d)
+                btn.classed("btn-toggled", !btn.classed("btn-toggled"));
+            }
+            function unToggleAllBtns() {
+                d3.select('.grid-btn-container')
+                    .selectAll('.btn')
+                    .classed("btn-toggled", false);
+            }
+
             //Transitions                      
             d3.select("div.buttonClearAll")
                 .on("click", function () {
+
+                    unToggleAllBtns();
                     //scale domain    
                     yScale.domain([0, d3.max(dataSet, function (d) { return d.Sum; })]);
                     xScale.domain([d3.min(dataSet, function (d) { return d.Date; }), d3.max(dataSet, function (d) { return d.Date; })]);
@@ -1267,6 +1279,7 @@ const Visualization = (() => {
                 });
             d3.select("div.buttonMale")
                 .on("click", function () {
+                    toggleButtonClass(this);
                     //draw new line  
                     if (clearMale == 1) {
                         malePoints = (function (d) { return yScale(d.Males); })
@@ -1307,6 +1320,7 @@ const Visualization = (() => {
                 });
             d3.select("div.buttonFemale")
                 .on("click", function () {
+                    toggleButtonClass(this);
                     //draw new line    
                     if (clearFemale == 1) {
                         femalePoints = (function (d) { return yScale(d.Females); })
@@ -1348,6 +1362,8 @@ const Visualization = (() => {
 
             d3.select("div.buttonBlacks")
                 .on("click", function () {
+                    toggleButtonClass(this);
+
                     //draw new line    
                     if (clearBlacks == 1) {
                         blacksPoints = (function (d) { return yScale(d.Blacks); })
@@ -1389,6 +1405,8 @@ const Visualization = (() => {
 
             d3.select("div.buttonHispanic")
                 .on("click", function () {
+                    toggleButtonClass(this);
+
                     //draw new line    
                     if (clearHispanic == 1) {
                         hispanicPoints = (function (d) { return yScale(d.Hispanic); })
@@ -1429,6 +1447,8 @@ const Visualization = (() => {
                 });
             d3.select("div.buttonWhite")
                 .on("click", function () {
+                    toggleButtonClass(this);
+
                     //draw new line    
                     if (clearWhite == 1) {
                         whitePoints = (function (d) { return yScale(d.White); })
@@ -1469,6 +1489,8 @@ const Visualization = (() => {
                 });
             d3.select("div.buttonAsians")
                 .on("click", function () {
+                    toggleButtonClass(this);
+
                     //draw new line    
                     if (clearAsians == 1) {
                         asiansPoints = (function (d) { return yScale(d.Asians); })
@@ -1509,6 +1531,8 @@ const Visualization = (() => {
                 });
             d3.select("div.buttonOthers")
                 .on("click", function () {
+                    toggleButtonClass(this);
+
                     //draw new line    
                     if (clearOthers == 1) {
                         othersPoints = (function (d) { return yScale(d.Others); })
@@ -1550,6 +1574,8 @@ const Visualization = (() => {
                 });
             d3.select("div.buttonSum")
                 .on("click", function () {
+                    toggleButtonClass(this);
+
                     //draw new line  
                     if (clearSum == 1) {
                         sumPoints = (function (d) { return yScale(d.Sum); })
@@ -1571,6 +1597,7 @@ const Visualization = (() => {
                 });
         });
     };
+    
 
 
     /* --------- TREE MAP ----------  */
