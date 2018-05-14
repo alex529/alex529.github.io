@@ -71,7 +71,7 @@
   }
 .lineHispanic {
     fill: none;
-    stroke: yellow;
+    stroke: orange;
     stroke-width: 1;
   }
 .lineWhite {
@@ -107,8 +107,8 @@
      fill: black;     
 }  
 .circleHispanic {
-     stroke: yellow;    
-     fill: yellow;
+     stroke: orange;    
+     fill: orange;
 }  
 .circleWhite {
      stroke: green;
@@ -169,10 +169,10 @@
     background-color: grey;
   }  
 .buttonHispanic {
-    border: 1px solid yellow;
+    border: 1px solid orange;
   }  
 .buttonHispanic:hover {
-    background-color: yellow;
+    background-color: orange;
   }  
 .buttonWhite {
     border: 1px solid green;
