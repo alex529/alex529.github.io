@@ -82,12 +82,12 @@
                                         <p>
                                             Los Angeles is the second most populous city in Unites States, it has a population of about 4 millions and represents a very important financial, cultural and commercial
                                             hub on the West coast. There is a lot of data about Los Angeles and in this article the arrests will be discussed in depth. There are important facts that have to be 
-                                            analyzed and we a going to focus on four main questions: 
+                                            analyzed and the article will focus on four of the five W's [5]: 
                                         <ul>
-                                            <li> <b> WHERE </b> are the arrests being made? Where are the safe and dangerous areas in the city?  </li>
-                                            <li> <b> WHO </b> is mainly getting arrested? Do we have any race/gender/age group that is mainly responsible for making illegal things?</li>                                            
-                                            <li> <b> WHEN </b> do we have the most arrests? Do we see any trend that can lead to some conclusions? </li>
-                                            <li> <b> WHAT </b> did the people get arrested for? What are the main reasons for getting arrested in Los Angeles? </li>
+                                            <li> <b> Where </b> are the arrests being made? Where are the safe and dangerous areas in the city?  </li>
+                                            <li> <b> Who </b> is mainly getting arrested? Do we have any race/gender/age group that is mainly responsible for making illegal things?</li>                                            
+                                            <li> <b> When </b> do we have the most arrests? Do we see any trend that can lead to some conclusions? </li>
+                                            <li> <b> What </b> did the people get arrested for? What are the main reasons for getting arrested in Los Angeles? </li>
                                         </ul>
                                             The questions mentioned above represent our foundation for further analysis, the expectations are to answer the questions and in the same time to come up with a discussion 
                                             about past/future trends that characterize the city of Los Angeles.  
@@ -411,15 +411,6 @@
                             </ul>
 
                             <h2 id="motivation">1. Motivation</h4>
-
-                            <!-- What is your dataset?
-
-                            Why did you choose this/these particular dataset(s)?
-
-                            What was your goal for the end user’s experience?
-                            
-                            -->
-
                             <p>
                                 The driving force for selecting a final dataset was mainly to be able to analyze a lot of data and to come up with a story for the user.
                                 As a result the selected dataset represents the Arrests in Los Angeles, it consists of 1.16 millions rows and 17 columns, showing the information 
@@ -433,12 +424,6 @@
 
                             <h2 id="basic-stats">2. Basic stats</h4>
                             
-                            
-                            <!--
-                            Write about your choices in data cleaning and preprocessing
-
-                            Write a short section that discusses the dataset stats, containing key points/plots from your exploratory data analysis.
-                            -->
 
                             <p>
                                 Once the dataset was selected, an obvious initial step consisted in data cleaning and prepossessing. Because the tasks were mainly divided by visualizations inside the team,
@@ -456,15 +441,6 @@
 
                             <h2 id="genre">3. Genre</h4>
 
-                            <!--
-                            Which genre of data story did you use?
-
-                            Which tools did you use from each of the 3 categories of Visual Narrative (Figure 7 in Segal and Heer). Why?
-
-                            Which tools did you use from each of the 3 categories of Narrative Structure (Figure 7 in Segal and Heer). Why?
-                            -->
-
-
                             <p>
                                 The story line has a combination between Magazine Style and Annotated Charts, it is very similar to a blog post which analyzes some problem and tackles piece by piece individual parts of the problem. 
                             </p>
@@ -477,49 +453,16 @@
                             <p>The project has a Liner Structure, but as it is a website Random Access to the different sections of the article is possible with the help of links.  
                                 By using elements such as Hovering Details, and Filtering the user Is able to manipulate and interact with the data. 
                                 The Message is delivered to the user through constructs such as Headlines, Introductory text, and Summaries.</p>
-                            
-                                <!-- visual narative
-                                visual structuring: 
-                                    consistent visual platform
-                                    timebar
-                                visual platform highlighting 
-                                    zooming 
-                                    feature distigtinction
-                                tranzition guidence
-                                    object continuity
-                            narative Structure
-                                Ordering 
-                                    Linear and random
-                                Interactivity
-                                    Hover details
-                                    Filtering
-                                    Stimulating default values
-                                Messaging
-                                    Headlines
-                                    Introductory text
-                                    Summary -->
-
-
-
-                            
-
 
                             <h2 id="visualizations">4. Visualizations</h4>
 
-                            <!--
-                            Explain the visualizations you’ve chosen.
-
-                            Why are they right for the story you want to tell?
-                            -->
 
                             <h5 id="zoomable-map">4.1 Zoomable map with brushable timeline</h5>
                             <p>
                                 A map has been chosen to show where the arrests have been conducted. As it would have been a computational impossible task to visualize all the arrests in one map, binning had to be done. Binning the arrests into divisions seemed logical, and the overall map thus reports the crime for each division. To visualize arrests in the divisions, the data was structured in dates with locations and a total count. This allowed for using the brush aswell.
                                 The zoom-to-feature functionality is implemented with a d3 transition zooming to the bounds of each feature and transforming all elements in the map according to the zoom.
-                                The basemap [3] shows the 21 different LAPD divisions
+                                The basemap [3] shows the 21 different LAPD divisions. The legend is created using the extended d3 library from Susie Lu [4].
                             </p>
-    
-
 
                             <h5 id="#scatter-plotz">4.2 Scatter plots</h5>
                             <p>
@@ -557,15 +500,6 @@
 
 
                             <h2 id="discussion">5. Discussion</h4>
-
-                            <!--
-                            Think critically about your creation
-
-                            What went well?,
-
-                            What is still missing? What could be improved?, Why?
-                            -->
-
                             <p>
                                 The aim of this project has been to answer four of the five W's, namely <b>who</b> was involved, <b>what</b> happened, <b>when</b> did it happen and <b>where</b> did it take place of the arrests in LA.
                                 By using the big data set of all arrests conducted between 2010 - 2018, different visualizations could be used to try answer these questions. The description of the data and the data itself was analysed, and mulitple candidate visualizations were suggested.
@@ -617,6 +551,8 @@
                             <p>[1] E. Segel and J. Heer, "Narrative Visualization: Telling Stories with Data", in IEEE Transactions on Visualization and Computer Graphics, vol. 16, no. 6, pp. 1139-1148, Nov.-Dec. 2010.</p>
                             <p>[2] S. Murray, "Interactive Data Visualization for the Web", 2nd Edition, 2017</p>
                             <p>[3] <a href="http://boundaries.latimes.com/set/lapd-divisions/">http://boundaries.latimes.com/set/lapd-divisions/</a></p>
+                            <p>[4] <a href="http://d3-legend.susielu.com/">http://d3-legend.susielu.com/</a></p>
+                            <p>[5] <a href="https://en.wikipedia.org/wiki/Five_Ws">https://en.wikipedia.org/wiki/Five_Ws</a></p>
                         </div>
                         <div class="mdl-cell mdl-cell--1-col"></div>
                     </section>
