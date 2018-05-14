@@ -1205,14 +1205,28 @@ const Visualization = (() => {
                     yScale.domain([0, d3.max(dataSet, maleDataSet)]);
                 } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 0) {
                     yScale.domain([0, d3.max(dataSet, hispanicDataSet)]);
-                } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 1 && clearBlacks == 0) {
+                } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 1 && clear_age_20_29 == 0 ) {
+                    yScale.domain([0, d3.max(dataSet, age_20_29_DataSet)]);    
+                } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 1 && clear_age_20_29 == 1 && clearBlacks == 0 ) {
                     yScale.domain([0, d3.max(dataSet, blacksDataSet)]);
-                } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 1 && clearBlacks == 1 && clearFemale == 0) {
-                    yScale.domain([0, d3.max(dataSet, femaleDataSet)]);
-                } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 1 && clearBlacks == 1 && clearFemale == 1 && clearWhite == 0) {
-                    yScale.domain([0, d3.max(dataSet, whiteDataSet)]);
+                } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 1 && clear_age_20_29 == 1 && clearBlacks == 1 && clear_age_10_19 == 0) {
+                    yScale.domain([0, d3.max(dataSet, age_10_19_DataSet)]);                    
+                } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 1 && clear_age_20_29 == 1 && clearBlacks == 1 && clear_age_10_19 == 1 && clearFemale == 0) {
+                    yScale.domain([0, d3.max(dataSet, femaleDataSet)]);                    
+                } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 1 && clear_age_20_29 == 1 && clearFemale == 1 && clearBlacks == 1 && clear_age_10_19 == 1 && clear_age_30_39 == 0) {
+                    yScale.domain([0, d3.max(dataSet, age_30_39_DataSet)]);
+                } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 1 && clear_age_20_29 == 1 && clearFemale == 1 && clearBlacks == 1 && clear_age_10_19 == 1 && clear_age_30_39 == 1 && clearWhite == 0) {
+                    yScale.domain([0, d3.max(dataSet, whiteDataSet)]);                    
+                } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 1 && clear_age_20_29 == 1 && clearFemale == 1 && clearBlacks == 1 && clear_age_10_19 == 1 && clear_age_30_39 == 1 && clearWhite == 1 && clear_age_40_49 == 0) {
+                    yScale.domain([0, d3.max(dataSet, age_40_49_DataSet)]);
+                } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 1 && clear_age_20_29 == 1 && clearFemale == 1 && clearBlacks == 1 && clear_age_10_19 == 1 && clear_age_30_39 == 1 && clearWhite == 1 && clear_age_40_49 == 1 && clear_age_50_59 == 0) {
+                    yScale.domain([0, d3.max(dataSet, age_50_59_DataSet)]);
+                } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 1 && clear_age_20_29 == 1 && clearFemale == 1 && clearBlacks == 1 && clear_age_10_19 == 1 && clear_age_30_39 == 1 && clearWhite == 1 && clear_age_40_49 == 1 && clear_age_50_59 == 1 && clearOthers == 0) {
+                    yScale.domain([0, d3.max(dataSet, othersDataSet)]); 
+                } else if (clearSum == 1 && clearMale == 1 && clearHispanic == 1 && clear_age_20_29 == 1 && clearFemale == 1 && clearBlacks == 1 && clear_age_10_19 == 1 && clear_age_30_39 == 1 && clearWhite == 1 && clear_age_40_49 == 1 && clear_age_50_59 == 1 && clearOthers == 1 && clear_age_60_69 == 0) {
+                    yScale.domain([0, d3.max(dataSet, age_60_69_DataSet)]);                     
                 } else {
-                    yScale.domain([0, d3.max(dataSet, othersDataSet)]);
+                    yScale.domain([0, d3.max(dataSet, age_0_9_DataSet)]);
                 }
 
             }
@@ -1299,6 +1313,16 @@ const Visualization = (() => {
             asiansPoints2 = (function (d) { return yScale2(d.Per_Asians); })
             othersPoints2 = (function (d) { return yScale2(d.Per_Others); })
             sumPoints2 = (function (d) { return yScale2(d.Per_Sum); })
+            //age
+            age_0_9_Points2 = (function (d) { return yScale2(d.Per_Age_0_9); })
+            age_10_19_Points2 = (function (d) { return yScale2(d.Per_Age_10_19); })
+            age_20_29_Points2 = (function (d) { return yScale2(d.Per_Age_20_29); })
+            age_30_39_Points2 = (function (d) { return yScale2(d.Per_Age_30_39); })
+            age_40_49_Points2 = (function (d) { return yScale2(d.Per_Age_40_49); })
+            age_50_59_Points2 = (function (d) { return yScale2(d.Per_Age_50_59); })
+            age_60_69_Points2 = (function (d) { return yScale2(d.Per_Age_60_69); })
+            age_70_plus_Points2 = (function (d) { return yScale2(d.Per_Age_70_plus); })             
+            
             //draw points
             drawPoints2("circle", femalePoints2, "circleFemale")
             drawPoints2("circle", malePoints2, "circleMale")
@@ -1308,6 +1332,15 @@ const Visualization = (() => {
             drawPoints2("circle", asiansPoints2, "circleAsians")
             drawPoints2("circle", othersPoints2, "circleOthers")
             drawPoints2("circle", sumPoints2, "circleSum")
+            
+            drawPoints2("circle", age_0_9_Points2, "circle0_9")
+            drawPoints2("circle", age_10_19_Points2, "circle10_19")
+            drawPoints2("circle", age_20_29_Points2, "circle20_29")
+            drawPoints2("circle", age_30_39_Points2, "circle30_39")
+            drawPoints2("circle", age_40_49_Points2, "circle40_49")
+            drawPoints2("circle", age_50_59_Points2, "circle50_59")
+            drawPoints2("circle", age_60_69_Points2, "circle60_69")
+            drawPoints2("circle", age_70_plus_Points2, "circle70_plus")             
 
             //draw lines between dots
             function drawLinesBetweenDots2(dataSetType, typeClass) {
@@ -1326,6 +1359,16 @@ const Visualization = (() => {
             asiansDataSet2 = function (d) { return d.Per_Asians; }
             othersDataSet2 = function (d) { return d.Per_Others; }
             sumDataSet2 = function (d) { return d.Per_Sum; }
+            //age datasets
+            age_0_9_DataSet2 = function (d) { return d.Per_Age_0_9; }
+            age_10_19_DataSet2 = function (d) { return d.Per_Age_10_19; }
+            age_20_29_DataSet2 = function (d) { return d.Per_Age_20_29; }
+            age_30_39_DataSet2 = function (d) { return d.Per_Age_30_39; }
+            age_40_49_DataSet2 = function (d) { return d.Per_Age_40_49; }
+            age_50_59_DataSet2 = function (d) { return d.Per_Age_50_59; }
+            age_60_69_DataSet2 = function (d) { return d.Per_Age_60_69; }
+            age_70_plus_DataSet2 = function (d) { return d.Per_Age_70_plus; }             
+            
 
             //generate lines and draw lines between dots
             generate_line2(femalePoints2)
@@ -1344,7 +1387,23 @@ const Visualization = (() => {
             drawLinesBetweenDots2(othersDataSet2, "lineOthers")
             generate_line2(sumPoints2)
             drawLinesBetweenDots2(sumDataSet2, "lineSum")
-
+            generate_line2(age_0_9_Points2)
+            drawLinesBetweenDots2(age_0_9_DataSet2, "line0_9")
+            generate_line2(age_10_19_Points2)
+            drawLinesBetweenDots2(age_10_19_DataSet2, "line10_19")
+            generate_line2(age_20_29_Points2)
+            drawLinesBetweenDots2(age_20_29_DataSet2, "line20_29")
+            generate_line2(age_30_39_Points2)
+            drawLinesBetweenDots2(age_30_39_DataSet2, "line30_39")
+            generate_line2(age_40_49_Points2)
+            drawLinesBetweenDots2(age_40_49_DataSet2, "line40_49")
+            generate_line2(age_50_59_Points2)
+            drawLinesBetweenDots2(age_50_59_DataSet2, "line50_59")
+            generate_line2(age_60_69_Points2)
+            drawLinesBetweenDots2(age_60_69_DataSet2, "line60_69")
+            generate_line2(age_70_plus_Points2)
+            drawLinesBetweenDots2(age_70_plus_DataSet2, "line70_plus") 
+           
             //remove men and women data functions
             function removeData2(circleType, lineType) {
                 //remove data     
@@ -1360,6 +1419,14 @@ const Visualization = (() => {
             clearAsians2 = 0
             clearOthers2 = 0
             clearSum2 = 0
+            clear_age_0_9_2 = 0
+            clear_age_10_19_2 = 0
+            clear_age_20_29_2 = 0
+            clear_age_30_39_2 = 0
+            clear_age_40_49_2 = 0
+            clear_age_50_59_2 = 0
+            clear_age_60_69_2 = 0
+            clear_age_70_plus_2 = 0              
             //update axis
             function update_axis2() {
                 svg2.select(".y.axis")
@@ -1393,32 +1460,52 @@ const Visualization = (() => {
             function all_transitions2() {
                 transition2(malePoints2, "lineMale", maleDataSet2, "circleMale")
                 transition2(femalePoints2, "lineFemale", femaleDataSet2, "circleFemale")
-
+                //race  
                 transition2(hispanicPoints2, "lineHispanic", hispanicDataSet2, "circleHispanic")
                 transition2(blacksPoints2, "lineBlacks", blacksDataSet2, "circleBlacks")
                 transition2(whitePoints2, "lineWhite", whiteDataSet2, "circleWhite")
                 transition2(asiansPoints2, "lineAsians", asiansDataSet2, "circleAsians")
                 transition2(othersPoints2, "lineOthers", othersDataSet2, "circleOthers")
                 transition2(sumPoints2, "lineSum", sumDataSet2, "circleSum")
-
+                //age
+                transition2(age_0_9_Points2, "line0_9", age_0_9_DataSet2, "circle0_9")
+                transition2(age_10_19_Points2, "line10_19", age_10_19_DataSet2, "circle10_19")
+                transition2(age_20_29_Points2, "line20_29", age_20_29_DataSet2, "circle20_29")
+                transition2(age_30_39_Points2, "line30_39", age_30_39_DataSet2, "circle30_39")
+                transition2(age_40_49_Points2, "line40_49", age_40_49_DataSet2, "circle40_49")
+                transition2(age_50_59_Points2, "line50_59", age_50_59_DataSet2, "circle50_59")
+                transition2(age_60_69_Points2, "line60_69", age_60_69_DataSet2, "circle60_69")
+                transition2(age_70_plus_Points2, "line70_plus", age_70_plus_DataSet2, "circle70_plus")                
             }
             function scale2() {
                 if (clearBlacks2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, blacksDataSet2)]);
                 } else if (clearBlacks2 == 1 && clearSum2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, sumDataSet2)]);
-                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clearOthers2 == 0) {
+                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clear_age_10_19_2 == 0) {
+                    yScale2.domain([0, d3.max(dataSet, age_10_19_DataSet2)]); 
+                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clear_age_10_19_2 == 1 && clear_age_20_29_2 == 0) {
+                    yScale2.domain([0, d3.max(dataSet, age_20_29_DataSet2)]);                     
+                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clear_age_10_19_2 == 1 && clear_age_10_19_2 == 1 && clearOthers2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, othersDataSet2)]);
-                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clearOthers2 == 1 && clearMale2 == 0) {
-                    yScale2.domain([0, d3.max(dataSet, maleDataSet2)]);
-                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 0) {
+                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clear_age_10_19_2 == 1 && clear_age_10_19_2 == 1 && clearOthers2 == 1 && clearMale2 == 0) {
+                    yScale2.domain([0, d3.max(dataSet, maleDataSet2)]);    
+                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clear_age_10_19_2 == 1 && clear_age_10_19_2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clear_age_40_49_2 == 0) {
+                    yScale2.domain([0, d3.max(dataSet, age_40_49_DataSet2)]);
+                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clear_age_10_19_2 == 1 && clear_age_10_19_2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clear_age_40_49_2 == 1 && clear_age_30_39_2 == 0) {
+                    yScale2.domain([0, d3.max(dataSet, age_30_39_DataSet2)]);    
+                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clear_age_10_19_2 == 1 && clear_age_10_19_2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clear_age_40_49_2 == 1 && clear_age_30_39_2 == 1 && clear_age_50_59_2 == 0) {
+                    yScale2.domain([0, d3.max(dataSet, age_50_59_DataSet2)]);    
+                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clear_age_10_19_2 == 1 && clear_age_10_19_2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clear_age_40_49_2 == 1 && clear_age_30_39_2 == 1 && clear_age_50_59_2 == 1 && clearHispanic2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, hispanicDataSet2)]);
-                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 1 && clearWhite2 == 0) {
+                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clear_age_10_19_2 == 1 && clear_age_10_19_2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clear_age_40_49_2 == 1 && clear_age_30_39_2 == 1 && clear_age_50_59_2 == 1 && clearHispanic2 == 1 && clearWhite2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, whiteDataSet2)]);
-                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 1 && clearWhite2 == 1 && clearFemale2 == 0) {
+                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clear_age_10_19_2 == 1 && clear_age_10_19_2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clear_age_40_49_2 == 1 && clear_age_30_39_2 == 1 && clear_age_50_59_2 == 1 && clearHispanic2 == 1 && clearWhite2 == 1 && clear_age_60_69_2 == 0) {
+                    yScale2.domain([0, d3.max(dataSet, age_60_69_DataSet2)]);                    
+                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clear_age_10_19_2 == 1 && clear_age_10_19_2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clear_age_40_49_2 == 1 && clear_age_30_39_2 == 1 && clear_age_50_59_2 == 1 && clearHispanic2 == 1 && clearWhite2 == 1 && clear_age_60_69_2 == 1 && clearFemale2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, femaleDataSet2)]);
                 } else {
-                    yScale2.domain([0, d3.max(dataSet, asiansDataSet2)]);
+                    yScale2.domain([0, d3.max(dataSet, age_70_plus_DataSet2)]);
                 }
 
             }
@@ -1491,6 +1578,14 @@ const Visualization = (() => {
                     removeData2("circle.circleAsians", "path.lineAsians")
                     removeData2("circle.circleOthers", "path.lineOthers")
                     removeData2("circle.circleSum", "path.lineSum")
+                    removeData2("circle.circle0_9", "path.line0_9")
+                    removeData2("circle.circle10_19", "path.line10_19")
+                    removeData2("circle.circle20_29", "path.line20_29")
+                    removeData2("circle.circle30_39", "path.line30_39")
+                    removeData2("circle.circle40_49", "path.line40_49")
+                    removeData2("circle.circle50_59", "path.line50_59")
+                    removeData2("circle.circle60_69", "path.line60_69")
+                    removeData2("circle.circle70_plus", "path.line70_plus")                     
 
                     //update axis   
                     update_axis2();
@@ -1503,6 +1598,14 @@ const Visualization = (() => {
                     clearAsians2 = 1
                     clearOthers2 = 1
                     clearSum2 = 1
+                    clear_age_0_9_2 = 1
+                    clear_age_10_19_2 = 1
+                    clear_age_20_29_2 = 1
+                    clear_age_30_39_2 = 1
+                    clear_age_40_49_2 = 1
+                    clear_age_50_59_2 = 1
+                    clear_age_60_69_2 = 1
+                    clear_age_70_plus_2 = 1                     
                 });
             d3.select("div.buttonMale")
                 .on("click", function () {
@@ -1850,7 +1953,7 @@ const Visualization = (() => {
                         age_0_9_Points = (function (d) { return yScale(d.Age_0_9); })
                         drawPoints("circle", age_0_9_Points, "circle0_9")
                         generate_line(age_0_9_Points)
-                        drawLinesBetweenDots(age_10_19_DataSet, "line0_9")
+                        drawLinesBetweenDots(age_0_9_DataSet, "line0_9")
                         clear_age_0_9 = 0
                         scale()
                         all_transitions()
@@ -1864,9 +1967,327 @@ const Visualization = (() => {
                     //update axis   
                     update_axis();
 
+                    //2nd scatter plot 
+                    //draw new line  
+                    if (clear_age_0_9_2 == 1) {
+                        age_0_9_Points2 = (function (d) { return yScale2(d.Per_Age_0_9); })
+                        drawPoints2("circle", age_0_9_Points2, "circle0_9")
+                        generate_line2(age_0_9_Points2)
+                        drawLinesBetweenDots2(age_0_9_DataSet2, "line0_9")
+                        clear_age_0_9_2 = 0
+                        scale2()
+                        all_transitions2()
+                    } else {
+                        //remove function
+                        removeData2("circle.circle0_9", "path.line0_9")
+                        clear_age_0_9_2 = 1
+                        scale2()
+                        all_transitions2()
+                    }
+                    //update axis   
+                    update_axis2();                    
+                });  
+             d3.select("div.button10_19")
+                .on("click", function () {
+                    toggleButtonClass(this);
+
+                    //draw new line  
+                    if (clear_age_10_19 == 1) {
+                        age_10_19_Points = (function (d) { return yScale(d.Age_10_19); })
+                        drawPoints("circle", age_10_19_Points, "circle10_19")
+                        generate_line(age_10_19_Points)
+                        drawLinesBetweenDots(age_10_19_DataSet, "line10_19")
+                        clear_age_10_19 = 0
+                        scale()
+                        all_transitions()
+                    } else {
+                        //remove function
+                        removeData("circle.circle10_19", "path.line10_19")
+                        clear_age_10_19 = 1
+                        scale()
+                        all_transitions()
+                    }
+                    //update axis   
+                    update_axis();
+
                     //2nd scatter plot
-                             
-                });                
+                    //draw new line  
+                    if (clear_age_10_19_2 == 1) {
+                        age_10_19_Points2 = (function (d) { return yScale2(d.Per_Age_10_19); })
+                        drawPoints2("circle", age_10_19_Points2, "circle10_19")
+                        generate_line2(age_10_19_Points2)
+                        drawLinesBetweenDots2(age_10_19_DataSet2, "line10_19")
+                        clear_age_10_19_2 = 0
+                        scale2()
+                        all_transitions2()
+                    } else {
+                        //remove function
+                        removeData2("circle.circle10_19", "path.line10_19")
+                        clear_age_10_19_2 = 1
+                        scale2()
+                        all_transitions2()
+                    }
+                    //update axis   
+                    update_axis2();                    
+                });  
+             d3.select("div.button20_29")
+                .on("click", function () {
+                    toggleButtonClass(this);
+
+                    //draw new line  
+                    if (clear_age_20_29 == 1) {
+                        age_20_29_Points = (function (d) { return yScale(d.Age_20_29); })
+                        drawPoints("circle", age_20_29_Points, "circle20_29")
+                        generate_line(age_20_29_Points)
+                        drawLinesBetweenDots(age_20_29_DataSet, "line20_29")
+                        clear_age_20_29 = 0
+                        scale()
+                        all_transitions()
+                    } else {
+                        //remove function
+                        removeData("circle.circle20_29", "path.line20_29")
+                        clear_age_20_29 = 1
+                        scale()
+                        all_transitions()
+                    }
+                    //update axis   
+                    update_axis();
+
+                    //2nd scatter plot  
+                    //draw new line  
+                    if (clear_age_20_29_2 == 1) {
+                        age_20_29_Points2 = (function (d) { return yScale2(d.Per_Age_20_29); })
+                        drawPoints2("circle", age_20_29_Points2, "circle20_29")
+                        generate_line2(age_20_29_Points2)
+                        drawLinesBetweenDots2(age_20_29_DataSet2, "line20_29")
+                        clear_age_20_29_2 = 0
+                        scale2()
+                        all_transitions2()
+                    } else {
+                        //remove function
+                        removeData2("circle.circle20_29", "path.line20_29")
+                        clear_age_20_29_2 = 1
+                        scale2()
+                        all_transitions2()
+                    }
+                    //update axis   
+                    update_axis2();                    
+                });  
+             d3.select("div.button30_39")
+                .on("click", function () {
+                    toggleButtonClass(this);
+
+                    //draw new line  
+                    if (clear_age_30_39 == 1) {
+                        age_30_39_Points = (function (d) { return yScale(d.Age_30_39); })
+                        drawPoints("circle", age_30_39_Points, "circle30_39")
+                        generate_line(age_30_39_Points)
+                        drawLinesBetweenDots(age_30_39_DataSet, "line30_39")
+                        clear_age_30_39 = 0
+                        scale()
+                        all_transitions()
+                    } else {
+                        //remove function
+                        removeData("circle.circle30_39", "path.line30_39")
+                        clear_age_30_39 = 1
+                        scale()
+                        all_transitions()
+                    }
+                    //update axis   
+                    update_axis();
+
+                    //2nd scatter plot  
+                    //draw new line  
+                    if (clear_age_30_39_2 == 1) {
+                        age_30_39_Points2 = (function (d) { return yScale2(d.Per_Age_30_39); })
+                        drawPoints2("circle", age_30_39_Points2, "circle30_39")
+                        generate_line2(age_30_39_Points2)
+                        drawLinesBetweenDots2(age_30_39_DataSet2, "line30_39")
+                        clear_age_30_39_2 = 0
+                        scale2()
+                        all_transitions2()
+                    } else {
+                        //remove function
+                        removeData2("circle.circle30_39", "path.line30_39")
+                        clear_age_30_39_2 = 1
+                        scale2()
+                        all_transitions2()
+                    }
+                    //update axis   
+                    update_axis2();                    
+                });  
+             d3.select("div.button40_49")
+                .on("click", function () {
+                    toggleButtonClass(this);
+
+                    //draw new line  
+                    if (clear_age_40_49 == 1) {
+                        age_40_49_Points = (function (d) { return yScale(d.Age_40_49); })
+                        drawPoints("circle", age_40_49_Points, "circle40_49")
+                        generate_line(age_40_49_Points)
+                        drawLinesBetweenDots(age_40_49_DataSet, "line40_49")
+                        clear_age_40_49 = 0
+                        scale()
+                        all_transitions()
+                    } else {
+                        //remove function
+                        removeData("circle.circle40_49", "path.line40_49")
+                        clear_age_40_49 = 1
+                        scale()
+                        all_transitions()
+                    }
+                    //update axis   
+                    update_axis();
+
+                    //2nd scatter plot  
+                    //draw new line  
+                    if (clear_age_40_49_2 == 1) {
+                        age_40_49_Points2 = (function (d) { return yScale2(d.Per_Age_40_49); })
+                        drawPoints2("circle", age_40_49_Points2, "circle40_49")
+                        generate_line2(age_40_49_Points2)
+                        drawLinesBetweenDots2(age_40_49_DataSet2, "line40_49")
+                        clear_age_40_49_2 = 0
+                        scale2()
+                        all_transitions2()
+                    } else {
+                        //remove function
+                        removeData2("circle.circle40_49", "path.line40_49")
+                        clear_age_40_49_2 = 1
+                        scale2()
+                        all_transitions2()
+                    }
+                    //update axis   
+                    update_axis2();                    
+                });  
+             d3.select("div.button50_59")
+                .on("click", function () {
+                    toggleButtonClass(this);
+
+                    //draw new line  
+                    if (clear_age_50_59 == 1) {
+                        age_50_59_Points = (function (d) { return yScale(d.Age_50_59); })
+                        drawPoints("circle", age_50_59_Points, "circle50_59")
+                        generate_line(age_50_59_Points)
+                        drawLinesBetweenDots(age_50_59_DataSet, "line50_59")
+                        clear_age_50_59 = 0
+                        scale()
+                        all_transitions()
+                    } else {
+                        //remove function
+                        removeData("circle.circle50_59", "path.line50_59")
+                        clear_age_50_59 = 1
+                        scale()
+                        all_transitions()
+                    }
+                    //update axis   
+                    update_axis();
+
+                    //2nd scatter plot 
+                    //draw new line  
+                    if (clear_age_50_59_2 == 1) {
+                        age_50_59_Points2 = (function (d) { return yScale2(d.Per_Age_50_59); })
+                        drawPoints2("circle", age_50_59_Points2, "circle50_59")
+                        generate_line2(age_50_59_Points2)
+                        drawLinesBetweenDots2(age_50_59_DataSet2, "line50_59")
+                        clear_age_50_59_2 = 0
+                        scale2()
+                        all_transitions2()
+                    } else {
+                        //remove function
+                        removeData2("circle.circle50_59", "path.line50_59")
+                        clear_age_50_59_2 = 1
+                        scale2()
+                        all_transitions2()
+                    }
+                    //update axis   
+                    update_axis2();                    
+                });  
+             d3.select("div.button60_69")
+                .on("click", function () {
+                    toggleButtonClass(this);
+
+                    //draw new line  
+                    if (clear_age_60_69 == 1) {
+                        age_60_69_Points = (function (d) { return yScale(d.Age_60_69); })
+                        drawPoints("circle", age_60_69_Points, "circle60_69")
+                        generate_line(age_60_69_Points)
+                        drawLinesBetweenDots(age_60_69_DataSet, "line60_69")
+                        clear_age_60_69 = 0
+                        scale()
+                        all_transitions()
+                    } else {
+                        //remove function
+                        removeData("circle.circle60_69", "path.line60_69")
+                        clear_age_60_69 = 1
+                        scale()
+                        all_transitions()
+                    }
+                    //update axis   
+                    update_axis();
+
+                    //2nd scatter plot 
+                    //draw new line  
+                    if (clear_age_60_69_2 == 1) {
+                        age_60_69_Points2 = (function (d) { return yScale2(d.Per_Age_60_69); })
+                        drawPoints2("circle", age_60_69_Points2, "circle60_69")
+                        generate_line2(age_60_69_Points2)
+                        drawLinesBetweenDots2(age_60_69_DataSet2, "line60_69")
+                        clear_age_60_69_2 = 0
+                        scale2()
+                        all_transitions2()
+                    } else {
+                        //remove function
+                        removeData2("circle.circle60_69", "path.line60_69")
+                        clear_age_60_69_2 = 1
+                        scale2()
+                        all_transitions2()
+                    }
+                    //update axis   
+                    update_axis2();                    
+                });  
+             d3.select("div.button70_plus")
+                .on("click", function () {
+                    toggleButtonClass(this);
+
+                    //draw new line  
+                    if (clear_age_70_plus == 1) {
+                        age_70_plus_Points = (function (d) { return yScale(d.Age_70_plus); })
+                        drawPoints("circle", age_70_plus_Points, "circle70_plus")
+                        generate_line(age_70_plus_Points)
+                        drawLinesBetweenDots(age_70_plus_DataSet, "line70_plus")
+                        clear_age_70_plus = 0
+                        scale()
+                        all_transitions()
+                    } else {
+                        //remove function
+                        removeData("circle.circle70_plus", "path.line70_plus")
+                        clear_age_70_plus = 1
+                        scale()
+                        all_transitions()
+                    }
+                    //update axis   
+                    update_axis();
+
+                    //2nd scatter plot     
+                    //draw new line  
+                    if (clear_age_70_plus_2 == 1) {
+                        age_70_plus_Points2 = (function (d) { return yScale2(d.Per_Age_70_plus); })
+                        drawPoints2("circle", age_70_plus_Points2, "circle70_plus")
+                        generate_line2(age_70_plus_Points2)
+                        drawLinesBetweenDots2(age_70_plus_DataSet2, "line70_plus")
+                        clear_age_70_plus_2 = 0
+                        scale2()
+                        all_transitions2()
+                    } else {
+                        //remove function
+                        removeData2("circle.circle70_plus", "path.line70_plus")
+                        clear_age_70_plus_2 = 1
+                        scale2()
+                        all_transitions2()
+                    }
+                    //update axis   
+                    update_axis2();                    
+                });                  
         });
     };
 
