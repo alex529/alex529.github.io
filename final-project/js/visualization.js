@@ -18,7 +18,7 @@ const Visualization = (() => {
     /* --------- MAP AND TIMELINE ----------  */
 
     var setupMap = function () {
-        const width = 1000;
+        const width = 800;
         const height = 800;
         var margin = { top: 40, right: 50, bottom: 40, left: 50 };
 
@@ -74,10 +74,15 @@ const Visualization = (() => {
 
             d3.json('./data/district-agr.json', (err, data) => {
 
-                var min = d3.min(data.Districts, (d) => {
+                //data.Districts.splice(0, 1);
+
+                let tmpDistricts = data.Districts.slice(0); // clone array
+                tmpDistricts.splice(0, 1); // removing index 0 because it contains no data
+
+                var min = d3.min(tmpDistricts, (d) => {
                     return d.count;
                 });
-                var max = d3.max(data.Districts, (d) => {
+                var max = d3.max(tmpDistricts, (d) => {
                     return d.count;
                 });
 
@@ -87,9 +92,29 @@ const Visualization = (() => {
 
                 svg.selectAll('path')
                     .style("fill", (d, i) => {
-                        return colorScale(data.Districts[i].count);
+                        let id = d.properties.external_id;
+                        return colorScale(data.Districts[id].count);
                     });
 
+                let legendSvg = d3.select('#color-legend')
+                    .append('svg')
+                    .attr('height', '400');
+
+                legendSvg.append("g")
+                    .attr("class", "legendQuant")
+                    .attr("transform", "translate(20,20)");
+                
+                let legend = d3.legendColor()
+                    .shapeWidth(25)
+                    .shapeHeight(25)
+                    .labelFormat(d3.format(".0f"))
+                    .useClass(false)
+                    .scale(colorScale);
+                
+                legendSvg.select(".legendQuant")
+                    .call(legend);
+
+                hideLoader("color-legend");
             });
 
             const radialGradient = svg.append("defs")
@@ -382,7 +407,7 @@ const Visualization = (() => {
         .on("zoom", zoomed);
 
     const zoomToFeature = (d, that) => {
-        const width = 1000;
+        const width = 800;
         const height = 800;
         var margin = { top: 40, right: 50, bottom: 40, left: 50 };
 
@@ -402,7 +427,7 @@ const Visualization = (() => {
             dy = bounds[1][1] - bounds[0][1],
             x = (bounds[0][0] + bounds[1][0]) / 2,
             y = (bounds[0][1] + bounds[1][1]) / 2,
-            scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / width, dy / height))),
+            scale = Math.max(1, Math.min(8, 0.9 / Math.max(dx / map.width, dy / map.height))),
             translate = [map.width / 2 - scale * x, map.height / 2 - scale * y];
 
         const svg = d3.selectAll('#map svg');
