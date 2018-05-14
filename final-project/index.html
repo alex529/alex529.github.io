@@ -92,9 +92,11 @@
                                             The questions mentioned above represent our foundation for further analysis, the expectations are to answer the questions and in the same time to come up with a discussion 
                                             about past/future trends that characterize the city of Los Angeles.  
                                         </p>
+
+                                        <p>The public data set used is provided by the City of Los Angeles and contains all arrests conducted in the 21 Los Angeles Police Department (LAPD) divisions between January 1st, 2010 - April 13th, 2018.</p>
                                         
                                         <p>
-                                            In terms of <b> Narrative Visualization Genre </b>, it will represent a mix between <b> Magazine Style </b> and <b> Annotated Charts </b> mainly, including different interactive visualizations and 
+                                            In terms of the <b> Narrative Visualization Genre</b> [1], it will represent a mix between <b> Magazine Style </b> and <b> Annotated Charts </b> mainly, including different interactive visualizations and 
                                             discussions about analyzed results. A special focus will be put on underlying how the visualization helped to get this results and how it facilitated realizing some trends that
                                             might derive after analysis of such data. 
                                         </p>
@@ -136,7 +138,7 @@
                                         </p>
 
                                         <p>
-                                            It is possible to click each division and have all arrests in that specific division shown on the map. A timeline appears showing the number of arrests conducted each day in the division. One can use the brush to select a desired time span, and the plotted arrests are updated in the map accordingly.
+                                            It is possible to click each division and have all arrests in that specific division shown on the map. A timeline appears below the map showing the number of arrests conducted each day in the division. One can use the brush to select a desired time span, and the plotted arrests are updated in the map accordingly.
                                         </p>
                                         
                                         <p>
@@ -514,6 +516,7 @@
                             <p>
                                 A map has been chosen to show where the arrests have been conducted. As it would have been a computational impossible task to visualize all the arrests in one map, binning had to be done. Binning the arrests into divisions seemed logical, and the overall map thus reports the crime for each division. To visualize arrests in the divisions, the data was structured in dates with locations and a total count. This allowed for using the brush aswell.
                                 The zoom-to-feature functionality is implemented with a d3 transition zooming to the bounds of each feature and transforming all elements in the map according to the zoom.
+                                The basemap [3] shows the 21 different LAPD divisions
                             </p>
     
 
@@ -613,6 +616,7 @@
 
                             <p>[1] E. Segel and J. Heer, "Narrative Visualization: Telling Stories with Data", in IEEE Transactions on Visualization and Computer Graphics, vol. 16, no. 6, pp. 1139-1148, Nov.-Dec. 2010.</p>
                             <p>[2] S. Murray, "Interactive Data Visualization for the Web", 2nd Edition, 2017</p>
+                            <p>[3] <a href="http://boundaries.latimes.com/set/lapd-divisions/">http://boundaries.latimes.com/set/lapd-divisions/</a></p>
                         </div>
                         <div class="mdl-cell mdl-cell--1-col"></div>
                     </section>
