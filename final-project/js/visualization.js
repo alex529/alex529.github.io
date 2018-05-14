@@ -441,34 +441,90 @@ const Visualization = (() => {
     /* --------- CALENDAR ----------  */
 
     var setupCalendar = function () {
-        d3.json('data/calendar/arrests_per_date.json', (err, data) => {
-            drawCalendar(data);
+        d3.json('data/calendar/calendar-agr.json', (err, data) => {
+            drawCalendar(data, true);
             hideLoader('calendar');
+
+            d3.json('data/calendar/calendar-by-year.json', (err, data) => {
+                for(year in data){
+                    drawCalendar(data[year], false, year);
+                    hideLoader("calendar-" + year);                 
+                }
+            });
         });
+
     };
 
-    var drawCalendar = function (data) {
+    var drawCalendar = function (data, groupedYears, year) {
         var width = 960,
-            height = 136,
+            height = 150,
             cellSize = 17;
 
         var formatPercent = d3.format(".1%");
 
-        var svg = d3.select("#calendar")
+        let id = "#calendar";
+        id += groupedYears ? "" : "-" + year;
+
+        let range = [];
+        if(groupedYears)
+            range = [2006, 2007];
+        else
+            range = [parseInt(year), parseInt(year) + 1];
+
+        var svg = d3.select(id)
             .selectAll("svg")
-            .data(d3.range(2006, 2007))
+            .data(d3.range(range[0], range[1]))
             .enter().append("svg")
             .attr("width", width)
             .attr("height", height)
             .append("g")
             .attr("transform", "translate(" + ((width - cellSize * 53) / 2) + "," + (height - cellSize * 7 - 1) + ")");
 
-        /*        svg.append("text")
-                    .attr("transform", "translate(-6," + cellSize * 3.5 + ")rotate(-90)")
-                    .attr("font-family", "sans-serif")
-                    .attr("font-size", 10)
-                    .attr("text-anchor", "middle")
-                    .text(function(d) { return d; });*/
+        /*
+            SHOW YEARS, DAYS, MONTHS
+        */
+        if(groupedYears){
+            svg.append("text")
+            .attr("dy", -20)
+            .attr("dx", width / 2)
+            .attr("font-family", "sans-serif")
+            .attr("font-size", 14)
+            .attr("text-anchor", "middle")
+            .text(function(d) { return "ALL YEARS"; });
+        }
+        else{
+            svg.append("text")
+            .attr("dy", -20)
+            .attr("dx", width / 2)
+            .attr("font-family", "sans-serif")
+            .attr("font-size", 14)
+            .attr("text-anchor", "middle")
+            .text(function(d) { return d });
+        }
+        
+        month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        for(var i = 0; i < month.length; i++){
+            x = (i + 1) * 4.33 * cellSize - cellSize;
+            svg.append("text")
+            .attr("class", "calendar-month")
+            .style("text-anchor", "end")
+            .attr("dy", "-.25em")
+                    .attr("dx", x)
+            .text(month[i]);
+        }
+        
+        if(!groupedYears){
+            days = ['Sun','Mon','Tue','Wes','Thu','Fri','Sat'];
+            for(var j =0; j < days.length; j++){
+                y = cellSize + j * cellSize - 5;
+                svg.append("text")
+                .attr("class", "calendar-day")
+                .style("text-anchor", "end")
+                .attr("dy", y)
+                .attr("dx", "-1em")
+                .text(days[j]);
+            }
+        }
 
         var rect = svg.append("g")
             .attr("fill", "none")
@@ -490,7 +546,9 @@ const Visualization = (() => {
             .enter().append("path")
             .attr("d", pathMonth);
 
-        delete data['29-02'];
+        if(groupedYears){
+            delete data['29-02'];
+        }       
 
         let minCount = d3.min(d3.values(data));
         let maxCount = d3.max(d3.values(data));
@@ -505,38 +563,14 @@ const Visualization = (() => {
             });
 
         rect.filter(function(d) { return d in config.celebrationDays})
-            //.attr('class', 'highlight-date');
             .attr('stroke', 'white')
             .attr('stroke-width', '3')
             .attr('stroke-dasharray', '5, 5, 1, 5')
             .attr('shape-rendering', "crispEdges")
-            .on("mouseover", function(d) {
-
-                //Get this bar's x/y values, then augment for the tooltip
-                var xPosition = parseFloat(d3.select(this).attr("x"));
-                var yPosition = parseFloat(d3.select(this).attr("y")) + height - cellSize;
-
-                //Update the tooltip position and value
-                let tooltip = d3.select("#calendar-tooltip")
-                    .style("left", xPosition + "px")
-                    .style("top", yPosition + "px");
-                
-                tooltip.select("#day-desc")
-                    .text(config.celebrationDays[d]);
-                
-                tooltip.select("#date")
-                    .text(d);
-           
-                //Show the tooltip
-                d3.select("#calendar-tooltip").classed("hidden", false);
-
-           })
-           .on("mouseout", function() {
-           
-                //Hide the tooltip
-                d3.select("#calendar-tooltip").classed("hidden", true);
-                
-           })
+            .append("title")
+            .text(function (d) {
+                return d + ": " + config.celebrationDays[d];
+            });
 
         function pathMonth(t0) {
             var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
