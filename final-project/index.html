@@ -125,16 +125,23 @@
                         <div class="mdl-card mdl-cell mdl-cell--12-col">
                             <div class="mdl-card__supporting-text mdl-grid">
 
-                                <h2 class="mdl-cell mdl-cell--12-col"> <b> Where? </b> Location distribution of Arrests </h2>
+                                <h2 class="mdl-cell mdl-cell--12-col"> <b> Where? </b> Locations in divisions</h2>
 
                                 <div class="section__text mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-                                    <h4 class="mdl-cell mdl-cell--12-col">Subtitle</h4>
+                                    <h4 class="mdl-cell mdl-cell--12-col">An interactive map visualizing the arrests in each division</h4>
                                     <div class="mdl-cell mdl-cell--12-col graybox">
+                                        <p>
+                                            In order to answer the question of <b>where</b> the arrests are happening, a map is visualizing the most criminal LAPD divisions in terms of total arrests between 2010 and 2018<sup>1</sup>.
+                                            The colors indiciate how many arrests have been conducted in each division. Even with a lower number of total arrests, the division might suffer from more crime per capita.
+                                        </p>
+
+                                        <p>
+                                            It is possible to click each division and have all arrests in that specific division shown on the map. A timeline appears showing the number of arrests conducted each day in the division. One can use the brush to select a desired time span, and the plotted arrests are updated in the map accordingly.
+                                        </p>
                                         
-                                        
-                                        <div id="timeline">
-                                            <div class="loader"></div>
-                                        </div>
+                                        <p>
+                                            <sup>1</sup> During the data research and analysis, it has not been possible to collect data about the population in each division. This would have been particular useful to show the percentage arrest rate in each division.
+                                        </p>
                                         
                                         <div class="mdl-grid">
                                             <div class="mdl-cell mdl-cell--10-col graybox">
@@ -149,6 +156,16 @@
                                             </div>
                                         </div>
 
+                                        <div id="timeline">
+                                        </div>
+
+                                        <p>
+                                            Looking at the map, three divisions stand out due to a significantly darker red color, namely <i>Hollywood</i>, <i>Central</i> and <i>Pacific</i>.
+                                            <i>Central</i> is the 113,288 arrests the most criminal division, with <i>Hollywood</i>, 109,332 arrests and <i>Pacific</i>, 91833 arrests following right after. It is seen that there's a huge drop in number of arrests to the 4th most criminal division being <i>77th Street</i> with 62,348 arrests. The least criminal division is <i>West Los Angeles</i> with only 25,281 arrests.
+                                        </p>
+                                        <p>
+                                            By clicking into the divisions, one can see how the arrests are distributed location wise. It is interesting to use the brush to recognize any patterns over time. One can for instance decrease the visible time span and see if crime has moved towards other areas of the division.
+                                        </p>
                                         
                                     </div>                
                                 </div>
@@ -172,7 +189,7 @@
                                         
 
                                         <div class = "mdl-grid">
-                                            <div class = "mdl-cell mdl-cell--2-col graybox hor-vert-center">
+                                            <div class = "mdl-cell mdl-cell--2-col graybox">
                                                 <div class="grid-btn-container">
                                                     <h6>All</h6>
                                                     <div class="btn buttonSum btn-toggled"> All arrests </div>
@@ -188,8 +205,22 @@
                                                     <div class="btn buttonOthers btn-toggled"> Other </div>
                                                 </div>
                                             </div>
+
+                                            <div class = "mdl-cell mdl-cell--2-col graybox">
+                                                <div class="grid-btn-container">
+                                                    <h6>Age</h6>
+                                                    <div class="btn button0_9 btn-toggled"> 0-9 </div>
+                                                    <div class="btn button10_19 btn-toggled"> 10-19 </div>
+                                                    <div class="btn button20_29 btn-toggled"> 20-29 </div>
+                                                    <div class="btn button30_39 btn-toggled"> 30-39 </div>
+                                                    <div class="btn button40_49 btn-toggled"> 40-49 </div>
+                                                    <div class="btn button50_59 btn-toggled"> 50-59 </div>
+                                                    <div class="btn button60_69 btn-toggled"> 60-69 </div>
+                                                    <div class="btn button70_plus btn-toggled"> 70 +  </div>
+                                                </div>
+                                            </div>
                                             
-                                            <div class = "mdl-cell mdl-cell--10-col graybox">
+                                            <div class = "mdl-cell mdl-cell--8-col graybox">
                                                 <div id="scatter"></div>
                                                 <br>
                                                 <div id="scatter2"></div>
@@ -200,7 +231,10 @@
                                         <p> In order to get the real insights of the arrests in respect to gender and races, two scatter plots were made: 
                                             <ul>
                                                 <li> <b>Total Number of Arrests:</b> In this scenario the  total number of arrests is shown, it can be seen the strong male numbers dominance over females, 
-                                                     as well as the primary races in terms of total numbers in the following order: Hispanic, Black, White, Other and Asians races. </li>
+                                                     as well as the primary races in terms of total numbers in the following order: Hispanic, Black, White, Other and Asians races. In terms of ages
+                                                     it can be seen pretty clearly that the interval 20-29 is predominant, but not so far are 30-39 and 40-49, in the same time a dramatic decrease of 10-19
+                                                     can be noticed in 8 years, in 2010 it was close to 20-29 but than it decreased to one of the smallest ones. As expected 0-9 and 70+ are the categories with 
+                                                     the littlest arrests. </li>
                                                 <li> <b>Number of Arrests per 1000:</b> Even though the total number shows the most arrests by gender and race, it can be misleading due to the fact that 
                                                      the number is strongly correlated with the total number of inhabitants by race. As a result, the second scatter plot shows the number of arrests per 1000
                                                      inhabitants of the total gender/race population. The results of this analysis show some interesting insights that were not covered by the first scatter plot, 
@@ -208,10 +242,10 @@
                                                      actually closer to the White race than to the black one. In the end, the blacks race tops up with a huge difference compared to the rest of the races, followed by
                                                      Other race type which in the first scatter plot was in the bottom, but taking it into consideration to the total population it comes second actually, Hispanic and White come 
                                                      next and the Asians still have the last spot in terms of arrests. Regarding gender difference, the same huge gap between males and females applies because their population is
-                                                     almost equal.
+                                                     almost equal. In terms of age, the same trend is noticed for most of the categories like in the scatter plot: "Total number of arrests distribution per race/gender over time".
                                                </li>
                                             </ul>
-                                             Another interesting fact that is reviled from the scatter plots, is the overall trend which is declining over the last 8 years and it applies to all races and genders.    
+                                             Another interesting fact that is reviled from the scatter plots, is the overall trend which is declining over the last 8 years and it applies to all races, genders and ages.    
                                         </p>
                                         <h4> Percentage comparison of arrests based on gender and race in Donut Charts  </h4>
                                         <p> After the analysis of arrests in the Scatter plots, the Donut Charts bring a visual representation of arrests over all 8 years in one picture, not over time. This represents 
@@ -242,34 +276,40 @@
                                         <div id="calendar" class="cal">
                                             <div class="loader"></div>
                                         </div>
-                                        <div id="calendar-2010" class="cal">
-                                            <div class="loader"></div>
+                                        <div id="yearly-calendars">
+                                            <div id="calendar-2010" class="cal">
+                                                <div class="loader"></div>
+                                            </div>
+                                            <div id="calendar-2011" class="cal">
+                                                <div class="loader"></div>
+                                            </div>
+                                            <div id="calendar-2012" class="cal">
+                                                <div class="loader"></div>
+                                            </div>
+                                            <div id="calendar-2013" class="cal">
+                                                <div class="loader"></div>
+                                            </div>
+                                            <div id="calendar-2014" class="cal">
+                                                <div class="loader"></div>
+                                            </div>
+                                            <div id="calendar-2015" class="cal">
+                                                <div class="loader"></div>
+                                            </div>
+                                            <div id="calendar-2016" class="cal">
+                                                <div class="loader"></div>
+                                            </div>
+                                            <div id="calendar-2017" class="cal">
+                                                <div class="loader"></div>
+                                            </div>
+                                            <div id="calendar-2018" class="cal">
+                                                <div class="loader"></div>
+                                            </div>
                                         </div>
-                                        <div id="calendar-2011" class="cal">
-                                            <div class="loader"></div>
+                                        <div class="hor-vert-center">
+                                            <button id="calendar-btn" class="mdl-button mdl-js-button" onclick="Visualization.toggleCalendars()">
+                                                + Expand years
+                                            </button>
                                         </div>
-                                        <div id="calendar-2012" class="cal">
-                                            <div class="loader"></div>
-                                        </div>
-                                        <div id="calendar-2013" class="cal">
-                                            <div class="loader"></div>
-                                        </div>
-                                        <div id="calendar-2014" class="cal">
-                                            <div class="loader"></div>
-                                        </div>
-                                        <div id="calendar-2015" class="cal">
-                                            <div class="loader"></div>
-                                        </div>
-                                        <div id="calendar-2016" class="cal">
-                                            <div class="loader"></div>
-                                        </div>
-                                        <div id="calendar-2017" class="cal">
-                                            <div class="loader"></div>
-                                        </div>
-                                        <div id="calendar-2018" class="cal">
-                                            <div class="loader"></div>
-                                        </div>
-   
                                     </div>                
                                 </div>
                             </div>
@@ -350,7 +390,7 @@
                             
                             <p>
                                 In this paragraph more details about the dataset will be discussed, it was already mentioned that it has 1.16 millions rows and 17 columns. Different visualizations used data from 
-                                different columns, for the map, the "Arrest Date", "Area Name" was mainly used to show the location of the arrest, for the scatter plots and donut charts: "Sex Code", "Descent Code" was mainly used,
+                                different columns, for the map, the "Arrest Date", "Area Name" was mainly used to show the location of the arrest, for the scatter plots and donut charts: "Sex Code", "Descent Code" and "Age" were mainly used,
                                 the calendar used the "Arrest Date" column and finally the treemap used the "Charge Group Description" and "Charge Description". As it can be seen various columns were used to show different
                                 parts of the story and especially to emphasize the whole picture of arrests in Los Angeles. The main scope of data processing of these columns was to count the number of arrests per specific unit such
                                 as date, race, gender etc. The selection of the dataset was strongly based on the assumption that many different angles of the problem could be tackled and in the end it fulfilled the expectations.
@@ -423,7 +463,7 @@
 
                             <p>[1] E. Segel and J. Heer, "Narrative Visualization: Telling Stories with Data," in IEEE Transactions on Visualization and Computer Graphics, vol. 16, no. 6, pp. 1139-1148, Nov.-Dec. 2010.</p>
                             <p>[2] S. Murray, "Interactive Data Visualization for the Web", 2nd Edition, 2017</p>
-                            <p>[3] </p>
+                            
 
                             <!--
                                
