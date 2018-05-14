@@ -400,7 +400,7 @@
                                         <a href="#zoomable-map">4.1 Zoomable map with brushable timeline</a>
                                         <a href="#scatter-plotz">4.2 Scatter plots</a>
                                         <a href="#do-chart">4.3 Doughnut chart</a>
-                                        <a href="#zoomable-map">4.4 Calendar using aggregated and decomposed data</a>
+                                        <a href="#cal-exp">4.4 Calendar using aggregated and decomposed data</a>
                                         <a href="#tree-map-exp">4.5 Treemap</a>
                                         
                                     </ul>
@@ -512,7 +512,8 @@
 
                             <h5 id="zoomable-map">4.1 Zoomable map with brushable timeline</h5>
                             <p>
-
+                                A map has been chosen to show where the arrests have been conducted. As it would have been a computational impossible task to visualize all the arrests in one map, binning had to be done. Binning the arrests into divisions seemed logical, and the overall map thus reports the crime for each division. To visualize arrests in the divisions, the data was structured in dates with locations and a total count. This allowed for using the brush aswell.
+                                The zoom-to-feature functionality is implemented with a d3 transition zooming to the bounds of each feature and transforming all elements in the map according to the zoom.
                             </p>
     
 
@@ -526,6 +527,7 @@
                                 race has more arrests than maybe the whole feminine gender. All these analysis is made very clear and easy to use for the user, that's why scatter plot is one of 
                                 the primary visualizations of the story line. 
                             </p>
+
                             <h5 id="#do-chart">4.3 Doughnut chart</h5>
                             <p>
                                 It is easy to compare the arrests over time, but Donut charts make an additional step towards consolidating the answer to the question of <b>who</b> is getting arrested.
@@ -533,18 +535,22 @@
                                 races get arrested the most and as well as which age group gets arrested the most. The correlations between the analysis between the scatter plots and the donut charts 
                                 validates some trend analysis and underlines the biggest and smallest categories in each group of persons who get arrested. 
                             </p>
-                            <h5 id="#zoomable-map">4.4 Calendar using aggregated and decomposed data</h5>
 
+                            <h5 id="#cal-exp">4.4 Calendar using aggregated and decomposed data</h5>
+                                <p>
+                                    The idea of using a calendar quickly emerged while discussing which visualization to use for reporting "when". Having only the overall calendar for all years would leave out possibly essential information, thus including the year-specific calendars shown on demand proved useful.
+                                    The data were grouped into years and dates with the total number of arrests in all divisions.
+                                    Including holidays and celebration days were also done to help the reader correlate the data with these days. It would have been convenient to include changing days as mentioned in the section.
+                                </p>
 
 
                             <h5 id="#tree-map-exp">4.5 Treemap</h5>
                                 <p>
-                                        The treemap is used o give a visual answer to the <b>what</b> question. 
-                                        The figure organizes the data both in an intuitive and hierarchical way. 
-                                        The map summarizes the type of felonies committed during the last 8 years. 
-                                        The data is not only organized by size but by using different colors, the user cat a better understanding of both the main crime that happens in Los Angeles but also the types of crime committed.
+                                    The treemap is used o give a visual answer to the <b>what</b> question. 
+                                    The figure organizes the data both in an intuitive and hierarchical way. 
+                                    The map summarizes the type of felonies committed during the last 8 years. 
+                                    The data is not only organized by size but by using different colors, the user cat a better understanding of both the main crime that happens in Los Angeles but also the types of crime committed.
                                 </p>
-
 
 
                             <h2 id="discussion">5. Discussion</h4>
@@ -586,6 +592,7 @@
 
                             <p>
                                 With the adressed concerns mentioend above, the conclusion of the project is, that the visualizations to a high degree helped answering the "W" questions, allowing the reader to get a quick and detailed overview of the arrests in Los Angeles. Using Material Design Lite as the design, also enhanced the readibility and user experience from a usability point of view.
+                                    Future work could include a way to link the different visualizations with each other, so that clicking a divsion on the map, would show division specific data for all the other visualizations and vice versa. In that way, the exploration of the data would seem near endless allowing for an enourmous amount of combinations.
                                 The d3.js library really provided its strengths to the project allowing the authors to generate complex visualizations with big data sets.
                             </p>
 
