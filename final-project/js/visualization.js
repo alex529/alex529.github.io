@@ -1,3 +1,16 @@
+String.prototype.width = function(font) {
+    var f = font || '15px arial',
+        o = $('<div></div>')
+              .text(this)
+              .css({'position': 'absolute', 'float': 'left', 'white-space': 'nowrap', 'visibility': 'hidden', 'font': f})
+              .appendTo($('body')),
+        w = o.width();
+  
+    o.remove();
+  
+    return w;
+  }
+  
 const Visualization = (() => {
 
     var activeFeature = d3.select(null);
@@ -1728,18 +1741,165 @@ const Visualization = (() => {
 
     /* --------- TREE MAP ----------  */
 
-    var setupTreemap = function () {
-        console.log('init treemap');
+    const setupTreemap = () => {
+
+        const width = 1000;
+        const height = 800;
+
+        const svg = d3.select('#treemap')
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height)
+            .attr('id', 'tree-svg');
+
+        const fader = function (color) { return d3.interpolateRgb(color, "#fff")(0.2); },
+            color = d3.scaleOrdinal(d3.schemeCategory20.map(fader)),
+            format = d3.format(",d");
+
+        const treemap = d3.treemap()
+            .tile(d3.treemapResquarify)
+            .size([width, height])
+            .round(true)
+            .paddingInner(1);
+
+        d3.json("./data/arrest-agr.json", function (error, data) {
+            if (error) throw error;
+
+            const root = d3.hierarchy(data)
+                .eachBefore((d) => {
+                    let tmp = d.data.name.toLowerCase();
+                    tmp = tmp.charAt(0).toUpperCase() + tmp.slice(1);
+                    d.data.name = tmp;
+                    d.data.id = (d.parent ? d.parent.data.id + "|" : "") + tmp;
+                })
+                .sum((d) => {
+                    return d.size;
+                })
+                .sort(function (a, b) {
+                    return b.value - a.value;
+                });
+
+            treemap(root);
+
+            const cell = svg.selectAll("g")
+                .data(root.leaves())
+                .enter().append("g")
+                .attr("transform", function (d) { return "translate(" + d.x0 + "," + d.y0 + ")"; });
+
+            cell.append("rect")
+                .attr("id", function (d) { return d.data.id; })
+                .attr("width", function (d) { return d.x1 - d.x0; })
+                .attr("height", function (d) { return d.y1 - d.y0; })
+                .attr("fill", function (d) {
+                    return color(d.parent.data.id);
+                });
+
+            cell.append("clipPath")
+                .attr("id", function (d) { return "clip-" + d.data.id; })
+                .append("use")
+                .attr("xlink:href", function (d) { return "#" + d.data.id; });
+
+            cell.append("text")
+                .attr("clip-path", function (d) { return "url(#clip-" + d.data.id + ")"; })
+                .selectAll("tspan")
+                .data(function (d) {
+                    let txt = [d.data.name]
+                    if ((d.x1 - d.x0) < d.data.name.width()) {
+                        txt = d.data.name.split(" ")
+                    }
+                    const tmp = []
+                    const width = d.x1 - d.x0
+                    const height = d.y1 - d.y0
+                    for (let i = 0; i < txt.length; i++) {
+                        tmp.push({
+                            txt: txt[i],
+                            width: width,
+                            height: height,
+                        });
+                    }
+                    return tmp;
+                })
+                .enter().append("tspan")
+                .attr('font-size', (d) => {
+                    if (d.height<15) {
+                        return 5 + 'px'
+                    }
+                    if (d.width > 70) {
+                        return '14px';
+                    }
+                    return d.width * 13 / 80 + "px";
+                })
+                .attr("x", 4)
+                .attr("y", function (d, i) { return 13 + i * 10; })
+                .text(function (d) { return d.txt; });
+
+            cell.append("title")
+                .text(function (d) {
+                    const first = d.data.id.indexOf('|');
+                    const last = d.data.id.lastIndexOf('|');
+                    return d.data.id.slice(0, first) + ": " + d.data.id.slice(first + 1, last) + "\nArrest Subtype: " + d.data.id.slice(last + 1) + "\nNumer of Arrests: " + format(d.value);
+                });
+
+            cell.transition()
+                .duration(750)
+                .attr("transform", (d) => { return "translate(" + d.x0 + "," + d.y0 + ")"; })
+                .select("rect")
+                .attr("width", (d) => { return d.x1 - d.x0; })
+                .attr("height", (d) => { return d.y1 - d.y0; });
+
+            var legend = ['part1', 'part2', 'part3'];
+
+            // // create legend
+            // var svg1 = d3.select('#treemap-legend')
+            //     .append('svg')
+            //     .attr('width', 200)
+            //     .attr('height', 500).append('g')
+            //     .attr('class', 'legend')
+            //     .attr('transform', 'translate(' + width + ', ' + 30 + ')');
+
+            // // legend title
+            // svg1.append('text')
+            //     .style('font-weight', 'bold')
+            //     .attr('x', 10)
+            //     .attr('y', -10)
+            //     .text('Legend');
+
+
+            // // create g for each legend item
+            // var legendItem = svg1.selectAll('.legend-item')
+            //     .data(legend).enter()
+            //     .append('g')
+            //     .attr('class', 'legend-item')
+            //     .attr('transform', function (d, i) {
+            //         return 'translate(10,' + i * 25 + ')'
+            //     });
+
+            // // legend rectangle
+            // legendItem.append('rect')
+            //     .attr('width', 20)
+            //     .attr('height', 20)
+            //     .style('fill', function (d) {
+            //         return color(d)
+            //     });
+
+            // // legend text
+            // legendItem.append('text')
+            //     .attr('x', 25)
+            //     .attr('y', 15).text(function (d) {
+            //         return d;
+            //     });
+        });
+
+        hideLoader('treemap');
     };
 
-    var hideLoader = function (parentId) {
+    const hideLoader = function (parentId) {
         $('#' + parentId).find('.loader').hide()
     };
 
-    var load = function () {
+    const load = function () {
         loadDataAndSetupVisualizations();
     };
-
 
 
     return {
