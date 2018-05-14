@@ -87,7 +87,7 @@
                                             <li> <b> WHERE </b> are the arrests being made? Where are the safe and dangerous areas in the city?  </li>
                                             <li> <b> WHO </b> is mainly getting arrested? Do we have any race/gender/age group that is mainly responsible for making illegal things?</li>                                            
                                             <li> <b> WHEN </b> do we have the most arrests? Do we see any trend that can lead to some conclusions? </li>
-                                            <li> <b> What </b> did people do to get arrested? What are the main reasons for getting arrested in Los Angeles? </li>
+                                            <li> <b> WHAT </b> did the people get arrested for? What are the main reasons for getting arrested in Los Angeles? </li>
                                         </ul>
                                             The questions mentioned above represent our foundation for further analysis, the expectations are to answer the questions and in the same time to come up with a discussion 
                                             about past/future trends that characterize the city of Los Angeles.  
@@ -161,7 +161,7 @@
 
                                         <p>
                                             Looking at the map, three divisions stand out due to a significantly darker red color, namely <i>Hollywood</i>, <i>Central</i> and <i>Pacific</i>.
-                                            <i>Central</i> is the 113,288 arrests the most criminal division, with <i>Hollywood</i>, 109,332 arrests and <i>Pacific</i>, 91833 arrests following right after. It is seen that there's a huge drop in number of arrests to the 4th most criminal division being <i>77th Street</i> with 62,348 arrests. The least criminal division is <i>West Los Angeles</i> with only 25,281 arrests.
+                                            <i>Central</i> is with 113,288 arrests the most criminal division, with <i>Hollywood</i>, 109,332 arrests and <i>Pacific</i>, 91833 arrests following right after. It is seen that there's a huge drop in number of arrests to the 4th most criminal division being <i>77th Street</i> with 62,348 arrests. The least criminal division is <i>West Los Angeles</i> with only 25,281 arrests.
                                         </p>
                                         <p>
                                             By clicking into the divisions, one can see how the arrests are distributed location wise. It is interesting to use the brush to recognize any patterns over time. One can for instance decrease the visible time span and see if crime has moved towards other areas of the division.
@@ -178,7 +178,7 @@
                         <div class="mdl-card mdl-cell mdl-cell--12-col">
                             <div class="mdl-card__supporting-text mdl-grid">
 
-                                <h2 class="mdl-cell mdl-cell--12-col"> <b> Who? </b> Races and gender analysis</h2>
+                                <h2 class="mdl-cell mdl-cell--12-col"> <b> Who? </b> Races, Gender and Race Group analysis</h2>
 
                                 <div class="section__text mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
                                     <h4 class="mdl-cell mdl-cell--12-col">Representation of arrests over time in scatter plots</h4>
@@ -516,13 +516,21 @@
 
 
                             <h5 id="#scatter-plotz">4.2 Scatter plots</h5>
-
-
-
+                                <p>
+                                    The Scatter plots are mainly responsible to answer the question <b> who </b> was arrested and to analyze the trends in respect to Gender, Race and Age group. 
+                                    The dataset shows continuous data over 8 years, and the scatter plot fulfills the aim of providing a simple and easy to understand way for the user. As it can be 
+                                    seen, the declining trends in terms of number of arrest made in Los Angeles is visible from the first look and in addition to that, comparison between different
+                                    genders, races and age groups is very easily made. Even more cross-category comparison can be done in a very easy manner, for example if a user wants to see if a 
+                                    race has more arrests than maybe the whole feminine gender. All these analysis is made very clear and easy to use for the user, that's why scatter plot is one of 
+                                    the primary visualizations of the story line. 
+                                </p>
                             <h5 id="#do-chart">4.3 Doughnut chart</h5>
-
-
-
+                                <p>
+                                    It is easy to compare the arrests over time, but Donut charts make an additional step towards consolidating the answer to the question of <b>who</b> is getting arrested.
+                                    The Donut charts make a summary of all 8 years of data into one small circle which gives straight away information to the user about what genders get arrested the most, what
+                                    races get arrested the most and as well as which age group gets arrested the most. The correlations between the analysis between the scatter plots and the donut charts 
+                                    validates some trend analysis and underlines the biggest and smallest categories in each group of persons who get arrested. 
+                                </p>
                             <h5 id="#zoomable-map">4.4 Calendar using aggregated and decomposed data</h5>
 
 
@@ -542,42 +550,37 @@
                             -->
 
                             <p>
-                                TEXT GOES HERE
+                                The aim of this project has been to answer four of the five W's, namely who was involved, what happened, when did it happen and where did it take place of the arrests in LA.
+                                By using the big data set of all arrests conducted between 2010 - 2018, different visualizations could be used to try answer these questions. The description of the data and the data itself was analysed, and mulitple candidate visualizations were suggested.
+                                The suggestions were discussed, and the result were a map, scatter plots, calendars and a treemap, with each of them focusing on one particular question.
+                            </p>
+
+                            <p>
+                                The zoomable map has an interesting and tempting interaction, that allows user to dive into each of the divisions, and furthermore play with the data in a finer detail using a brushable timeline. The visualization itself however did not present remarkable results to the authors of this project. The visualization did both on a top-level (whole map) and with a finer granularity (division) show fairly general results, allowing for only a few hypotheses to be proposed. On the whole map, it could have been interesting to include a brushable timeline aswell, to identify trends e.g. if some divisions would be more or less criminal over time.
+                                In each dvision, it would also have been convenient to be able to start an animation over time, that is, the moving brush would have a smaller extent and the map would be updated by itself. This can however be achieved manually, but it is not as convenient as an "Animate" button.
+                            </p>
+
+                            <p>
+                                
                             </p>
 
 
                             <h2 id="contributions">6. Contributions</h4>
-
-                            <!--Who did what?
-
-                            You should write (just briefly) which group member was the main responsible for which elements of the assignment. (I want you guys to understand every part of the assignment, but usually there is someone who took lead role on certain portions of the work. That’s what you should explain).
-
-                            It is not OK simply to write "All group members contributed equally".
-
-                            -->
-
                             <p>
                                 <ul>
-                                <li> Map: Main Contributors( Jesper Mark, Alexandru Savin); </li>
-                                <li> Scatter Plots: Main Contributor (Cristian Zara); </li>
-                                <li> Donut Charts: Main Contributor (Cristian Zara); </li>
+                                <li> Map: Main Contributors (Jesper Mark, Alexandru Savin) </li>
+                                <li> Scatter Plots: Main Contributor (Cristian Zara) </li>
+                                <li> Donut Charts: Main Contributor (Cristian Zara) </li>
                                 <li> Calendar: Main Contributor (Jesper Mark) </li>
                                 <li> Treemap: Main Contributor (Alexandru Savin) </li>
                                 </ul>
-                                The main contributors had the main responsibility for the visualizations, but the ideas/suggestions/tunings were usually cross-functional and every group member participated in them. 
+                                The main contributors had the main responsibility for the visualizations, but the ideas/suggestions/tunings were usually cross-functional and every group member participated in them.
                             </p>
 
                             <h4>References</h4>
 
-                            <p>[1] E. Segel and J. Heer, "Narrative Visualization: Telling Stories with Data," in IEEE Transactions on Visualization and Computer Graphics, vol. 16, no. 6, pp. 1139-1148, Nov.-Dec. 2010.</p>
+                            <p>[1] E. Segel and J. Heer, "Narrative Visualization: Telling Stories with Data", in IEEE Transactions on Visualization and Computer Graphics, vol. 16, no. 6, pp. 1139-1148, Nov.-Dec. 2010.</p>
                             <p>[2] S. Murray, "Interactive Data Visualization for the Web", 2nd Edition, 2017</p>
-                            
-
-                            <!--
-                               
-                            Some additional notes: * Make sure that you use references when they’re needed and follow academic standards.
-
-                            -->
                         </div>
                         <div class="mdl-cell mdl-cell--1-col"></div>
                     </section>
