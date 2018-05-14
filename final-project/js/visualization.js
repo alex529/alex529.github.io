@@ -103,7 +103,7 @@ const Visualization = (() => {
                 legendSvg.append("g")
                     .attr("class", "legendQuant")
                     .attr("transform", "translate(20,20)");
-                
+
                 let legend = d3.legendColor()
                     .shapeWidth(25)
                     .shapeHeight(25)
@@ -111,7 +111,7 @@ const Visualization = (() => {
                     .useClass(false)
                     .title("Number of arrests")
                     .scale(colorScale);
-                
+
                 legendSvg.select(".legendQuant")
                     .call(legend);
 
@@ -213,14 +213,14 @@ const Visualization = (() => {
             .rangeRound([0, timeline.width]);
 
         const yScale = d3.scaleLinear()
-            .domain([0, d3.max(data, function (d) { 
+            .domain([0, d3.max(data, function (d) {
                 let count = 0;
-                for(let k in d.Locations){
-                    if(d.Locations.hasOwnProperty(k)){
+                for (let k in d.Locations) {
+                    if (d.Locations.hasOwnProperty(k)) {
                         count += d.Locations[k].count;
                     }
                 }
-                return count; 
+                return count;
             })])
             .range([timeline.height, 0]);
 
@@ -240,8 +240,8 @@ const Visualization = (() => {
             })
             .attr('y', function (d) {
                 let count = 0;
-                for(let k in d.Locations){
-                    if(d.Locations.hasOwnProperty(k)){
+                for (let k in d.Locations) {
+                    if (d.Locations.hasOwnProperty(k)) {
                         count += d.Locations[k].count;
                     }
                 }
@@ -250,8 +250,8 @@ const Visualization = (() => {
             .attr('width', timeline.width / data.length)
             .attr('height', function (d) {
                 let count = 0;
-                for(let k in d.Locations){
-                    if(d.Locations.hasOwnProperty(k)){
+                for (let k in d.Locations) {
+                    if (d.Locations.hasOwnProperty(k)) {
                         count += d.Locations[k].count;
                     }
                 }
@@ -293,13 +293,13 @@ const Visualization = (() => {
 
             const t1 = (xScale.invert(s[0]));
             const t2 = (xScale.invert(s[1]));
-            let circles =  d3.selectAll('#map svg circle');
+            let circles = d3.selectAll('#map svg circle');
 
             circles.attr("class", "not-brushed");
-        
-            circles.filter(function (d){
-                    return t1 <= d.time && d.time <= t2;            
-                })
+
+            circles.filter(function (d) {
+                return t1 <= d.time && d.time <= t2;
+            })
                 .attr("class", "brushed");
         }
 
@@ -341,9 +341,9 @@ const Visualization = (() => {
         var circles = groups.selectAll('circle')
             .data(function (d) {
 
-                for(let k in d.Locations)
+                for (let k in d.Locations)
                     d.Locations[k].time = d.time
-                
+
                 return d.Locations;
             })
             .enter()
@@ -446,9 +446,9 @@ const Visualization = (() => {
             hideLoader('calendar');
 
             d3.json('data/calendar/calendar-by-year.json', (err, data) => {
-                for(year in data){
+                for (year in data) {
                     drawCalendar(data[year], false, year);
-                    hideLoader("calendar-" + year);                 
+                    hideLoader("calendar-" + year);
                 }
             });
         });
@@ -466,7 +466,7 @@ const Visualization = (() => {
         id += groupedYears ? "" : "-" + year;
 
         let range = [];
-        if(groupedYears)
+        if (groupedYears)
             range = [2006, 2007];
         else
             range = [parseInt(year), parseInt(year) + 1];
@@ -483,46 +483,46 @@ const Visualization = (() => {
         /*
             SHOW YEARS, DAYS, MONTHS
         */
-        if(groupedYears){
+        if (groupedYears) {
             svg.append("text")
-            .attr("dy", -20)
-            .attr("dx", width / 2)
-            .attr("font-family", "sans-serif")
-            .attr("font-size", 14)
-            .attr("text-anchor", "middle")
-            .text(function(d) { return "ALL YEARS"; });
+                .attr("dy", -20)
+                .attr("dx", width / 2)
+                .attr("font-family", "sans-serif")
+                .attr("font-size", 14)
+                .attr("text-anchor", "middle")
+                .text(function (d) { return "ALL YEARS"; });
         }
-        else{
+        else {
             svg.append("text")
-            .attr("dy", -20)
-            .attr("dx", width / 2)
-            .attr("font-family", "sans-serif")
-            .attr("font-size", 14)
-            .attr("text-anchor", "middle")
-            .text(function(d) { return d });
+                .attr("dy", -20)
+                .attr("dx", width / 2)
+                .attr("font-family", "sans-serif")
+                .attr("font-size", 14)
+                .attr("text-anchor", "middle")
+                .text(function (d) { return d });
         }
-        
-        month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-        for(var i = 0; i < month.length; i++){
+
+        month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        for (var i = 0; i < month.length; i++) {
             x = (i + 1) * 4.33 * cellSize - cellSize;
             svg.append("text")
-            .attr("class", "calendar-month")
-            .style("text-anchor", "end")
-            .attr("dy", "-.25em")
-                    .attr("dx", x)
-            .text(month[i]);
+                .attr("class", "calendar-month")
+                .style("text-anchor", "end")
+                .attr("dy", "-.25em")
+                .attr("dx", x)
+                .text(month[i]);
         }
-        
-        if(!groupedYears){
-            days = ['Sun','Mon','Tue','Wes','Thu','Fri','Sat'];
-            for(var j =0; j < days.length; j++){
+
+        if (!groupedYears) {
+            days = ['Sun', 'Mon', 'Tue', 'Wes', 'Thu', 'Fri', 'Sat'];
+            for (var j = 0; j < days.length; j++) {
                 y = cellSize + j * cellSize - 5;
                 svg.append("text")
-                .attr("class", "calendar-day")
-                .style("text-anchor", "end")
-                .attr("dy", y)
-                .attr("dx", "-1em")
-                .text(days[j]);
+                    .attr("class", "calendar-day")
+                    .style("text-anchor", "end")
+                    .attr("dy", y)
+                    .attr("dx", "-1em")
+                    .text(days[j]);
             }
         }
 
@@ -546,9 +546,9 @@ const Visualization = (() => {
             .enter().append("path")
             .attr("d", pathMonth);
 
-        if(groupedYears){
+        if (groupedYears) {
             delete data['29-02'];
-        }       
+        }
 
         let minCount = d3.min(d3.values(data));
         let maxCount = d3.max(d3.values(data));
@@ -562,7 +562,7 @@ const Visualization = (() => {
                 return color(data[d]);
             });
 
-        rect.filter(function(d) { return d in config.celebrationDays})
+        rect.filter(function (d) { return d in config.celebrationDays })
             .attr('stroke', 'white')
             .attr('stroke-width', '3')
             .attr('stroke-dasharray', '5, 5, 1, 5')
@@ -703,15 +703,15 @@ const Visualization = (() => {
                 .text(function (d) {
                     return Math.round(d.SumRaces / total * 100) + "%";
                 });
-                
+
             //Title
             svg.append("text")
-                .attr("x", (width / 2))             
+                .attr("x", (width / 2))
                 .attr("y", (margin.bottom + 350))
-                .attr("text-anchor", "middle")  
-                .style("font-size", "16px")  
+                .attr("text-anchor", "middle")
+                .style("font-size", "16px")
                 .data(dataSet)
-                .text("Race arrests distribution in the interval 2010-2018");    
+                .text("Race arrests distribution in the interval 2010-2018");
 
 
         });
@@ -830,12 +830,12 @@ const Visualization = (() => {
                 });
             //Title
             svg.append("text")
-                .attr("x", (width / 2))             
+                .attr("x", (width / 2))
                 .attr("y", (margin.bottom + 350))
-                .attr("text-anchor", "middle")  
-                .style("font-size", "16px")  
+                .attr("text-anchor", "middle")
+                .style("font-size", "16px")
                 .data(dataSet)
-                .text("Gender arrests distribution in the interval 2010-2018");                   
+                .text("Gender arrests distribution in the interval 2010-2018");
 
         });
     };
@@ -958,10 +958,10 @@ const Visualization = (() => {
             //Title
             svg.append("text")
                 .attr("transform", "translate(" + (width / 2) + "," + (height + (padding / 2)) + ")")  // centre below axis
-                .attr("text-anchor", "middle")  
-                .style("font-size", "16px")  
+                .attr("text-anchor", "middle")
+                .style("font-size", "16px")
                 .data(dataSet)
-                .text("Total number of arrests distribution per race/gender over time");                 
+                .text("Total number of arrests distribution per race/gender over time");
 
             //draw points(dots) function
             function drawPoints(type, Points, class_type) {
@@ -1162,12 +1162,12 @@ const Visualization = (() => {
             //Title
             svg2.append("text")
                 .attr("transform", "translate(" + (width / 2) + "," + (height + (padding / 2)) + ")")  // centre below axis
-                .attr("text-anchor", "middle")  
-                .style("font-size", "16px")  
+                .attr("text-anchor", "middle")
+                .style("font-size", "16px")
                 .data(dataSet)
-                .text("Number of arrests per 1000 inhabitants based on race/gender over time");                
-                
-                
+                .text("Number of arrests per 1000 inhabitants based on race/gender over time");
+
+
             //draw points(dots) function
             function drawPoints2(type, Points, class_type) {
                 svg2.selectAll(type + "." + class_type)
@@ -1221,7 +1221,7 @@ const Visualization = (() => {
             whiteDataSet2 = function (d) { return d.Per_White; }
             asiansDataSet2 = function (d) { return d.Per_Asians; }
             othersDataSet2 = function (d) { return d.Per_Others; }
-            sumDataSet2 = function (d) { return d.Per_Sum; }            
+            sumDataSet2 = function (d) { return d.Per_Sum; }
 
             //generate lines and draw lines between dots
             generate_line2(femalePoints2)
@@ -1239,7 +1239,7 @@ const Visualization = (() => {
             generate_line2(othersPoints2)
             drawLinesBetweenDots2(othersDataSet2, "lineOthers")
             generate_line2(sumPoints2)
-            drawLinesBetweenDots2(sumDataSet2, "lineSum")            
+            drawLinesBetweenDots2(sumDataSet2, "lineSum")
 
             //remove men and women data functions
             function removeData2(circleType, lineType) {
@@ -1295,23 +1295,23 @@ const Visualization = (() => {
                 transition2(whitePoints2, "lineWhite", whiteDataSet2, "circleWhite")
                 transition2(asiansPoints2, "lineAsians", asiansDataSet2, "circleAsians")
                 transition2(othersPoints2, "lineOthers", othersDataSet2, "circleOthers")
-                transition2(sumPoints2, "lineSum", sumDataSet2, "circleSum")                
+                transition2(sumPoints2, "lineSum", sumDataSet2, "circleSum")
 
             }
             function scale2() {
                 if (clearBlacks2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, blacksDataSet2)]);
-                } else if (clearBlacks2 == 1 && clearSum2 ==0) {
-                    yScale2.domain([0, d3.max(dataSet, sumDataSet2)]);                    
-                } else if (clearBlacks2 == 1 && clearSum2 ==1 && clearOthers2 == 0) {
+                } else if (clearBlacks2 == 1 && clearSum2 == 0) {
+                    yScale2.domain([0, d3.max(dataSet, sumDataSet2)]);
+                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clearOthers2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, othersDataSet2)]);
-                } else if (clearBlacks2 == 1 && clearSum2 ==1 && clearOthers2 == 1 && clearMale2 == 0) {
+                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clearOthers2 == 1 && clearMale2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, maleDataSet2)]);
-                } else if (clearBlacks2 == 1 && clearSum2 ==1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 0) {
+                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, hispanicDataSet2)]);
-                } else if (clearBlacks2 == 1 && clearSum2 ==1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 1 && clearWhite2 == 0) {
+                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 1 && clearWhite2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, whiteDataSet2)]);
-                } else if (clearBlacks2 == 1 && clearSum2 ==1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 1 && clearWhite2 == 1 && clearFemale2 == 0) {
+                } else if (clearBlacks2 == 1 && clearSum2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 1 && clearWhite2 == 1 && clearFemale2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, femaleDataSet2)]);
                 } else {
                     yScale2.domain([0, d3.max(dataSet, asiansDataSet2)]);
@@ -1369,9 +1369,9 @@ const Visualization = (() => {
                     removeData2("circle.circleHispanic", "path.lineHispanic")
                     removeData2("circle.circleWhite", "path.lineWhite")
                     removeData2("circle.circleAsians", "path.lineAsians")
-                    removeData2("circle.circleOthers", "path.lineOthers")                    
+                    removeData2("circle.circleOthers", "path.lineOthers")
                     removeData2("circle.circleSum", "path.lineSum")
-                    
+
                     //update axis   
                     update_axis2();
                     //set the triggers that everything was cleared
@@ -1719,11 +1719,11 @@ const Visualization = (() => {
                         all_transitions2()
                     }
                     //update axis   
-                    update_axis2();                    
+                    update_axis2();
                 });
         });
     };
-    
+
 
 
     /* --------- TREE MAP ----------  */
