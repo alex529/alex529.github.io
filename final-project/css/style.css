@@ -133,8 +133,9 @@
   color: black;
   text-align: center;
   display: inline-block;
-  font-size: 11px;
-  padding: 6px 12px;
+  font-weight: 300;
+  font-size: 12px;
+  padding: 6px 6px;
   border-radius: 4px;
   -webkit-transition-duration: 0.4s;
   transition-duration: 0.4s;
@@ -142,61 +143,61 @@
 }
 
 .buttonClearAll {
-    border: 1px solid rgb(255, 136, 0);
+    border: 1px solid rgb(255, 0, 0);
     align-self: end;
   }
   
 .buttonClearAll:hover {
-    background-color: rgba(255, 136, 0, 0.2);
-    color: white;
+    background-color: rgba(255, 0, 0, 0.6);
+    color: black;
   } 
 .buttonMale {
     border: 1px solid blue;
   } 
 .buttonMale:hover {
-    background-color: blue;
+    background-color: rgba(0, 0, 255, 0.4);
   } 
 .buttonFemale {
     border: 1px solid red;
   }  
 .buttonFemale:hover {
-    background-color: red;
+    background-color: rgba(255, 0, 0, 0.4);
   }  
 .buttonBlacks {
     border: 1px solid black;
   }  
 .buttonBlacks:hover {
-    background-color: grey;
+    background-color: rgba(128, 128, 128, 0.4);
   }  
 .buttonHispanic {
     border: 1px solid orange;
   }  
 .buttonHispanic:hover {
-    background-color: orange;
+    background-color: rgba(255, 165, 0, 0.4);
   }  
 .buttonWhite {
     border: 1px solid green;
   }  
 .buttonWhite:hover {
-    background-color: green;
+    background-color: rgba(0, 128, 0, 0.4);
   }  
 .buttonAsians {
     border: 1px solid aqua;
   }  
 .buttonAsians:hover {
-    background-color: aqua;
+    background-color: rgba(0, 255, 255, 0.4);
   }  
 .buttonOthers {
     border: 1px solid brown;
   }  
 .buttonOthers:hover {
-    background-color: brown;
+    background-color: rgba(165, 42, 42, 0.4);
   }   
 .buttonSum {
     border: 1px solid grey;
   }  
 .buttonSum:hover {
-    background-color: white;
+    background-color: rgba(47, 79, 79, 0.4);
   }
 
 .highlight-date {
@@ -259,5 +260,9 @@
 }
 .second {
   display: inline-block;    
+}
 
+.btn-toggled{
+  font-weight: 400;
+  border-width: 3px;
 }

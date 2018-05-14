@@ -268,20 +268,7 @@ h1 {
 
 .grid-btn-container {
   display: grid;
-  grid-gap: 1em;
-}
-
-.btn {
-  background-color: white;
-  color: black;
-  text-align: center;
-  display: inline-block;
-  font-size: 11px;
-  padding: 6px 12px;
-  border-radius: 4px;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
-  width: 95px;
+  grid-gap: 0.5em;
 }
 
 .button1 {
