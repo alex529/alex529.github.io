@@ -798,7 +798,8 @@ const Visualization = (() => {
                 Per_Blacks: parseFloat(d.Per_Blacks).toFixed(5) * 1000,
                 Per_White: parseFloat(d.Per_White).toFixed(5) * 1000,
                 Per_Asians: parseFloat(d.Per_Asians).toFixed(5) * 1000,
-                Per_Others: parseFloat(d.Per_Others).toFixed(5) * 1000
+                Per_Others: parseFloat(d.Per_Others).toFixed(5) * 1000,
+                Per_Sum: parseFloat(d.Per_Sum).toFixed(5) * 1000
             };
         }
 
@@ -1099,6 +1100,7 @@ const Visualization = (() => {
             whitePoints2 = (function (d) { return yScale2(d.Per_White); })
             asiansPoints2 = (function (d) { return yScale2(d.Per_Asians); })
             othersPoints2 = (function (d) { return yScale2(d.Per_Others); })
+            sumPoints2 = (function (d) { return yScale2(d.Per_Sum); })
             //draw points
             drawPoints2("circle", femalePoints2, "circleFemale")
             drawPoints2("circle", malePoints2, "circleMale")
@@ -1107,6 +1109,7 @@ const Visualization = (() => {
             drawPoints2("circle", whitePoints2, "circleWhite")
             drawPoints2("circle", asiansPoints2, "circleAsians")
             drawPoints2("circle", othersPoints2, "circleOthers")
+            drawPoints2("circle", sumPoints2, "circleSum")
 
             //draw lines between dots
             function drawLinesBetweenDots2(dataSetType, typeClass) {
@@ -1124,6 +1127,7 @@ const Visualization = (() => {
             whiteDataSet2 = function (d) { return d.Per_White; }
             asiansDataSet2 = function (d) { return d.Per_Asians; }
             othersDataSet2 = function (d) { return d.Per_Others; }
+            sumDataSet2 = function (d) { return d.Per_Sum; }            
 
             //generate lines and draw lines between dots
             generate_line2(femalePoints2)
@@ -1140,6 +1144,8 @@ const Visualization = (() => {
             drawLinesBetweenDots2(asiansDataSet2, "lineAsians")
             generate_line2(othersPoints2)
             drawLinesBetweenDots2(othersDataSet2, "lineOthers")
+            generate_line2(sumPoints2)
+            drawLinesBetweenDots2(sumDataSet2, "lineSum")            
 
             //remove men and women data functions
             function removeData2(circleType, lineType) {
@@ -1155,6 +1161,7 @@ const Visualization = (() => {
             clearWhite2 = 0
             clearAsians2 = 0
             clearOthers2 = 0
+            clearSum2 = 0
             //update axis
             function update_axis2() {
                 svg2.select(".y.axis")
@@ -1194,20 +1201,23 @@ const Visualization = (() => {
                 transition2(whitePoints2, "lineWhite", whiteDataSet2, "circleWhite")
                 transition2(asiansPoints2, "lineAsians", asiansDataSet2, "circleAsians")
                 transition2(othersPoints2, "lineOthers", othersDataSet2, "circleOthers")
+                transition2(sumPoints2, "lineSum", sumDataSet2, "circleSum")                
 
             }
             function scale2() {
                 if (clearBlacks2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, blacksDataSet2)]);
-                } else if (clearBlacks2 == 1 && clearOthers2 == 0) {
+                } else if (clearBlacks2 == 1 && clearSum2 ==0) {
+                    yScale2.domain([0, d3.max(dataSet, sumDataSet2)]);                    
+                } else if (clearBlacks2 == 1 && clearSum2 ==1 && clearOthers2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, othersDataSet2)]);
-                } else if (clearBlacks2 == 1 && clearOthers2 == 1 && clearMale2 == 0) {
+                } else if (clearBlacks2 == 1 && clearSum2 ==1 && clearOthers2 == 1 && clearMale2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, maleDataSet2)]);
-                } else if (clearBlacks2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 0) {
+                } else if (clearBlacks2 == 1 && clearSum2 ==1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, hispanicDataSet2)]);
-                } else if (clearBlacks2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 1 && clearWhite2 == 0) {
+                } else if (clearBlacks2 == 1 && clearSum2 ==1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 1 && clearWhite2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, whiteDataSet2)]);
-                } else if (clearBlacks2 == 1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 1 && clearWhite2 == 1 && clearFemale2 == 0) {
+                } else if (clearBlacks2 == 1 && clearSum2 ==1 && clearOthers2 == 1 && clearMale2 == 1 && clearHispanic2 == 1 && clearWhite2 == 1 && clearFemale2 == 0) {
                     yScale2.domain([0, d3.max(dataSet, femaleDataSet2)]);
                 } else {
                     yScale2.domain([0, d3.max(dataSet, asiansDataSet2)]);
@@ -1265,7 +1275,9 @@ const Visualization = (() => {
                     removeData2("circle.circleHispanic", "path.lineHispanic")
                     removeData2("circle.circleWhite", "path.lineWhite")
                     removeData2("circle.circleAsians", "path.lineAsians")
-                    removeData2("circle.circleOthers", "path.lineOthers")
+                    removeData2("circle.circleOthers", "path.lineOthers")                    
+                    removeData2("circle.circleSum", "path.lineSum")
+                    
                     //update axis   
                     update_axis2();
                     //set the triggers that everything was cleared
@@ -1276,6 +1288,7 @@ const Visualization = (() => {
                     clearWhite2 = 1
                     clearAsians2 = 1
                     clearOthers2 = 1
+                    clearSum2 = 1
                 });
             d3.select("div.buttonMale")
                 .on("click", function () {
@@ -1594,6 +1607,25 @@ const Visualization = (() => {
                     }
                     //update axis   
                     update_axis();
+
+                    //2nd scatter plot
+                    if (clearSum2 == 1) {
+                        sumPoints2 = (function (d) { return yScale2(d.Per_Sum); })
+                        drawPoints2("circle", sumPoints2, "circleSum")
+                        generate_line2(sumPoints2)
+                        drawLinesBetweenDots2(sumDataSet2, "lineSum")
+                        clearSum2 = 0
+                        scale2()
+                        all_transitions2()
+                    } else {
+                        //remove function
+                        removeData2("circle.circleSum", "path.lineSum")
+                        clearSum2 = 1
+                        scale2()
+                        all_transitions2()
+                    }
+                    //update axis   
+                    update_axis2();                    
                 });
         });
     };
