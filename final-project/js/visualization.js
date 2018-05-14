@@ -643,6 +643,15 @@ const Visualization = (() => {
                 .text(function (d) {
                     return Math.round(d.SumRaces / total * 100) + "%";
                 });
+                
+            //Title
+            svg.append("text")
+                .attr("x", (width / 2))             
+                .attr("y", (margin.bottom + 350))
+                .attr("text-anchor", "middle")  
+                .style("font-size", "16px")  
+                .data(dataSet)
+                .text("Race arrests distribution in the interval 2010-2018");    
 
 
         });
@@ -759,6 +768,14 @@ const Visualization = (() => {
                 .text(function (d) {
                     return Math.round(d.SumGender / total * 100) + "%";
                 });
+            //Title
+            svg.append("text")
+                .attr("x", (width / 2))             
+                .attr("y", (margin.bottom + 350))
+                .attr("text-anchor", "middle")  
+                .style("font-size", "16px")  
+                .data(dataSet)
+                .text("Gender arrests distribution in the interval 2010-2018");                   
 
         });
     };
@@ -877,6 +894,14 @@ const Visualization = (() => {
                 .attr("text-anchor", "middle")  // this makes it easy to centre the text as the transform is applied to the anchor
                 .attr("transform", "translate(" + (width / 2) + "," + (height + (padding / 3)) + ")")  // centre below axis
                 .text("Year");
+
+            //Title
+            svg.append("text")
+                .attr("transform", "translate(" + (width / 2) + "," + (height + (padding / 2)) + ")")  // centre below axis
+                .attr("text-anchor", "middle")  
+                .style("font-size", "16px")  
+                .data(dataSet)
+                .text("Total number of arrests distribution per race/gender over time");                 
 
             //draw points(dots) function
             function drawPoints(type, Points, class_type) {
@@ -1074,6 +1099,15 @@ const Visualization = (() => {
                 .attr("transform", "translate(" + (width / 2) + "," + (height + (padding / 3)) + ")")  // centre below axis
                 .text("Year");
 
+            //Title
+            svg2.append("text")
+                .attr("transform", "translate(" + (width / 2) + "," + (height + (padding / 2)) + ")")  // centre below axis
+                .attr("text-anchor", "middle")  
+                .style("font-size", "16px")  
+                .data(dataSet)
+                .text("Number of arrests per 1000 inhabitants based on race/gender over time");                
+                
+                
             //draw points(dots) function
             function drawPoints2(type, Points, class_type) {
                 svg2.selectAll(type + "." + class_type)
