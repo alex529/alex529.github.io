@@ -76,14 +76,27 @@
                                 <h1 class="mdl-cell mdl-cell--12-col">Arrests in Los Angeles</h1>
 
                                 <div class="section__text mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-                                    <h4 class="mdl-cell mdl-cell--12-col">Subtitle (if needed)</h4>
+                                    
                                     <div class="mdl-cell mdl-cell--12-col graybox">
-                                        
+                                        <p>
+                                            Los Angeles is the second most populous city in Unites States, it has a population of about 4 millions and represents a very important financial, cultural and commercial
+                                            hub on the West coast. There is a lot of data about Los Angeles and in this article the arrests will be discussed in depth. There are important facts that have to be 
+                                            analyzed and we a going to focus on four main questions: 
+                                        <ul>
+                                            <li> <b> WHERE </b> are the arrests being made? Where are the safe and dangerous areas in the city?  </li>
+                                            <li> <b> WHO </b> is mainly getting arrested? Do we have any race/gender that is mainly responsible for making illegal things?</li>                                            
+                                            <li> <b> WHEN </b> do we have the most arrests? Do we see any trend that can lead to some conclusions? </li>
+                                            <li> <b> HOW </b> did people get arrested? What are the main reasons for getting arrested in Los Angeles? </li>
+                                        </ul>
+                                            The questions mentioned above represent our foundation for further analysis, the expectations are to answer the questions and in the same time to come up with a discussion 
+                                            about past/future trends that characterize the city of Los Angeles.  
+                                        </p>
                                         
                                         <p>
-                                            INTRO TO DATA STORY AND PROJECT GOES HERE
+                                            In terms of <b> Narrative Visualization Genre </b>, it will represent a mix between <b> Magazine Style </b> and <b> Annotated Charts </b> mainly, including different iterative visualizations and 
+                                            discussions about analyzed results. A special focus will be put on underlying how the visualization helped to get this results and how it facilitated realizing some trends that
+                                            might derive after analysis of such data. 
                                         </p>
-
                                     </div>                
                                 </div>
                             </div>
@@ -96,8 +109,12 @@
                         </header>
                         <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
                             <div class="mdl-card__supporting-text">
-                            <h4>Presentation</h4>
-                            Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor eu fugiat consectetur elit cillum esse.
+                            <h4> Initial Video Presentation</h4>
+                                <p>
+                                    Here is the video that was initially made as the first step towards creating the narrative visualization. The major change that can be spotted is the genre which was initially selected as 
+                                    a Slide Show, but after analyzing the user experience it was decided that the Magazine Style in combination with the Annotated chart will provide a nicer experience for the user, so that he/she
+                                    can read it like a short story about arrests in Los Angeles. 
+                                </p>
                             </div>
                         </div>
                     </section>
@@ -258,12 +275,19 @@
                             -->
 
                             <p>
-                                TEXT GOES HERE
+                                The driving force for selecting a final dataset was mainly to be able to analyze a lot of data and to come up with a story for the user.
+                                As a result the selected dataset represents the Arrests in Los Angeles, it consists of 1.16 millions rows and 17 columns, showing the information 
+                                such as personal information (race, gender), type or arrest(murder, drunkenness etc.), location of the arrest etc. Combining all these data can
+                                result in a wide analysis of arrest in the second biggest city in United States. In addition to the actual analysis, we created a story line 
+                                in the following manner: there are 4 main questions to be answered so that the user will get the whole picture of arrest in Los Angeles. The 
+                                questions are the following: where did the arrest happen? who did it? when did it happen? and how was it made (what type of arrest was made).
+                                Answering these basic questions it will be able to provide the user with detailed analysis and moreover it will underline past/present 
+                                and future trends in this area. 
                             </p>
 
                             <h2 id="basic-stats">2. Basic stats</h4>
-
-
+                            
+                            
                             <!--
                             Write about your choices in data cleaning and preprocessing
 
@@ -271,7 +295,17 @@
                             -->
 
                             <p>
-                                TEXT GOES HERE
+                                Once the dataset was selected, an obvious initial step consisted in data cleaning and prepossessing. Because the tasks were mainly divided by visualizations inside the team,
+                                two main processing languages were used Python to prepare CSV data files for scatter plots and donut charts and GO to process JSON files for the map, calendar and treemap. This
+                                step consisted mainly in counting the number of arrests based on different categories, like: location, race, gender etc. and it served as an input for the visualizations made in D3.
+                            </p>
+                            
+                            <p>
+                                In this paragraph more details about the dataset will be discussed, it was already mentioned that it has 1.16 millions rows and 17 columns. Different visualizations used data from 
+                                different columns, for the map, the "Arrest Date", "Area Name" was mainly used to show the location of the arrest, for the scatter plots and donut charts: "Sex Code", "Descent Code" was mainly used,
+                                the calendar used the "Arrest Date" column and finally the treemap used the "Charge Group Description" and "Charge Description". As it can be seen various columns were used to show different
+                                parts of the story and especially to emphasize the whole picture of arrests in Los Angeles. The main scope of data processing of these columns was to count the number of arrests per specific unit such
+                                as date, race, gender etc. The selection of the dataset was strongly based on the assumption that many different angles of the problem could be tackled and in the end it fulfilled the expectations.
                             </p>
 
                             <h2 id="genre">3. Genre</h4>
@@ -286,7 +320,7 @@
 
 
                             <p>
-                                TEXT GOES HERE
+                                The story line has a combination between Magazine Style and Annotated Charts, it is very similar to a blog post which analyzes some problem and tackles piece by piece individual parts of the problem. 
                             </p>
 
                             <h2 id="visualizations">4. Visualizations</h4>
@@ -327,7 +361,14 @@
                             -->
 
                             <p>
-                                TEXT GOES HERE
+                                <ul>
+                                <li> Map: Main Contributors( Jesper Mark, Alexandru Savin); </li>
+                                <li> Scatter Plots: Main Contributor (Cristian Zara); </li>
+                                <li> Donut Charts: Main Contributor (Cristian Zara); </li>
+                                <li> Calendar: Main Contributor (Jesper Mark) </li>
+                                <li> Treemap: Main Contributor (Alexandru Savin) </li>
+                                </ul>
+                                The main contributors had the main responsibility for the visualizations, but the ideas/suggestions/tunings were usually cross-functional and every group member participated in them. 
                             </p>
 
                             <!--
