@@ -531,7 +531,7 @@ const Visualization = (() => {
                 .attr("font-family", "sans-serif")
                 .attr("font-size", 14)
                 .attr("text-anchor", "middle")
-                .text(function (d) { return "ALL YEARS"; });
+                .text(function (d) { return "Arrests per date (Aggregated data from all years)"; });
         }
         else {
             svg.append("text")
@@ -632,11 +632,12 @@ const Visualization = (() => {
     var setupDoughnut = function () {
         drawGenderDoughnut();
         drawDescentDoughnut();
+        drawAgeDoughnut();
     };
     var drawDescentDoughnut = function () {
         //Width and height
-        var margin = { top: 0, right: 50, bottom: 0, left: 60 };
-        var width = 400 - margin.left - margin.right,
+        var margin = { top: 0, right: 0, bottom: 0, left: 10 };
+        var width = 300 - margin.left - margin.right,
             height = 400 - margin.top - margin.bottom;
         padding = 100;
         var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
@@ -656,8 +657,8 @@ const Visualization = (() => {
             }
             dataSet = rawData;
             //Width and height
-            var w = 300;
-            var h = 300;
+            var w = 250;
+            var h = 250;
             var outerRadius = w / 2;
             var innerRadius = w / 3;
             var arc = d3.arc()
@@ -702,8 +703,8 @@ const Visualization = (() => {
                 });
 
             //legend
-            var legendRectSize = 18;
-            var legendSpacing = 4;
+            var legendRectSize = 14;
+            var legendSpacing = 3;
 
             var legend = svg.selectAll('.legend')
                 .data(color.domain())
@@ -747,21 +748,19 @@ const Visualization = (() => {
 
             //Title
             svg.append("text")
-                .attr("x", (width / 2))
-                .attr("y", (margin.bottom + 350))
+                .attr("x", (width / 2) - 20)
+                .attr("y", (margin.bottom + 300))
                 .attr("text-anchor", "middle")
-                .style("font-size", "16px")
+                .style("font-size", "10px")
                 .data(dataSet)
-                .text("Race arrests distribution in the interval 2010-2018");
-
-
+                .text("Distribution of arrests based on Race");
         });
 
     };
     var drawGenderDoughnut = function () {
         //Width and height
-        var margin = { top: 0, right: 50, bottom: 0, left: 60 };
-        var width = 400 - margin.left - margin.right,
+        var margin = { top: 0, right: 0, bottom: 0, left: 0 };
+        var width = 300 - margin.left - margin.right,
             height = 400 - margin.top - margin.bottom;
         padding = 100;
         var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
@@ -781,8 +780,8 @@ const Visualization = (() => {
             }
             dataSet = rawData;
             //Width and height
-            var w = 300;
-            var h = 300;
+            var w = 250;
+            var h = 250;
             var outerRadius = w / 2;
             var innerRadius = w / 3;
             var arc = d3.arc()
@@ -827,8 +826,8 @@ const Visualization = (() => {
                 });
 
             //legend
-            var legendRectSize = 18;
-            var legendSpacing = 4;
+            var legendRectSize = 14;
+            var legendSpacing = 3;
 
             var legend = svg.selectAll('.legend')
                 .data(color.domain())
@@ -871,15 +870,146 @@ const Visualization = (() => {
                 });
             //Title
             svg.append("text")
-                .attr("x", (width / 2))
-                .attr("y", (margin.bottom + 350))
+                .attr("x", (width / 2) - 20)
+                .attr("y", (margin.bottom + 300))
                 .attr("text-anchor", "middle")
-                .style("font-size", "16px")
+                .style("font-size", "10px")
                 .data(dataSet)
-                .text("Gender arrests distribution in the interval 2010-2018");
+                .text("Distribution of arrests based on Gender");
+
+            //General title
+            svg.append("text")
+                .attr("x", (width / 2) - 20)
+                .attr("y", (margin.bottom + 340))
+                .attr("text-anchor", "middle")
+                .style("font-size", "12px")
+                .data(dataSet)
+                .text("All distributions are for the 2010-2018 interval");                 
 
         });
     };
+    var drawAgeDoughnut = function () {
+        //Width and height
+        var margin = { top: 0, right: 10, bottom: 0, left: 0 };
+        var width = 300 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+        padding = 100;
+        var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
+        var startDate, endDate;
+
+        function rowConverter(d) {
+            return {
+                Age: d.Age,
+                SumAge: d.Sum_Age
+            };
+        }
+
+
+        d3.csv("./data/excel/descent_code_pie_age.csv", rowConverter, function (error, rawData) {
+            if (error) {
+                console.log("Please check if the CSV file is present");
+            }
+            dataSet = rawData;
+            //Width and height
+            var w = 250;
+            var h = 250;
+            var outerRadius = w / 2;
+            var innerRadius = w / 3;
+            var arc = d3.arc()
+                .innerRadius(innerRadius)
+                .cornerRadius(3) // sets how rounded the corners are on each slice
+                .outerRadius(outerRadius);
+
+            var pie = d3.pie()
+                .value(function (d) { return d.SumAge; })
+                .padAngle(0.01);
+            //Easy colors accessible via a 10-step ordinal scale
+            var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+            //Create SVG element
+            var svg = d3.select("#doughnut3").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            //Set up groups
+            var arcs = svg.selectAll("g.arc")
+                .data(pie(dataSet))
+                .enter()
+                .append("g")
+                .attr("class", "arc")
+                .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
+
+            //calculate total
+            var total = d3.sum(dataSet, function (d) { return d.SumAge });
+
+            //Draw arc paths
+            arcs.append("path")
+                .attr("fill", function (d, i) {
+                    return color(i);
+                })
+                .attr("d", arc)
+                .data(dataSet)
+                .append("title")
+                .text(function (d) {
+                    return "The number of arrest for the age " + d.Age + " is: " + d.SumAge + " or " + Math.round(d.SumAge / total * 100) + "%";
+                });
+
+            //legend
+            var legendRectSize = 14;
+            var legendSpacing = 3;
+
+            var legend = svg.selectAll('.legend')
+                .data(color.domain())
+                .enter()
+                .append('g')
+                .attr('class', 'legend')
+                .attr('transform', function (d, i) {
+                    var hLegend = legendRectSize + legendSpacing;
+                    //var offset2 =  h * color.domain().length / 2;
+                    var horz = 7 * legendRectSize;
+                    var vert = i * hLegend + h / 4.2;
+                    return 'translate(' + horz + ',' + vert + ')';
+                });
+
+            legend.append('rect')
+                .attr('width', legendRectSize)
+                .attr('height', legendRectSize)
+                .style('fill', color)
+                .style('stroke', color);
+
+            legend.append('text')
+                .data(dataSet)
+                .attr('x', legendRectSize + legendSpacing)
+                .attr('y', legendRectSize - legendSpacing)
+                .text(function (d) { return d.Age; });
+
+            //Labels
+            arcs.append("text")
+                .attr("text-anchor", "middle")
+                .attr("transform", function (d) {
+                    var _d = arc.centroid(d);
+                    _d[0] *= 1.35;	//multiply by a constant factor
+                    _d[1] *= 1.35;	//multiply by a constant factor
+                    return "translate(" + _d + ")";
+                })
+                .attr("dy", ".50em")
+                .data(dataSet)
+                .text(function (d) {
+                    return Math.round(d.SumAge / total * 100) + "%";
+                });
+            //Title
+            svg.append("text")
+                .attr("x", (width / 2) - 20)
+                .attr("y", (margin.bottom + 300))
+                .attr("text-anchor", "middle")
+                .style("font-size", "10px")
+                .data(dataSet)
+                .text("Distribution of arrests based on Age");                             
+
+        });
+    };    
 
     /* --------- SCATTER PLOT ----------  */
     var setupScatterPlot = function () {
