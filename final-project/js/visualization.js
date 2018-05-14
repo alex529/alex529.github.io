@@ -9,7 +9,6 @@ const Visualization = (() => {
 
     var loadDataAndSetupVisualizations = function () {
         setupMap();
-        setupTimeline();
         setupDoughnut();
         setupCalendar();
         setupScatterPlot();
@@ -95,7 +94,11 @@ const Visualization = (() => {
                     .style("fill", (d, i) => {
                         let id = d.properties.external_id;
                         return colorScale(data.Districts[id].count);
-                    });
+                    })
+                    .append("title")
+                    .text(function (d) {
+                        return d.properties.name + ": " + data.Districts[d.properties.external_id].count + " arrests";
+                    });;
 
                 let legendSvg = d3.select('#color-legend')
                     .append('svg')
@@ -327,6 +330,7 @@ const Visualization = (() => {
     };
 
     const redrawTimeline = (data) => {
+        setupTimeline();
         populateTimeline(data);
         hideLoader('timeline');
     }
@@ -380,8 +384,7 @@ const Visualization = (() => {
     }
 
     const resetTimeline = () => {
-        d3.selectAll('#timeline svg g')
-            .selectAll("*")
+        d3.selectAll('#timeline svg')
             .remove();
     }
 
