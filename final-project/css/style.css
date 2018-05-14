@@ -390,6 +390,9 @@
 .second {
   display: inline-block;    
 }
+.third {
+  display: inline-block;    
+}
 
 .btn-toggled{
   font-weight: 400;
