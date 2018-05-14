@@ -325,3 +325,16 @@ h2{
 .mdl-mega-footer {
   margin-top: 40px !important;
 }
+
+
+.mdl-layout__header{
+  background: #FFC107 !important;
+}
+
+.mdl-layout__tab-bar{
+  background: #FFA000 !important;
+}
+
+.mdl-color--accent{
+  background: #FFEB3B !important;
+}

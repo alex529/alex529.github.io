@@ -187,7 +187,15 @@ const Visualization = (() => {
             .rangeRound([0, timeline.width]);
 
         const yScale = d3.scaleLinear()
-            .domain([0, d3.max(data, function (d) { return d.Locations.length; })])
+            .domain([0, d3.max(data, function (d) { 
+                let count = 0;
+                for(let k in d.Locations){
+                    if(d.Locations.hasOwnProperty(k)){
+                        count += d.Locations[k].count;
+                    }
+                }
+                return count; 
+            })])
             .range([timeline.height, 0]);
 
         const xAxis = d3.axisBottom()
@@ -205,11 +213,23 @@ const Visualization = (() => {
                 return xScale(d.time);
             })
             .attr('y', function (d) {
-                return yScale(d.Locations.length);
+                let count = 0;
+                for(let k in d.Locations){
+                    if(d.Locations.hasOwnProperty(k)){
+                        count += d.Locations[k].count;
+                    }
+                }
+                return yScale(count);
             })
             .attr('width', timeline.width / data.length)
             .attr('height', function (d) {
-                return timeline.height - yScale(d.Locations.length);
+                let count = 0;
+                for(let k in d.Locations){
+                    if(d.Locations.hasOwnProperty(k)){
+                        count += d.Locations[k].count;
+                    }
+                }
+                return timeline.height - yScale(count);
             })
             .attr('fill', 'darkslateblue');
 
@@ -247,59 +267,14 @@ const Visualization = (() => {
 
             const t1 = (xScale.invert(s[0]));
             const t2 = (xScale.invert(s[1]));
+            let circles =  d3.selectAll('#map svg circle');
 
-            let j = 0;
-
-
-
-            if (oldti1[0] < t1) {
-                //left edge of the brushed moved ->
-
-                for (j = oldti1[1]; data[j].time < t1; j++) {
-                    for (let i = 0; i < data[j].Locations.length; i++) {
-                        const c = document.getElementById(data[j].Locations[i].id)
-                        if (c !== null) {
-                            c.style.display = 'none';
-                        }
-                    }
-                }
-                oldti1 = [t1, j]
-            } else if (oldti1[0].getTime() !== t1.getTime()) {
-                //left edge of the brushed moved <-
-                for (j = oldti1[1]; data[j].time > t1; j--) {
-                    for (let i = 0; i < data[j].Locations.length; i++) {
-                        const c = document.getElementById(data[j].Locations[i].id)
-                        if (c !== null) {
-                            c.style.display = 'initial';
-                        }
-                    }
-                }
-                oldti1 = [t1, j]
-            }
-
-            if (oldti2[0] > t2) {
-                //right edge of the brushed moved ->
-                for (j = oldti2[1]; data[j].time > t2; j--) {
-                    for (let i = 0; i < data[j].Locations.length; i++) {
-                        const c = document.getElementById(data[j].Locations[i].id)
-                        if (c !== null) {
-                            c.style.display = 'none';
-                        }
-                    }
-                }
-                oldti2 = [t2, j];
-            } else if (oldti2[0].getTime() !== t2.getTime()) {
-                //right edge of the brushed moved <-
-                for (j = oldti2[1]; data[j].time < t2; j++) {
-                    for (let i = 0; i < data[j].Locations.length; i++) {
-                        const c = document.getElementById(data[j].Locations[i].id)
-                        if (c !== null) {
-                            c.style.display = 'initial';
-                        }
-                    }
-                }
-                oldti2 = [t2, j];
-            }
+            circles.attr("class", "not-brushed");
+        
+            circles.filter(function (d){
+                    return t1 <= d.Date && d.Date <= t2;            
+                })
+                .attr("class", "brushed");
         }
 
         brush = d3.brushX()
@@ -394,7 +369,7 @@ const Visualization = (() => {
             .style("stroke-width", 1.5 / d3.event.transform.k + "px")
             .attr("transform", d3.event.transform);
 
-        d3.selectAll('circle')
+        d3.selectAll('#map svg circle')
             .attr("transform", d3.event.transform);
     };
 
