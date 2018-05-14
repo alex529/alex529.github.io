@@ -243,3 +243,21 @@
 .brushed{
   display: initial;
 }
+
+.hor-vert-center{
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  text-align: center;
+}
+
+.donuts {
+  text-align: center;
+}
+.first {
+  display: inline-block;
+}
+.second {
+  display: inline-block;    
+
+}
