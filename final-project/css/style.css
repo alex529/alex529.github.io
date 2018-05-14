@@ -106,7 +106,7 @@
   }
 .line20_29 {
     fill: none;
-    stroke: Coral;
+    stroke: MediumTurquoise ;
     stroke-width: 1;
   }
 .line30_39 {
@@ -121,7 +121,7 @@
   }
 .line50_59 {
     fill: none;
-    stroke: DarkOrange;
+    stroke: LightPink ;
     stroke-width: 1;
   }
 .line60_69 {
@@ -176,8 +176,8 @@
      fill: Chartreuse ;     
 } 
 .circle20_29 {
-     stroke: Coral ;
-     fill: Coral ;     
+     stroke: MediumTurquoise  ;
+     fill: MediumTurquoise  ;     
 } 
 .circle30_39 {
      stroke: CornflowerBlue ;
@@ -188,8 +188,8 @@
      fill: DarkMagenta ;     
 } 
 .circle50_59 {
-     stroke: DarkOrange ;
-     fill: DarkOrange ;     
+     stroke: LightPink  ;
+     fill: LightPink  ;     
 } 
 .circle60_69 {
      stroke: DeepPink;
@@ -285,10 +285,10 @@
     background-color: Chartreuse;
   } 
 .button20_29 {
-    border: 1px solid Coral;
+    border: 1px solid MediumTurquoise ;
   }  
 .button20_29:hover {
-    background-color: Coral;
+    background-color: MediumTurquoise ;
   } 
 .button30_39 {
     border: 1px solid CornflowerBlue;
@@ -303,10 +303,10 @@
     background-color: DarkMagenta;
   } 
 .button50_59 {
-    border: 1px solid DarkOrange;
+    border: 1px solid LightPink ;
   }  
 .button50_59:hover {
-    background-color: DarkOrange;
+    background-color: LightPink;
   } 
 .button60_69 {
     border: 1px solid DeepPink;
