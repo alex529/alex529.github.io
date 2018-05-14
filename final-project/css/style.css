@@ -96,42 +96,42 @@
   } 
 .line0_9 {
     fill: none;
-    stroke: grey;
+    stroke: CadetBlue;
     stroke-width: 1;
   } 
 .line10_19 {
     fill: none;
-    stroke: grey;
+    stroke: Chartreuse;
     stroke-width: 1;
   }
 .line20_29 {
     fill: none;
-    stroke: grey;
+    stroke: Coral;
     stroke-width: 1;
   }
 .line30_39 {
     fill: none;
-    stroke: grey;
+    stroke: CornflowerBlue;
     stroke-width: 1;
   }
 .line40_49 {
     fill: none;
-    stroke: grey;
+    stroke: DarkMagenta;
     stroke-width: 1;
   }
 .line50_59 {
     fill: none;
-    stroke: grey;
+    stroke: DarkOrange;
     stroke-width: 1;
   }
 .line60_69 {
     fill: none;
-    stroke: grey;
+    stroke: DeepPink;
     stroke-width: 1;
   }
 .line70_plus {
     fill: none;
-    stroke: grey;
+    stroke: GoldenRod;
     stroke-width: 1;
   }  
   
@@ -168,36 +168,36 @@
      fill: grey;     
 }  
 .circle0_9 {
-     stroke: grey;
-     fill: grey;     
+     stroke: CadetBlue ;
+     fill: CadetBlue ;     
 } 
 .circle10_19 {
-     stroke: grey;
-     fill: grey;     
+     stroke: Chartreuse ;
+     fill: Chartreuse ;     
 } 
 .circle20_29 {
-     stroke: grey;
-     fill: grey;     
+     stroke: Coral ;
+     fill: Coral ;     
 } 
 .circle30_39 {
-     stroke: grey;
-     fill: grey;     
+     stroke: CornflowerBlue ;
+     fill: CornflowerBlue ;     
 } 
 .circle40_49 {
-     stroke: grey;
-     fill: grey;     
+     stroke: DarkMagenta ;
+     fill: DarkMagenta ;     
 } 
 .circle50_59 {
-     stroke: grey;
-     fill: grey;     
+     stroke: DarkOrange ;
+     fill: DarkOrange ;     
 } 
 .circle60_69 {
-     stroke: grey;
-     fill: grey;     
+     stroke: DeepPink;
+     fill: DeepPink;     
 } 
 .circle70_plus {
-     stroke: grey;
-     fill: grey;     
+     stroke: GoldenRod ;
+     fill: GoldenRod ;     
 }  
 
 /* buttons graph*/
@@ -272,54 +272,53 @@
 .buttonSum:hover {
     background-color: rgba(47, 79, 79, 0.4);
   }
-  
 .button0_9 {
-    border: 1px solid grey;
+    border: 1px solid CadetBlue;
   }  
 .button0_9:hover {
-    background-color: rgba(47, 79, 79, 0.4);
+    background-color: CadetBlue;
   } 
 .button10_19 {
-    border: 1px solid grey;
+    border: 1px solid Chartreuse;
   }  
 .button10_19:hover {
-    background-color: rgba(47, 79, 79, 0.4);
+    background-color: Chartreuse;
   } 
 .button20_29 {
-    border: 1px solid grey;
+    border: 1px solid Coral;
   }  
 .button20_29:hover {
-    background-color: rgba(47, 79, 79, 0.4);
+    background-color: Coral;
   } 
 .button30_39 {
-    border: 1px solid grey;
+    border: 1px solid CornflowerBlue;
   }  
 .button30_39:hover {
-    background-color: rgba(47, 79, 79, 0.4);
+    background-color: CornflowerBlue;
   } 
 .button40_49 {
-    border: 1px solid grey;
+    border: 1px solid DarkMagenta;
   }  
 .button40_49:hover {
-    background-color: rgba(47, 79, 79, 0.4);
+    background-color: DarkMagenta;
   } 
 .button50_59 {
-    border: 1px solid grey;
+    border: 1px solid DarkOrange;
   }  
 .button50_59:hover {
-    background-color: rgba(47, 79, 79, 0.4);
+    background-color: DarkOrange;
   } 
 .button60_69 {
-    border: 1px solid grey;
+    border: 1px solid DeepPink;
   }  
 .button60_69:hover {
-    background-color: rgba(47, 79, 79, 0.4);
+    background-color: DeepPink;
   } 
 .button70_plus {
-    border: 1px solid grey;
+    border: 1px solid GoldenRod;
   }  
 .button70_plus:hover {
-    background-color: rgba(47, 79, 79, 0.4);
+    background-color: GoldenRod;
   }   
 
 .highlight-date {
