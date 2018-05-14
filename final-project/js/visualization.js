@@ -1425,7 +1425,7 @@ const Visualization = (() => {
                 btn.classed("btn-toggled", !btn.classed("btn-toggled"));
             }
             function unToggleAllBtns() {
-                d3.select('.grid-btn-container')
+                d3.selectAll('.grid-btn-container')
                     .selectAll('.btn')
                     .classed("btn-toggled", false);
             }
