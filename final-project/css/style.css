@@ -366,6 +366,9 @@
 .brushed{
   display: initial;
 }
+.center{
+  text-align: center;
+}
 
 .hor-vert-center{
   display: flex;
@@ -387,4 +390,16 @@
 .btn-toggled{
   font-weight: 400;
   border-width: 3px;
+}
+
+.calendar-day, .calendar-month{
+  font-size: 9px;
+}
+
+.cal{
+  margin-bottom: 40px;
+}
+
+#yearly-calendars{
+  display: none;
 }
