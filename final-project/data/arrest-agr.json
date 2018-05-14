@@ -1,316 +1,904 @@
-{
-  "Against Family/Child": {
-    "Count": 5784,
-    "Sub": {
-      "DISOBEY DOMESTIC RELATIONS COURT ORDER": 5402,
-      "HARMFUL MATTER SENT: SEDUCTION OF MINOR": 19,
-      "Others": 348,
-      "VIOLATION OF CUSTODY DECREE": 15
-    }
-  },
-  "Aggravated Assault": {
-    "Count": 71131,
-    "Sub": {
-      "ADW, NOT FIREARM, W/GBI": 22986,
-      "ARSON INHABITED STRUCTURE/PROPERTY": 206,
-      "ATTEMPT - MURDER": 2163,
-      "BATTERY W/GBI": 2891,
-      "CORPORAL INJURY ON SPOUSE/COHABITANT/ETC": 39851,
-      "CRUEL TO CHILD LIKELY TO PROD GBI/DEATH": 1410,
-      "Others": 1624
-    }
-  },
-  "Burglary": {
-    "Count": 21426,
-    "Sub": {
-      "ATTEMPT - BURGLARY": 1288,
-      "BURGLARY": 20072,
-      "Others": 66
-    }
-  },
-  "Disorderly Conduct": {
-    "Count": 34503,
-    "Sub": {
-      "ATT DISORDR COND LODGE,BLDG/ETC W/O CONS": 1,
-      "BEGGING": 2222,
-      "INTERFERING W/A POLICE HORSE/DOG": 3,
-      "Others": 3482,
-      "SIT/LIE/SLEEP SIDEWALK OR STREET": 28795
-    }
-  },
-  "Disturbing the Peace": {
-    "Count": 2811,
-    "Sub": {
-      "NOISE ORD - MOTOR VEH ENGINE, ETC": 16,
-      "NOISE ORD AMPLIFIED SOUND-THEATRES": 2,
-      "NOISE ORDINANCE": 1183,
-      "Others": 1610
-    }
-  },
-  "Driving Under Influence": {
-    "Count": 106077,
-    "Sub": {
-      "DRUNK DRIVING ALCOHOL/DRUGS": 97793,
-      "DUI ALCOHOL/DRUGS ON BICYCLE": 2046,
-      "DUI ALCOHOL/DRUGS W/INJURY": 5779,
-      "DUI W/PRIOR SPECIFIC CONVICTIONS": 1
-    }
-  },
-  "Drunkeness": {
-    "Count": 109988,
-    "Sub": {
-      "DRINKING IN PUBLIC": 98548,
-      "DRINKING IN PUBLIC***": 8071,
-      "DRUNK, ALCOHOL": 3369
-    }
-  },
-  "Federal Offenses": {
+[
+  {
     "Count": 199,
-    "Sub": {
-      "DESERTION": 24,
-      "Others": 174,
-      "POSS/ETC COUNTERFIT $/ETC": 1
-    }
+    "Name": "Federal Offenses",
+    "SubCats": [
+      {
+        "Count": 81,
+        "Name": "Others"
+      },
+      {
+        "Count": 94,
+        "Name": "PROBATION VIOLATION; FEDERAL"
+      },
+      {
+        "Count": 24,
+        "Name": "DESERTION"
+      }
+    ]
   },
-  "Forgery/Counterfeit": {
-    "Count": 6436,
-    "Sub": {
-      "ACQUIRE ACCESS CARD IN 4+ NAMES \u003e 12 MOS": 1313,
-      "ATTEMPT MAKE/POSS/UTTER FICTITIOUS INSTRMT": 2,
-      "COUNTERFEITING - PUNISHMENT": 1749,
-      "FALSE CHECKS/REC/CERT/ETC": 1099,
-      "MFG/SELL COUNTERFEIT MARK": 1078,
-      "OFFER FALSE/FORGED INSTRUMENT TO BE FILED": 70,
-      "Others": 1125
-    }
-  },
-  "Fraud/Embezzlement": {
-    "Count": 8064,
-    "Sub": {
-      "DISPLAY FALSE DISABLED PERSON PLACARD": 1277,
-      "FALSE REPRES SELF AS ALARM COMPANY LIC": 1,
-      "FUEL NOT CONE TO SPECS": 1,
-      "GET CREDIT/ETC OTHER'S ID": 2750,
-      "Others": 4035
-    }
-  },
-  "Gambling": {
-    "Count": 1950,
-    "Sub": {
-      "GAMBLING LOOKOUT": 45,
-      "MISC GAMBLING": 387,
-      "Others": 1518
-    }
-  },
-  "Homicide": {
+  {
     "Count": 2056,
-    "Sub": {
-      "MURDER:FIRST DEGREE:SHOOT FROM VEHICLE": 1774,
-      "Others": 180,
-      "VEH MANSLAUGHTER DUI W/GROSS NEGLIGENCE": 102
-    }
+    "Name": "Homicide",
+    "SubCats": [
+      {
+        "Count": 180,
+        "Name": "Others"
+      },
+      {
+        "Count": 1774,
+        "Name": "MURDER:FIRST DEGREE:SHOOT FROM VEHICLE"
+      },
+      {
+        "Count": 102,
+        "Name": "VEH MANSLAUGHTER DUI W/GROSS NEGLIGENCE"
+      }
+    ]
   },
-  "Larceny": {
-    "Count": 62701,
-    "Sub": {
-      "ATT -PETTY THEFT MERCHANDISE/LIBRARY BOOK": 7,
-      "BURGLARY FROM VEHICLE": 1109,
-      "EVADE PAYFARE PUBLC/SUBSIDIZE TRANSP SYS": 950,
-      "GRAND THEFT (OVER $400)": 22578,
-      "GRAND THEFT MONEY/PROPERTY \u003e $400": 8374,
-      "Others": 1167,
-      "PETTY THEFT": 4625,
-      "PETTY THEFT LESS THAN $50": 2885,
-      "PETTY THEFT W/SPECIFIED PRIOR CONVICTION": 5783,
-      "SHOPLIFTING": 9373,
-      "THEFT FROM VEHICLE": 4794
-    }
+  {
+    "Count": 106077,
+    "Name": "Driving Under Influence",
+    "SubCats": [
+      {
+        "Count": 458,
+        "Name": "Others"
+      },
+      {
+        "Count": 1,
+        "Name": "DUI W/PRIOR SPECIFIC CONVICTIONS"
+      },
+      {
+        "Count": 2046,
+        "Name": "DUI ALCOHOL/DRUGS ON BICYCLE"
+      },
+      {
+        "Count": 97793,
+        "Name": "DRUNK DRIVING ALCOHOL/DRUGS"
+      },
+      {
+        "Count": 5779,
+        "Name": "DUI ALCOHOL/DRUGS W/INJURY"
+      }
+    ]
   },
-  "Liquor Laws": {
-    "Count": 46261,
-    "Sub": {
-      "DRINKING ALCOHOL": 8339,
-      "HIRE TO PROCURE LIQUOR SALE": 102,
-      "MINOR IN POSSESSION OF ALCOHOLIC BEVERAGE": 4604,
-      "MINOR POSSESS ALCOHOL": 1596,
-      "OPEN ALCOHOLIC BEV IN PUBLIC PARK/PLACE": 25453,
-      "Others": 1662,
-      "POSS OPEN CONTAINER ALC BEV": 1976,
-      "SALE/ETC OF ALCOHOLIC BEVERAGE TO MINOR": 2529
-    }
+  {
+    "Count": 71131,
+    "Name": "Aggravated Assault",
+    "SubCats": [
+      {
+        "Count": 1705,
+        "Name": "Others"
+      },
+      {
+        "Count": 87,
+        "Name": "ASSAULT WITH DEADLY WEAPON PERSON"
+      },
+      {
+        "Count": 38,
+        "Name": "ASSAULT W/STUN GUN OR TASER"
+      },
+      {
+        "Count": 2163,
+        "Name": "ATTEMPT - MURDER"
+      },
+      {
+        "Count": 39851,
+        "Name": "CORPORAL INJURY ON SPOUSE/COHABITANT/ETC"
+      },
+      {
+        "Count": 22986,
+        "Name": "ADW, NOT FIREARM, W/GBI"
+      },
+      {
+        "Count": 2891,
+        "Name": "BATTERY W/GBI"
+      },
+      {
+        "Count": 1410,
+        "Name": "CRUEL TO CHILD LIKELY TO PROD GBI/DEATH"
+      }
+    ]
   },
-  "Miscellaneous Other Violations": {
-    "Count": 216415,
-    "Sub": {
-      "CRIMINAL THREATS": 9240,
-      "CURFEW - JUV ONLY": 12314,
-      "ENTER/REMAIN ON POSTED PROPERTY": 1950,
-      "FLASH INCARCERATION": 9551,
-      "FTA AFTER WRITTEN PROMISE": 29620,
-      "FUGITIVE FROM JUSTICE:WARRANTLESS ARREST": 2900,
-      "HIRE VEH W/O LIC": 4797,
-      "ILLEGAL POSSESSION OF SHOPPING CART": 8815,
-      "ILLEGAL POSSESSION OF SHOPPING CART****": 1341,
-      "LEAVING PERSONAL PROP ON SIDEWALK": 1090,
-      "LOS ANGELES MUNICIPAL CODE": 23696,
-      "MATERIAL WITNESS/CIVIL CONTEMPT": 1,
-      "MINOR BUY/ETC TOBACCO/ETC": 6274,
-      "Others": 17046,
-      "PARK REGULATIONS": 5661,
-      "PAROLE WARRANT": 4409,
-      "PETITION TO REVOKE PRCS": 4777,
-      "POSSESSION BURGLARY TOOLS": 2149,
-      "PROBATION VIOLATION": 3405,
-      "REARREST/REVOKE PROBATION/ETC": 1564,
-      "SOLICIT SIDEWALK": 4552,
-      "TATTOO PERSON UNDER 18 YRS": 1137,
-      "TRESPASS W/PRIOR WARNING 24HRS": 2968,
-      "TRESPASSING": 1582,
-      "TRESPASSING LANDS UNDER CULTIVATION": 6762,
-      "UNAUTHORIZED ENTRY NONCOMMERCIAL DWELLNG": 1354,
-      "URINATING OR DEFECATING IN PUBLIC": 1180,
-      "VANDALISM LOSS VALUE: \u003e $5000/\u003c$50,000": 20628,
-      "VIOL DOMESTIC VIOL PROTECT/STAY AWAY ORD": 6417,
-      "VIOLATION OF PAROLE:FELONY": 19235
-    }
-  },
-  "Moving Traffic Violations": {
-    "Count": 47742,
-    "Sub": {
-      "DISREGARD SAFETY:EVADE PO": 1394,
-      "DRIVE W/LIC SUSPEND/REVOKE 4 OTHER REASON": 19567,
-      "FTA/TRAFFIC WARRANT": 11269,
-      "HIT AND RUN CAUSING INJURY/DEATH": 1112,
-      "HIT AND RUN:PROP DAMAGE": 3102,
-      "LOCATION/NUMBER OF LICENSE PLATES": 25,
-      "OPERATE BICYCLE AT NIGHT W/O LIGHTS": 111,
-      "Others": 3327,
-      "RECKLESS DRIVING": 1119,
-      "UNLICENSED DRIVER": 6716
-    }
-  },
-  "Narcotic Drug Laws": {
-    "Count": 145575,
-    "Sub": {
-      "BRING/SEND NARC/CONT SUBS/ALCOHOL TO JAIL": 1209,
-      "MANUFACTURE/ETC CONTROLLED SUBSTANCE": 2159,
-      "Others": 4283,
-      "POS CNTL SUB:W/O PRESCRIP": 191,
-      "POSS DEVICE/INSTRUMT/PARAPHERNALIA": 2649,
-      "POSS/PURCHASE COCAINE BASE FOR SALE": 3913,
-      "POSSESS 28.5 GRAMS OR LESS OF MARIJUANA": 8588,
-      "POSSESS 28.5 GRAMS OR LESS OF MARIJUANA**": 15630,
-      "POSSESSION CNTL SUBSTANCE PARAPHERNALIA": 7095,
-      "POSSESSION CONTROLLED SUBSTANCE": 11633,
-      "POSSESSION OF CONTROLLED SUBSTANCE": 32625,
-      "PREPARE/SELL/GIVE C/SUBS TO MINOR/SCHOOL": 7,
-      "SELL/FURNISH/ETC MARIJ/HASH OVER 1 OZ": 3497,
-      "TRANSPORT/SELL/ETC CONTROLLED SUBSTANCE": 9566,
-      "UNDER INFLUENCE CNTL SUB": 3660,
-      "USE/UNDER INFLUENCE OF CONTROLLED SUBS": 2489
-    }
-  },
-  "Non-Criminal Detention": {
-    "Count": 6557,
-    "Sub": {
-      "PARENT IN CUSTODY, NO CARETAKER AVAILABLE": 6542,
-      "REMOVE MINOR FROM CUSTODY OF PARENT": 15
-    }
-  },
-  "Other Assaults": {
-    "Count": 50872,
-    "Sub": {
-      "BATT PRSN:PUB TRANSP/ETC": 5,
-      "BATTERY ON NONCOHABITATING FORMER SPOUSE": 2916,
-      "BATTERY ON PERSON": 32607,
-      "BATTERY ON PERSON ON SCHOOL/HOSP/PARK/PROP": 1200,
-      "OBSTRUCT/ETC PUB OFCR/ETC": 5001,
-      "OBSTRUCT/RESIST EXECUTIVE OFFICER": 2378,
-      "Others": 1451,
-      "TERRORIZE CAUSING FEAR": 5307,
-      "VIOL CIVIL RIGHTS BY FORCE/THREAT OF FRCE": 7
-    }
-  },
-  "Pre-Delinquency": {
-    "Count": 11818,
-    "Sub": {
-      "Others": 424,
-      "TRUANCY": 10766,
-      "TRUANCY*****": 628
-    }
-  },
-  "Prostitution/Allied": {
-    "Count": 34556,
-    "Sub": {
-      "LOITER:INTENT:PROSTITUTION": 7269,
-      "LOITERING FOR PURPOSES OF PROSTITUTION": 2593,
-      "Others": 760,
-      "PROSTITUTION": 23934
-    }
-  },
-  "Rape": {
-    "Count": 2496,
-    "Sub": {
-      "ORAL COP:W/VICT UNCONSC OF NATURE OF ACT": 207,
-      "Others": 1169,
-      "RAPE BY FORCE/FEAR": 1118,
-      "UNLAWFUL SEXUAL INTERCOURSE": 2
-    }
-  },
-  "Receive Stolen Property": {
-    "Count": 6018,
-    "Sub": {
-      "ATTEMPT RECEIVE KNOWN STOLEN PROPERTY/ETC": 9,
-      "ATTEMPT RECEIVE STOLEN PROPERTY \u003e$950": 37,
-      "Others": 628,
-      "RECEIVING KNOWN STOLEN PROPERTY \u003e$950": 5344
-    }
-  },
-  "Robbery": {
-    "Count": 22498,
-    "Sub": {
-      "ATTEMPT - ROBBERY": 2529,
-      "ATTEMPT-ROBBERY W/IN PUBLC VEH-1ST DEGREE": 2,
-      "ROBBERY": 19224,
-      "ROBBERY - SECOND DEGREE": 167
-    }
-  },
-  "Sex (except rape/prst)": {
-    "Count": 11788,
-    "Sub": {
-      "ADULT SCHOOL/MOLEST PUPILS": 1668,
-      "DEVELOP/DUPL FILM/ETC DEPICTNG MINOR W/PR": 8,
-      "INDECENT EXPOSURE,ILL ENTRY OCCUPY DWELLG": 1038,
-      "LEWD/LASCIVIOUS ACTS W/CHILD \u003c 14 YRS": 2051,
-      "Others": 2905,
-      "SEXUAL BATTERY BY RESTRAINT": 1239,
-      "SEXUAL MISCONDUCT": 2,
-      "SOLICIT/ENGAGE LEWD ACT IN PUBLIC VIEW": 2877
-    }
-  },
-  "Vehicle Theft": {
-    "Count": 20365,
-    "Sub": {
-      "ATTEMPT GRAND THEFT VEHICLE/VESSEL/ETC": 26,
-      "GRAND THEFT AUTO/HORSE/ETC": 6656,
-      "GRAND THEFT VEHICLE/VESSEL/ETC": 12,
-      "TAKE VEHICLE W/O OWNER'S CONSENT": 12825
-    }
-  },
-  "Weapon (carry/poss)": {
+  {
     "Count": 26056,
-    "Sub": {
-      "CARRY CONCEALED ON PERSON DIRK OR DAGGER": 2326,
-      "CARRY CONCEALED WEAPON IN VEHICLE": 2250,
-      "CARRY LOADED FIREARM:GANG MEMBER": 2401,
-      "ILLEGAL POSSESSION OF AMMUNITION": 1134,
-      "MFG/SELL/GIVE/LEND POSSESS METAL KNUCKLES": 1106,
-      "Others": 9118,
-      "POSS F/ARM BY CONVICTED FELON/ADDICT/ETC": 4856,
-      "POSS FIREARM BY CONVICTD FELON/ADDICT/ETC": 1092,
-      "POSSESS/SELL/MFG DANGEROUS WEAPON": 1764,
-      "PURCHASES, OWNS, OR POSSESSES BODY ARMOR": 8,
-      "VIOL F/ARM SALES/LEASE/TRANSPORT REGLTNS": 1
-    }
+    "Name": "Weapon (carry/poss)",
+    "SubCats": [
+      {
+        "Count": 8069,
+        "Name": "Others"
+      },
+      {
+        "Count": 259,
+        "Name": "ILLEGAL USE OF TEAR GAS/TEAR GAS WEAPON"
+      },
+      {
+        "Count": 799,
+        "Name": "EXHIBIT/DRAW DEADLY WEAPON NOT A FIREARM"
+      },
+      {
+        "Count": 2401,
+        "Name": "CARRY LOADED FIREARM:GANG MEMBER"
+      },
+      {
+        "Count": 2250,
+        "Name": "CARRY CONCEALED WEAPON IN VEHICLE"
+      },
+      {
+        "Count": 1134,
+        "Name": "ILLEGAL POSSESSION OF AMMUNITION"
+      },
+      {
+        "Count": 2326,
+        "Name": "CARRY CONCEALED ON PERSON DIRK OR DAGGER"
+      },
+      {
+        "Count": 4856,
+        "Name": "POSS F/ARM BY CONVICTED FELON/ADDICT/ETC"
+      },
+      {
+        "Count": 1764,
+        "Name": "POSSESS/SELL/MFG DANGEROUS WEAPON"
+      },
+      {
+        "Count": 1106,
+        "Name": "MFG/SELL/GIVE/LEND POSSESS METAL KNUCKLES"
+      },
+      {
+        "Count": 1092,
+        "Name": "POSS FIREARM BY CONVICTD FELON/ADDICT/ETC"
+      }
+    ]
+  },
+  {
+    "Count": 6436,
+    "Name": "Forgery/Counterfeit",
+    "SubCats": [
+      {
+        "Count": 1190,
+        "Name": "Others"
+      },
+      {
+        "Count": 6,
+        "Name": "MFG/SELL FALSE GOVERNMENT DOCUMENTS"
+      },
+      {
+        "Count": 1,
+        "Name": "UNLAWFUL PROCUREMENT OF MED DIPLOMA/CERT"
+      },
+      {
+        "Count": 1313,
+        "Name": "ACQUIRE ACCESS CARD IN 4+ NAMES \u003e 12 MOS"
+      },
+      {
+        "Count": 1078,
+        "Name": "MFG/SELL COUNTERFEIT MARK"
+      },
+      {
+        "Count": 1099,
+        "Name": "FALSE CHECKS/REC/CERT/ETC"
+      },
+      {
+        "Count": 1749,
+        "Name": "COUNTERFEITING - PUNISHMENT"
+      }
+    ]
+  },
+  {
+    "Count": 21426,
+    "Name": "Burglary",
+    "SubCats": [
+      {
+        "Count": 66,
+        "Name": "Others"
+      },
+      {
+        "Count": 20072,
+        "Name": "BURGLARY"
+      },
+      {
+        "Count": 1288,
+        "Name": "ATTEMPT - BURGLARY"
+      }
+    ]
+  },
+  {
+    "Count": 6557,
+    "Name": "Non-Criminal Detention",
+    "SubCats": [
+      {
+        "Count": 0,
+        "Name": "Others"
+      },
+      {
+        "Count": 6542,
+        "Name": "PARENT IN CUSTODY, NO CARETAKER AVAILABLE"
+      },
+      {
+        "Count": 15,
+        "Name": "REMOVE MINOR FROM CUSTODY OF PARENT"
+      }
+    ]
+  },
+  {
+    "Count": 20365,
+    "Name": "Vehicle Theft",
+    "SubCats": [
+      {
+        "Count": 876,
+        "Name": "Others"
+      },
+      {
+        "Count": 7,
+        "Name": "POSSESS W/INTENT TO USE VEH MASTER KEY"
+      },
+      {
+        "Count": 1,
+        "Name": "THEFT:VEH/VESSEL W/IMPRISN ON 2+PR:PC499B"
+      },
+      {
+        "Count": 6656,
+        "Name": "GRAND THEFT AUTO/HORSE/ETC"
+      },
+      {
+        "Count": 12825,
+        "Name": "TAKE VEHICLE W/O OWNER'S CONSENT"
+      }
+    ]
+  },
+  {
+    "Count": 62701,
+    "Name": "Larceny",
+    "SubCats": [
+      {
+        "Count": 2007,
+        "Name": "Others"
+      },
+      {
+        "Count": 113,
+        "Name": "ATTEMPT BURGLARY FROM VEHICLE"
+      },
+      {
+        "Count": 4,
+        "Name": "BOOTLEG RECORDINGS W/PRIOR"
+      },
+      {
+        "Count": 9373,
+        "Name": "SHOPLIFTING"
+      },
+      {
+        "Count": 4794,
+        "Name": "THEFT FROM VEHICLE"
+      },
+      {
+        "Count": 1056,
+        "Name": "PETTY THEFT"
+      },
+      {
+        "Count": 2885,
+        "Name": "PETTY THEFT LESS THAN $50"
+      },
+      {
+        "Count": 8374,
+        "Name": "GRAND THEFT MONEY/PROPERTY \u003e $400"
+      },
+      {
+        "Count": 22578,
+        "Name": "GRAND THEFT (OVER $400)"
+      },
+      {
+        "Count": 5783,
+        "Name": "PETTY THEFT W/SPECIFIED PRIOR CONVICTION"
+      },
+      {
+        "Count": 4625,
+        "Name": "PETTY THEFT"
+      },
+      {
+        "Count": 1109,
+        "Name": "BURGLARY FROM VEHICLE"
+      }
+    ]
+  },
+  {
+    "Count": 46261,
+    "Name": "Liquor Laws",
+    "SubCats": [
+      {
+        "Count": 1762,
+        "Name": "Others"
+      },
+      {
+        "Count": 2,
+        "Name": "STORAGE OF OPENED RECEPTACLE"
+      },
+      {
+        "Count": 4604,
+        "Name": "MINOR IN POSSESSION OF ALCOHOLIC BEVERAGE"
+      },
+      {
+        "Count": 1596,
+        "Name": "MINOR POSSESS ALCOHOL"
+      },
+      {
+        "Count": 8339,
+        "Name": "DRINKING ALCOHOL"
+      },
+      {
+        "Count": 2529,
+        "Name": "SALE/ETC OF ALCOHOLIC BEVERAGE TO MINOR"
+      },
+      {
+        "Count": 1976,
+        "Name": "POSS OPEN CONTAINER ALC BEV"
+      },
+      {
+        "Count": 25453,
+        "Name": "OPEN ALCOHOLIC BEV IN PUBLIC PARK/PLACE"
+      }
+    ]
+  },
+  {
+    "Count": 47742,
+    "Name": "Moving Traffic Violations",
+    "SubCats": [
+      {
+        "Count": 3388,
+        "Name": "Others"
+      },
+      {
+        "Count": 75,
+        "Name": "JAYWALKING"
+      },
+      {
+        "Count": 6716,
+        "Name": "UNLICENSED DRIVER"
+      },
+      {
+        "Count": 3102,
+        "Name": "HIT AND RUN:PROP DAMAGE"
+      },
+      {
+        "Count": 11269,
+        "Name": "FTA/TRAFFIC WARRANT"
+      },
+      {
+        "Count": 19567,
+        "Name": "DRIVE W/LIC SUSPEND/REVOKE 4 OTHER REASON"
+      },
+      {
+        "Count": 1112,
+        "Name": "HIT AND RUN CAUSING INJURY/DEATH"
+      },
+      {
+        "Count": 1119,
+        "Name": "RECKLESS DRIVING"
+      },
+      {
+        "Count": 1394,
+        "Name": "DISREGARD SAFETY:EVADE PO"
+      }
+    ]
+  },
+  {
+    "Count": 6018,
+    "Name": "Receive Stolen Property",
+    "SubCats": [
+      {
+        "Count": 423,
+        "Name": "Others"
+      },
+      {
+        "Count": 5344,
+        "Name": "RECEIVING KNOWN STOLEN PROPERTY \u003e$950"
+      },
+      {
+        "Count": 251,
+        "Name": "POSS STOLEN VEH/VES/ETC"
+      }
+    ]
+  },
+  {
+    "Count": 216415,
+    "Name": "Miscellaneous Other Violations",
+    "SubCats": [
+      {
+        "Count": 17045,
+        "Name": "Others"
+      },
+      {
+        "Count": 1,
+        "Name": "ATTORNEY PRACT/AD AFTR SUSPEND/DISBARED"
+      },
+      {
+        "Count": 1,
+        "Name": "MONEY LAUNDER PROCEEDS CIMINAL ACTIVITY"
+      },
+      {
+        "Count": 4409,
+        "Name": "PAROLE WARRANT"
+      },
+      {
+        "Count": 12314,
+        "Name": "CURFEW - JUV ONLY"
+      },
+      {
+        "Count": 3405,
+        "Name": "PROBATION VIOLATION"
+      },
+      {
+        "Count": 4797,
+        "Name": "HIRE VEH W/O LIC"
+      },
+      {
+        "Count": 1564,
+        "Name": "REARREST/REVOKE PROBATION/ETC"
+      },
+      {
+        "Count": 9240,
+        "Name": "CRIMINAL THREATS"
+      },
+      {
+        "Count": 2149,
+        "Name": "POSSESSION BURGLARY TOOLS"
+      },
+      {
+        "Count": 1180,
+        "Name": "URINATING OR DEFECATING IN PUBLIC"
+      },
+      {
+        "Count": 1090,
+        "Name": "LEAVING PERSONAL PROP ON SIDEWALK"
+      },
+      {
+        "Count": 6762,
+        "Name": "TRESPASSING LANDS UNDER CULTIVATION"
+      },
+      {
+        "Count": 1582,
+        "Name": "TRESPASSING"
+      },
+      {
+        "Count": 4552,
+        "Name": "SOLICIT SIDEWALK"
+      },
+      {
+        "Count": 1950,
+        "Name": "ENTER/REMAIN ON POSTED PROPERTY"
+      },
+      {
+        "Count": 4777,
+        "Name": "PETITION TO REVOKE PRCS"
+      },
+      {
+        "Count": 23696,
+        "Name": "LOS ANGELES MUNICIPAL CODE"
+      },
+      {
+        "Count": 20628,
+        "Name": "VANDALISM LOSS VALUE: \u003e $5000/\u003c$50,000"
+      },
+      {
+        "Count": 1341,
+        "Name": "ILLEGAL POSSESSION OF SHOPPING CART****"
+      },
+      {
+        "Count": 6274,
+        "Name": "MINOR BUY/ETC TOBACCO/ETC"
+      },
+      {
+        "Count": 9551,
+        "Name": "FLASH INCARCERATION"
+      },
+      {
+        "Count": 1354,
+        "Name": "UNAUTHORIZED ENTRY NONCOMMERCIAL DWELLNG"
+      },
+      {
+        "Count": 19235,
+        "Name": "VIOLATION OF PAROLE:FELONY"
+      },
+      {
+        "Count": 2900,
+        "Name": "FUGITIVE FROM JUSTICE:WARRANTLESS ARREST"
+      },
+      {
+        "Count": 1137,
+        "Name": "TATTOO PERSON UNDER 18 YRS"
+      },
+      {
+        "Count": 5661,
+        "Name": "PARK REGULATIONS"
+      },
+      {
+        "Count": 6417,
+        "Name": "VIOL DOMESTIC VIOL PROTECT/STAY AWAY ORD"
+      },
+      {
+        "Count": 2968,
+        "Name": "TRESPASS W/PRIOR WARNING 24HRS"
+      },
+      {
+        "Count": 29620,
+        "Name": "FTA AFTER WRITTEN PROMISE"
+      },
+      {
+        "Count": 8815,
+        "Name": "ILLEGAL POSSESSION OF SHOPPING CART"
+      }
+    ]
+  },
+  {
+    "Count": 2811,
+    "Name": "Disturbing the Peace",
+    "SubCats": [
+      {
+        "Count": 1544,
+        "Name": "Others"
+      },
+      {
+        "Count": 67,
+        "Name": "OFFENSIVE LANGUAGE IN PUBLIC"
+      },
+      {
+        "Count": 17,
+        "Name": "DISTURBANCE OF PUBLIC MEETING/ASSEMBLY"
+      },
+      {
+        "Count": 1183,
+        "Name": "NOISE ORDINANCE"
+      }
+    ]
+  },
+  {
+    "Count": 34556,
+    "Name": "Prostitution/Allied",
+    "SubCats": [
+      {
+        "Count": 24,
+        "Name": "Others"
+      },
+      {
+        "Count": 277,
+        "Name": "KEEP DISORDERLY HOUSE"
+      },
+      {
+        "Count": 459,
+        "Name": "PIMPING"
+      },
+      {
+        "Count": 23934,
+        "Name": "PROSTITUTION"
+      },
+      {
+        "Count": 2593,
+        "Name": "LOITERING FOR PURPOSES OF PROSTITUTION"
+      },
+      {
+        "Count": 7269,
+        "Name": "LOITER:INTENT:PROSTITUTION"
+      }
+    ]
+  },
+  {
+    "Count": 50872,
+    "Name": "Other Assaults",
+    "SubCats": [
+      {
+        "Count": 683,
+        "Name": "Others"
+      },
+      {
+        "Count": 779,
+        "Name": "FALSE IDENTIFICATION TO PEACE OFFICER"
+      },
+      {
+        "Count": 1,
+        "Name": "AGGRAVATE BATTERY BY PRISONER"
+      },
+      {
+        "Count": 32607,
+        "Name": "BATTERY ON PERSON"
+      },
+      {
+        "Count": 2378,
+        "Name": "OBSTRUCT/RESIST EXECUTIVE OFFICER"
+      },
+      {
+        "Count": 2916,
+        "Name": "BATTERY ON NONCOHABITATING FORMER SPOUSE"
+      },
+      {
+        "Count": 5001,
+        "Name": "OBSTRUCT/ETC PUB OFCR/ETC"
+      },
+      {
+        "Count": 5307,
+        "Name": "TERRORIZE CAUSING FEAR"
+      },
+      {
+        "Count": 1200,
+        "Name": "BATTERY ON PERSON ON SCHOOL/HOSP/PARK/PROP"
+      }
+    ]
+  },
+  {
+    "Count": 11818,
+    "Name": "Pre-Delinquency",
+    "SubCats": [
+      {
+        "Count": 0,
+        "Name": "Others"
+      },
+      {
+        "Count": 628,
+        "Name": "TRUANCY*****"
+      },
+      {
+        "Count": 424,
+        "Name": "BEYOND PARENTAL CONTROL"
+      },
+      {
+        "Count": 10766,
+        "Name": "TRUANCY"
+      }
+    ]
+  },
+  {
+    "Count": 22498,
+    "Name": "Robbery",
+    "SubCats": [
+      {
+        "Count": 745,
+        "Name": "Others"
+      },
+      {
+        "Count": 19224,
+        "Name": "ROBBERY"
+      },
+      {
+        "Count": 2529,
+        "Name": "ATTEMPT - ROBBERY"
+      }
+    ]
+  },
+  {
+    "Count": 145575,
+    "Name": "Narcotic Drug Laws",
+    "SubCats": [
+      {
+        "Count": 4481,
+        "Name": "Others"
+      },
+      {
+        "Count": 3497,
+        "Name": "SELL/FURNISH/ETC MARIJ/HASH OVER 1 OZ"
+      },
+      {
+        "Count": 15630,
+        "Name": "POSSESS 28.5 GRAMS OR LESS OF MARIJUANA**"
+      },
+      {
+        "Count": 7095,
+        "Name": "POSSESSION CNTL SUBSTANCE PARAPHERNALIA"
+      },
+      {
+        "Count": 9566,
+        "Name": "TRANSPORT/SELL/ETC CONTROLLED SUBSTANCE"
+      },
+      {
+        "Count": 8588,
+        "Name": "POSSESS 28.5 GRAMS OR LESS OF MARIJUANA"
+      },
+      {
+        "Count": 3660,
+        "Name": "UNDER INFLUENCE CNTL SUB"
+      },
+      {
+        "Count": 1209,
+        "Name": "BRING/SEND NARC/CONT SUBS/ALCOHOL TO JAIL"
+      },
+      {
+        "Count": 32625,
+        "Name": "POSSESSION OF CONTROLLED SUBSTANCE"
+      },
+      {
+        "Count": 2649,
+        "Name": "POSS DEVICE/INSTRUMT/PARAPHERNALIA"
+      },
+      {
+        "Count": 11633,
+        "Name": "POSSESSION CONTROLLED SUBSTANCE"
+      },
+      {
+        "Count": 2489,
+        "Name": "USE/UNDER INFLUENCE OF CONTROLLED SUBS"
+      },
+      {
+        "Count": 3913,
+        "Name": "POSS/PURCHASE COCAINE BASE FOR SALE"
+      },
+      {
+        "Count": 36381,
+        "Name": "POSSESSION CONTROLLED SUBSTANCE"
+      },
+      {
+        "Count": 2159,
+        "Name": "MANUFACTURE/ETC CONTROLLED SUBSTANCE"
+      }
+    ]
+  },
+  {
+    "Count": 109988,
+    "Name": "Drunkeness",
+    "SubCats": [
+      {
+        "Count": 0,
+        "Name": "Others"
+      },
+      {
+        "Count": 3369,
+        "Name": "DRUNK, ALCOHOL"
+      },
+      {
+        "Count": 98548,
+        "Name": "DRINKING IN PUBLIC"
+      },
+      {
+        "Count": 8071,
+        "Name": "DRINKING IN PUBLIC***"
+      }
+    ]
+  },
+  {
+    "Count": 1950,
+    "Name": "Gambling",
+    "SubCats": [
+      {
+        "Count": 1494,
+        "Name": "Others"
+      },
+      {
+        "Count": 45,
+        "Name": "GAMBLING LOOKOUT"
+      },
+      {
+        "Count": 411,
+        "Name": "PRES AT GAMBLING"
+      }
+    ]
+  },
+  {
+    "Count": 34503,
+    "Name": "Disorderly Conduct",
+    "SubCats": [
+      {
+        "Count": 3459,
+        "Name": "Others"
+      },
+      {
+        "Count": 25,
+        "Name": "TRESP SCH GRNDS"
+      },
+      {
+        "Count": 2,
+        "Name": "RIOT"
+      },
+      {
+        "Count": 2222,
+        "Name": "BEGGING"
+      },
+      {
+        "Count": 28795,
+        "Name": "SIT/LIE/SLEEP SIDEWALK OR STREET"
+      }
+    ]
+  },
+  {
+    "Count": 11788,
+    "Name": "Sex (except rape/prst)",
+    "SubCats": [
+      {
+        "Count": 2888,
+        "Name": "Others"
+      },
+      {
+        "Count": 25,
+        "Name": "CRIMES AGAINST CHILDREN/LEWD/LASCIVIOUS"
+      },
+      {
+        "Count": 2,
+        "Name": "SEXUAL MISCONDUCT"
+      },
+      {
+        "Count": 2877,
+        "Name": "SOLICIT/ENGAGE LEWD ACT IN PUBLIC VIEW"
+      },
+      {
+        "Count": 1668,
+        "Name": "ADULT SCHOOL/MOLEST PUPILS"
+      },
+      {
+        "Count": 1239,
+        "Name": "SEXUAL BATTERY BY RESTRAINT"
+      },
+      {
+        "Count": 2051,
+        "Name": "LEWD/LASCIVIOUS ACTS W/CHILD \u003c 14 YRS"
+      },
+      {
+        "Count": 1038,
+        "Name": "INDECENT EXPOSURE,ILL ENTRY OCCUPY DWELLG"
+      }
+    ]
+  },
+  {
+    "Count": 5784,
+    "Name": "Against Family/Child",
+    "SubCats": [
+      {
+        "Count": 36,
+        "Name": "Others"
+      },
+      {
+        "Count": 328,
+        "Name": "CHILD STEALING"
+      },
+      {
+        "Count": 18,
+        "Name": "DEPRIVE CUSTODY/VISIT IN VIOL OF CRT ORD"
+      },
+      {
+        "Count": 5402,
+        "Name": "DISOBEY DOMESTIC RELATIONS COURT ORDER"
+      }
+    ]
+  },
+  {
+    "Count": 8064,
+    "Name": "Fraud/Embezzlement",
+    "SubCats": [
+      {
+        "Count": 4034,
+        "Name": "Others"
+      },
+      {
+        "Count": 1,
+        "Name": "SALES OF SECURITIES"
+      },
+      {
+        "Count": 2,
+        "Name": "ALTER MEDICAL RECORD W/FRAUDULENT INTENT"
+      },
+      {
+        "Count": 1277,
+        "Name": "DISPLAY FALSE DISABLED PERSON PLACARD"
+      },
+      {
+        "Count": 2750,
+        "Name": "GET CREDIT/ETC OTHER'S ID"
+      }
+    ]
+  },
+  {
+    "Count": 2496,
+    "Name": "Rape",
+    "SubCats": [
+      {
+        "Count": 1213,
+        "Name": "Others"
+      },
+      {
+        "Count": 1,
+        "Name": "RAPE BY FORCE/FEAR"
+      },
+      {
+        "Count": 164,
+        "Name": "RAPE"
+      },
+      {
+        "Count": 1118,
+        "Name": "RAPE BY FORCE/FEAR"
+      }
+    ]
   }
-}
+]
