@@ -93,7 +93,48 @@
     fill: none;
     stroke: grey;
     stroke-width: 1;
-  }   
+  } 
+.line0_9 {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+  } 
+.line10_19 {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+  }
+.line20_29 {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+  }
+.line30_39 {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+  }
+.line40_49 {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+  }
+.line50_59 {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+  }
+.line60_69 {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+  }
+.line70_plus {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+  }  
+  
 .circleMale {
      stroke: blue; 
      fill: blue;     
@@ -123,6 +164,38 @@
      fill: brown;
 } 
 .circleSum {
+     stroke: grey;
+     fill: grey;     
+}  
+.circle0_9 {
+     stroke: grey;
+     fill: grey;     
+} 
+.circle10_19 {
+     stroke: grey;
+     fill: grey;     
+} 
+.circle20_29 {
+     stroke: grey;
+     fill: grey;     
+} 
+.circle30_39 {
+     stroke: grey;
+     fill: grey;     
+} 
+.circle40_49 {
+     stroke: grey;
+     fill: grey;     
+} 
+.circle50_59 {
+     stroke: grey;
+     fill: grey;     
+} 
+.circle60_69 {
+     stroke: grey;
+     fill: grey;     
+} 
+.circle70_plus {
      stroke: grey;
      fill: grey;     
 }  
@@ -199,6 +272,55 @@
 .buttonSum:hover {
     background-color: rgba(47, 79, 79, 0.4);
   }
+  
+.button0_9 {
+    border: 1px solid grey;
+  }  
+.button0_9:hover {
+    background-color: rgba(47, 79, 79, 0.4);
+  } 
+.button10_19 {
+    border: 1px solid grey;
+  }  
+.button10_19:hover {
+    background-color: rgba(47, 79, 79, 0.4);
+  } 
+.button20_29 {
+    border: 1px solid grey;
+  }  
+.button20_29:hover {
+    background-color: rgba(47, 79, 79, 0.4);
+  } 
+.button30_39 {
+    border: 1px solid grey;
+  }  
+.button30_39:hover {
+    background-color: rgba(47, 79, 79, 0.4);
+  } 
+.button40_49 {
+    border: 1px solid grey;
+  }  
+.button40_49:hover {
+    background-color: rgba(47, 79, 79, 0.4);
+  } 
+.button50_59 {
+    border: 1px solid grey;
+  }  
+.button50_59:hover {
+    background-color: rgba(47, 79, 79, 0.4);
+  } 
+.button60_69 {
+    border: 1px solid grey;
+  }  
+.button60_69:hover {
+    background-color: rgba(47, 79, 79, 0.4);
+  } 
+.button70_plus {
+    border: 1px solid grey;
+  }  
+.button70_plus:hover {
+    background-color: rgba(47, 79, 79, 0.4);
+  }   
 
 .highlight-date {
   border-style: solid;

@@ -841,12 +841,29 @@ const Visualization = (() => {
                 Per_White: parseFloat(d.Per_White).toFixed(5) * 1000,
                 Per_Asians: parseFloat(d.Per_Asians).toFixed(5) * 1000,
                 Per_Others: parseFloat(d.Per_Others).toFixed(5) * 1000,
-                Per_Sum: parseFloat(d.Per_Sum).toFixed(5) * 1000
+                Per_Sum: parseFloat(d.Per_Sum).toFixed(5) * 1000,
+                //Age
+                Age_0_9: parseInt(d.Age_0_9),
+                Age_10_19: parseInt(d.Age_10_19),
+                Age_20_29: parseInt(d.Age_20_29),
+                Age_30_39: parseInt(d.Age_30_39),
+                Age_40_49: parseInt(d.Age_40_49),
+                Age_50_59: parseInt(d.Age_50_59),
+                Age_60_69: parseInt(d.Age_60_69),
+                Age_70_plus: parseInt(d.Age_70_plus), 
+                Per_Age_0_9: parseFloat(d.Per_Age_0_9).toFixed(5) * 1000,
+                Per_Age_10_19: parseFloat(d.Per_Age_10_19).toFixed(5) * 1000,
+                Per_Age_20_29: parseFloat(d.Per_Age_20_29).toFixed(5) * 1000,
+                Per_Age_30_39: parseFloat(d.Per_Age_30_39).toFixed(5) * 1000,
+                Per_Age_40_49: parseFloat(d.Per_Age_40_49).toFixed(5) * 1000,
+                Per_Age_50_59: parseFloat(d.Per_Age_50_59).toFixed(5) * 1000,
+                Per_Age_60_69: parseFloat(d.Per_Age_60_69).toFixed(5) * 1000,
+                Per_Age_70_plus: parseFloat(d.Per_Age_70_plus).toFixed(5) * 1000
             };
         }
 
         //read from CSV 
-        d3.csv("./data/excel/arrests_races_and_sex_resampled_percentage.csv", rowConverter, function (error, rawData) {
+        d3.csv("./data/excel/arrests_races_sex_age_percentage.csv", rowConverter, function (error, rawData) {
             if (error) {
                 console.log("Please check if the CSV file is present");
             }
@@ -955,6 +972,15 @@ const Visualization = (() => {
             asiansPoints = (function (d) { return yScale(d.Asians); })
             othersPoints = (function (d) { return yScale(d.Others); })
             sumPoints = (function (d) { return yScale(d.Sum); })
+            //age
+            age_0_9_Points = (function (d) { return yScale(d.Age_0_9); })
+            age_10_19_Points = (function (d) { return yScale(d.Age_10_19); })
+            age_20_29_Points = (function (d) { return yScale(d.Age_20_29); })
+            age_30_39_Points = (function (d) { return yScale(d.Age_30_39); })
+            age_40_49_Points = (function (d) { return yScale(d.Age_40_49); })
+            age_50_59_Points = (function (d) { return yScale(d.Age_50_59); })
+            age_60_69_Points = (function (d) { return yScale(d.Age_60_69); })
+            age_70_plus_Points = (function (d) { return yScale(d.Age_70_plus); })  
             //draw points
             drawPoints("circle", femalePoints, "circleFemale")
             drawPoints("circle", malePoints, "circleMale")
@@ -964,6 +990,14 @@ const Visualization = (() => {
             drawPoints("circle", asiansPoints, "circleAsians")
             drawPoints("circle", othersPoints, "circleOthers")
             drawPoints("circle", sumPoints, "circleSum")
+            drawPoints("circle", age_0_9_Points, "circle0_9")
+            drawPoints("circle", age_10_19_Points, "circle10_19")
+            drawPoints("circle", age_20_29_Points, "circle20_29")
+            drawPoints("circle", age_30_39_Points, "circle30_39")
+            drawPoints("circle", age_40_49_Points, "circle40_49")
+            drawPoints("circle", age_50_59_Points, "circle50_59")
+            drawPoints("circle", age_60_69_Points, "circle60_69")
+            drawPoints("circle", age_70_plus_Points, "circle70_plus")  
 
 
             //draw lines between dots
@@ -983,7 +1017,16 @@ const Visualization = (() => {
             asiansDataSet = function (d) { return d.Asians; }
             othersDataSet = function (d) { return d.Others; }
             sumDataSet = function (d) { return d.Sum; }
-
+            //age datasets
+            age_0_9_DataSet = function (d) { return d.Age_0_9; }
+            age_10_19_DataSet = function (d) { return d.Age_10_19; }
+            age_20_29_DataSet = function (d) { return d.Age_20_29; }
+            age_30_39_DataSet = function (d) { return d.Age_30_39; }
+            age_40_49_DataSet = function (d) { return d.Age_40_49; }
+            age_50_59_DataSet = function (d) { return d.Age_50_59; }
+            age_60_69_DataSet = function (d) { return d.Age_60_69; }
+            age_70_plus_DataSet = function (d) { return d.Age_70_plus; } 
+            
             //generate lines and draw lines between dots
             generate_line(femalePoints)
             drawLinesBetweenDots(femaleDataSet, "lineFemale")
@@ -1001,6 +1044,22 @@ const Visualization = (() => {
             drawLinesBetweenDots(othersDataSet, "lineOthers")
             generate_line(sumPoints)
             drawLinesBetweenDots(sumDataSet, "lineSum")
+            generate_line(age_0_9_Points)
+            drawLinesBetweenDots(age_0_9_DataSet, "line0_9")
+            generate_line(age_10_19_Points)
+            drawLinesBetweenDots(age_10_19_DataSet, "line10_19")
+            generate_line(age_20_29_Points)
+            drawLinesBetweenDots(age_20_29_DataSet, "line20_29")
+            generate_line(age_30_39_Points)
+            drawLinesBetweenDots(age_30_39_DataSet, "line30_39")
+            generate_line(age_40_49_Points)
+            drawLinesBetweenDots(age_40_49_DataSet, "line40_49")
+            generate_line(age_50_59_Points)
+            drawLinesBetweenDots(age_50_59_DataSet, "line50_59")
+            generate_line(age_60_69_Points)
+            drawLinesBetweenDots(age_60_69_DataSet, "line60_69")
+            generate_line(age_70_plus_Points)
+            drawLinesBetweenDots(age_70_plus_DataSet, "line70_plus")          
 
             //remove men and women data functions
             function removeData(circleType, lineType) {
@@ -1017,6 +1076,14 @@ const Visualization = (() => {
             clearAsians = 0
             clearOthers = 0
             clearSum = 0
+            clear_age_0_9 = 0
+            clear_age_10_19 = 0
+            clear_age_20_29 = 0
+            clear_age_30_39 = 0
+            clear_age_40_49 = 0
+            clear_age_50_59 = 0
+            clear_age_60_69 = 0
+            clear_age_70_plus = 0            
             //update axis
             function update_axis() {
                 svg.select(".y.axis")
@@ -1048,16 +1115,25 @@ const Visualization = (() => {
                     .attr("cy", typePoints)
             }
             function all_transitions() {
+                //gender
                 transition(malePoints, "lineMale", maleDataSet, "circleMale")
                 transition(femalePoints, "lineFemale", femaleDataSet, "circleFemale")
                 transition(sumPoints, "lineSum", sumDataSet, "circleSum")
-
+                //race
                 transition(hispanicPoints, "lineHispanic", hispanicDataSet, "circleHispanic")
                 transition(blacksPoints, "lineBlacks", blacksDataSet, "circleBlacks")
                 transition(whitePoints, "lineWhite", whiteDataSet, "circleWhite")
                 transition(asiansPoints, "lineAsians", asiansDataSet, "circleAsians")
                 transition(othersPoints, "lineOthers", othersDataSet, "circleOthers")
-
+                //age
+                transition(age_0_9_Points, "line0_9", age_0_9_DataSet, "circle0_9")
+                transition(age_10_19_Points, "line10_19", age_10_19_DataSet, "circle10_19")
+                transition(age_20_29_Points, "line20_29", age_20_29_DataSet, "circle20_29")
+                transition(age_30_39_Points, "line30_39", age_30_39_DataSet, "circle30_39")
+                transition(age_40_49_Points, "line40_49", age_40_49_DataSet, "circle40_49")
+                transition(age_50_59_Points, "line50_59", age_50_59_DataSet, "circle50_59")
+                transition(age_60_69_Points, "line60_69", age_60_69_DataSet, "circle60_69")
+                transition(age_70_plus_Points, "line70_plus", age_70_plus_DataSet, "circle70_plus")                 
             }
             function scale() {
                 if (clearSum == 0) {
@@ -1311,6 +1387,15 @@ const Visualization = (() => {
                     removeData("circle.circleAsians", "path.lineAsians")
                     removeData("circle.circleOthers", "path.lineOthers")
                     removeData("circle.circleSum", "path.lineSum")
+                    removeData("circle.circle0_9", "path.line0_9")
+                    removeData("circle.circle10_19", "path.line10_19")
+                    removeData("circle.circle20_29", "path.line20_29")
+                    removeData("circle.circle30_39", "path.line30_39")
+                    removeData("circle.circle40_49", "path.line40_49")
+                    removeData("circle.circle50_59", "path.line50_59")
+                    removeData("circle.circle60_69", "path.line60_69")
+                    removeData("circle.circle70_plus", "path.line70_plus") 
+                                        
                     //update axis   
                     update_axis();
                     //set the triggers that everything was cleared
@@ -1322,7 +1407,14 @@ const Visualization = (() => {
                     clearAsians = 1
                     clearOthers = 1
                     clearSum = 1
-                    console.log("scatter test clearAll")
+                    clear_age_0_9 = 1
+                    clear_age_10_19 = 1
+                    clear_age_20_29 = 1
+                    clear_age_30_39 = 1
+                    clear_age_40_49 = 1
+                    clear_age_50_59 = 1
+                    clear_age_60_69 = 1
+                    clear_age_70_plus = 1                      
 
                     //2nd scatter plot
                     //scale
@@ -1686,6 +1778,32 @@ const Visualization = (() => {
                     //update axis   
                     update_axis2();                    
                 });
+             d3.select("div.button0_9")
+                .on("click", function () {
+                    toggleButtonClass(this);
+
+                    //draw new line  
+                    if (clear_age_0_9 == 1) {
+                        age_0_9_Points = (function (d) { return yScale(d.Age_0_9); })
+                        drawPoints("circle", age_0_9_Points, "circle0_9")
+                        generate_line(age_0_9_Points)
+                        drawLinesBetweenDots(age_10_19_DataSet, "line0_9")
+                        clear_age_0_9 = 0
+                        scale()
+                        all_transitions()
+                    } else {
+                        //remove function
+                        removeData("circle.circle0_9", "path.line0_9")
+                        clear_age_0_9 = 1
+                        scale()
+                        all_transitions()
+                    }
+                    //update axis   
+                    update_axis();
+
+                    //2nd scatter plot
+                             
+                });                
         });
     };
     
