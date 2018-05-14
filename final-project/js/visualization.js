@@ -531,7 +531,7 @@ const Visualization = (() => {
                 .attr("font-family", "sans-serif")
                 .attr("font-size", 14)
                 .attr("text-anchor", "middle")
-                .text(function (d) { return "ALL YEARS"; });
+                .text(function (d) { return "Arrests per date (Aggregated data from all years)"; });
         }
         else {
             svg.append("text")
