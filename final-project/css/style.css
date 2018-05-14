@@ -369,6 +369,11 @@
 .center{
   text-align: center;
 }
+.hor-center{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
 
 .hor-vert-center{
   display: flex;

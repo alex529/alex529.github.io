@@ -870,7 +870,7 @@ const Visualization = (() => {
         //1st SCATTER PLOT           
         //Width and height
         var margin = { top: 10, right: 50, bottom: 60, left: 100 };
-        var width = 750 - margin.left - margin.right,
+        var width = 650 - margin.left - margin.right,
             height = 350 - margin.top - margin.bottom;
         padding = 100;
         var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
