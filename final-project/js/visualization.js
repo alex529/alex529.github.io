@@ -109,6 +109,7 @@ const Visualization = (() => {
                     .shapeHeight(25)
                     .labelFormat(d3.format(".0f"))
                     .useClass(false)
+                    .title("Number of arrests")
                     .scale(colorScale);
                 
                 legendSvg.select(".legendQuant")
