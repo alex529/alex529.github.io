@@ -270,3 +270,7 @@
 .calendar-day, .calendar-month{
   font-size: 9px;
 }
+
+.cal{
+  margin-bottom: 40px;
+}
