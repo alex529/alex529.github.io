@@ -1,3 +1,16 @@
+String.prototype.width = function(font) {
+    var f = font || '15px arial',
+        o = $('<div></div>')
+              .text(this)
+              .css({'position': 'absolute', 'float': 'left', 'white-space': 'nowrap', 'visibility': 'hidden', 'font': f})
+              .appendTo($('body')),
+        w = o.width();
+  
+    o.remove();
+  
+    return w;
+  }
+  
 const Visualization = (() => {
 
     var activeFeature = d3.select(null);
@@ -619,11 +632,12 @@ const Visualization = (() => {
     var setupDoughnut = function () {
         drawGenderDoughnut();
         drawDescentDoughnut();
+        drawAgeDoughnut();
     };
     var drawDescentDoughnut = function () {
         //Width and height
-        var margin = { top: 0, right: 50, bottom: 0, left: 60 };
-        var width = 400 - margin.left - margin.right,
+        var margin = { top: 0, right: 0, bottom: 0, left: 10 };
+        var width = 300 - margin.left - margin.right,
             height = 400 - margin.top - margin.bottom;
         padding = 100;
         var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
@@ -643,8 +657,8 @@ const Visualization = (() => {
             }
             dataSet = rawData;
             //Width and height
-            var w = 300;
-            var h = 300;
+            var w = 250;
+            var h = 250;
             var outerRadius = w / 2;
             var innerRadius = w / 3;
             var arc = d3.arc()
@@ -689,8 +703,8 @@ const Visualization = (() => {
                 });
 
             //legend
-            var legendRectSize = 18;
-            var legendSpacing = 4;
+            var legendRectSize = 14;
+            var legendSpacing = 3;
 
             var legend = svg.selectAll('.legend')
                 .data(color.domain())
@@ -734,21 +748,19 @@ const Visualization = (() => {
 
             //Title
             svg.append("text")
-                .attr("x", (width / 2))
-                .attr("y", (margin.bottom + 350))
+                .attr("x", (width / 2) - 20)
+                .attr("y", (margin.bottom + 300))
                 .attr("text-anchor", "middle")
-                .style("font-size", "16px")
+                .style("font-size", "10px")
                 .data(dataSet)
-                .text("Race arrests distribution in the interval 2010-2018");
-
-
+                .text("Distribution of arrests based on Race");
         });
 
     };
     var drawGenderDoughnut = function () {
         //Width and height
-        var margin = { top: 0, right: 50, bottom: 0, left: 60 };
-        var width = 400 - margin.left - margin.right,
+        var margin = { top: 0, right: 0, bottom: 0, left: 0 };
+        var width = 300 - margin.left - margin.right,
             height = 400 - margin.top - margin.bottom;
         padding = 100;
         var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
@@ -768,8 +780,8 @@ const Visualization = (() => {
             }
             dataSet = rawData;
             //Width and height
-            var w = 300;
-            var h = 300;
+            var w = 250;
+            var h = 250;
             var outerRadius = w / 2;
             var innerRadius = w / 3;
             var arc = d3.arc()
@@ -814,8 +826,8 @@ const Visualization = (() => {
                 });
 
             //legend
-            var legendRectSize = 18;
-            var legendSpacing = 4;
+            var legendRectSize = 14;
+            var legendSpacing = 3;
 
             var legend = svg.selectAll('.legend')
                 .data(color.domain())
@@ -858,15 +870,146 @@ const Visualization = (() => {
                 });
             //Title
             svg.append("text")
-                .attr("x", (width / 2))
-                .attr("y", (margin.bottom + 350))
+                .attr("x", (width / 2) - 20)
+                .attr("y", (margin.bottom + 300))
                 .attr("text-anchor", "middle")
-                .style("font-size", "16px")
+                .style("font-size", "10px")
                 .data(dataSet)
-                .text("Gender arrests distribution in the interval 2010-2018");
+                .text("Distribution of arrests based on Gender");
+
+            //General title
+            svg.append("text")
+                .attr("x", (width / 2) - 20)
+                .attr("y", (margin.bottom + 340))
+                .attr("text-anchor", "middle")
+                .style("font-size", "12px")
+                .data(dataSet)
+                .text("All distributions are for the 2010-2018 interval");                 
 
         });
     };
+    var drawAgeDoughnut = function () {
+        //Width and height
+        var margin = { top: 0, right: 10, bottom: 0, left: 0 };
+        var width = 300 - margin.left - margin.right,
+            height = 400 - margin.top - margin.bottom;
+        padding = 100;
+        var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
+        var startDate, endDate;
+
+        function rowConverter(d) {
+            return {
+                Age: d.Age,
+                SumAge: d.Sum_Age
+            };
+        }
+
+
+        d3.csv("./data/excel/descent_code_pie_age.csv", rowConverter, function (error, rawData) {
+            if (error) {
+                console.log("Please check if the CSV file is present");
+            }
+            dataSet = rawData;
+            //Width and height
+            var w = 250;
+            var h = 250;
+            var outerRadius = w / 2;
+            var innerRadius = w / 3;
+            var arc = d3.arc()
+                .innerRadius(innerRadius)
+                .cornerRadius(3) // sets how rounded the corners are on each slice
+                .outerRadius(outerRadius);
+
+            var pie = d3.pie()
+                .value(function (d) { return d.SumAge; })
+                .padAngle(0.01);
+            //Easy colors accessible via a 10-step ordinal scale
+            var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+            //Create SVG element
+            var svg = d3.select("#doughnut3").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            //Set up groups
+            var arcs = svg.selectAll("g.arc")
+                .data(pie(dataSet))
+                .enter()
+                .append("g")
+                .attr("class", "arc")
+                .attr("transform", "translate(" + outerRadius + "," + outerRadius + ")");
+
+            //calculate total
+            var total = d3.sum(dataSet, function (d) { return d.SumAge });
+
+            //Draw arc paths
+            arcs.append("path")
+                .attr("fill", function (d, i) {
+                    return color(i);
+                })
+                .attr("d", arc)
+                .data(dataSet)
+                .append("title")
+                .text(function (d) {
+                    return "The number of arrest for the age " + d.Age + " is: " + d.SumAge + " or " + Math.round(d.SumAge / total * 100) + "%";
+                });
+
+            //legend
+            var legendRectSize = 14;
+            var legendSpacing = 3;
+
+            var legend = svg.selectAll('.legend')
+                .data(color.domain())
+                .enter()
+                .append('g')
+                .attr('class', 'legend')
+                .attr('transform', function (d, i) {
+                    var hLegend = legendRectSize + legendSpacing;
+                    //var offset2 =  h * color.domain().length / 2;
+                    var horz = 7 * legendRectSize;
+                    var vert = i * hLegend + h / 4.2;
+                    return 'translate(' + horz + ',' + vert + ')';
+                });
+
+            legend.append('rect')
+                .attr('width', legendRectSize)
+                .attr('height', legendRectSize)
+                .style('fill', color)
+                .style('stroke', color);
+
+            legend.append('text')
+                .data(dataSet)
+                .attr('x', legendRectSize + legendSpacing)
+                .attr('y', legendRectSize - legendSpacing)
+                .text(function (d) { return d.Age; });
+
+            //Labels
+            arcs.append("text")
+                .attr("text-anchor", "middle")
+                .attr("transform", function (d) {
+                    var _d = arc.centroid(d);
+                    _d[0] *= 1.35;	//multiply by a constant factor
+                    _d[1] *= 1.35;	//multiply by a constant factor
+                    return "translate(" + _d + ")";
+                })
+                .attr("dy", ".50em")
+                .data(dataSet)
+                .text(function (d) {
+                    return Math.round(d.SumAge / total * 100) + "%";
+                });
+            //Title
+            svg.append("text")
+                .attr("x", (width / 2) - 20)
+                .attr("y", (margin.bottom + 300))
+                .attr("text-anchor", "middle")
+                .style("font-size", "10px")
+                .data(dataSet)
+                .text("Distribution of arrests based on Age");                             
+
+        });
+    };    
 
     /* --------- SCATTER PLOT ----------  */
     var setupScatterPlot = function () {
@@ -2295,18 +2438,165 @@ const Visualization = (() => {
 
     /* --------- TREE MAP ----------  */
 
-    var setupTreemap = function () {
-        console.log('init treemap');
+    const setupTreemap = () => {
+
+        const width = 1000;
+        const height = 800;
+
+        const svg = d3.select('#treemap')
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height)
+            .attr('id', 'tree-svg');
+
+        const fader = function (color) { return d3.interpolateRgb(color, "#fff")(0.2); },
+            color = d3.scaleOrdinal(d3.schemeCategory20.map(fader)),
+            format = d3.format(",d");
+
+        const treemap = d3.treemap()
+            .tile(d3.treemapResquarify)
+            .size([width, height])
+            .round(true)
+            .paddingInner(1);
+
+        d3.json("./data/arrest-agr.json", function (error, data) {
+            if (error) throw error;
+
+            const root = d3.hierarchy(data)
+                .eachBefore((d) => {
+                    let tmp = d.data.name.toLowerCase();
+                    tmp = tmp.charAt(0).toUpperCase() + tmp.slice(1);
+                    d.data.name = tmp;
+                    d.data.id = (d.parent ? d.parent.data.id + "|" : "") + tmp;
+                })
+                .sum((d) => {
+                    return d.size;
+                })
+                .sort(function (a, b) {
+                    return b.value - a.value;
+                });
+
+            treemap(root);
+
+            const cell = svg.selectAll("g")
+                .data(root.leaves())
+                .enter().append("g")
+                .attr("transform", function (d) { return "translate(" + d.x0 + "," + d.y0 + ")"; });
+
+            cell.append("rect")
+                .attr("id", function (d) { return d.data.id; })
+                .attr("width", function (d) { return d.x1 - d.x0; })
+                .attr("height", function (d) { return d.y1 - d.y0; })
+                .attr("fill", function (d) {
+                    return color(d.parent.data.id);
+                });
+
+            cell.append("clipPath")
+                .attr("id", function (d) { return "clip-" + d.data.id; })
+                .append("use")
+                .attr("xlink:href", function (d) { return "#" + d.data.id; });
+
+            cell.append("text")
+                .attr("clip-path", function (d) { return "url(#clip-" + d.data.id + ")"; })
+                .selectAll("tspan")
+                .data(function (d) {
+                    let txt = [d.data.name]
+                    if ((d.x1 - d.x0) < d.data.name.width()) {
+                        txt = d.data.name.split(" ")
+                    }
+                    const tmp = []
+                    const width = d.x1 - d.x0
+                    const height = d.y1 - d.y0
+                    for (let i = 0; i < txt.length; i++) {
+                        tmp.push({
+                            txt: txt[i],
+                            width: width,
+                            height: height,
+                        });
+                    }
+                    return tmp;
+                })
+                .enter().append("tspan")
+                .attr('font-size', (d) => {
+                    if (d.height<15) {
+                        return 5 + 'px'
+                    }
+                    if (d.width > 70) {
+                        return '14px';
+                    }
+                    return d.width * 13 / 80 + "px";
+                })
+                .attr("x", 4)
+                .attr("y", function (d, i) { return 13 + i * 10; })
+                .text(function (d) { return d.txt; });
+
+            cell.append("title")
+                .text(function (d) {
+                    const first = d.data.id.indexOf('|');
+                    const last = d.data.id.lastIndexOf('|');
+                    return d.data.id.slice(0, first) + ": " + d.data.id.slice(first + 1, last) + "\nArrest Subtype: " + d.data.id.slice(last + 1) + "\nNumer of Arrests: " + format(d.value);
+                });
+
+            cell.transition()
+                .duration(750)
+                .attr("transform", (d) => { return "translate(" + d.x0 + "," + d.y0 + ")"; })
+                .select("rect")
+                .attr("width", (d) => { return d.x1 - d.x0; })
+                .attr("height", (d) => { return d.y1 - d.y0; });
+
+            var legend = ['part1', 'part2', 'part3'];
+
+            // // create legend
+            // var svg1 = d3.select('#treemap-legend')
+            //     .append('svg')
+            //     .attr('width', 200)
+            //     .attr('height', 500).append('g')
+            //     .attr('class', 'legend')
+            //     .attr('transform', 'translate(' + width + ', ' + 30 + ')');
+
+            // // legend title
+            // svg1.append('text')
+            //     .style('font-weight', 'bold')
+            //     .attr('x', 10)
+            //     .attr('y', -10)
+            //     .text('Legend');
+
+
+            // // create g for each legend item
+            // var legendItem = svg1.selectAll('.legend-item')
+            //     .data(legend).enter()
+            //     .append('g')
+            //     .attr('class', 'legend-item')
+            //     .attr('transform', function (d, i) {
+            //         return 'translate(10,' + i * 25 + ')'
+            //     });
+
+            // // legend rectangle
+            // legendItem.append('rect')
+            //     .attr('width', 20)
+            //     .attr('height', 20)
+            //     .style('fill', function (d) {
+            //         return color(d)
+            //     });
+
+            // // legend text
+            // legendItem.append('text')
+            //     .attr('x', 25)
+            //     .attr('y', 15).text(function (d) {
+            //         return d;
+            //     });
+        });
+
+        hideLoader('treemap');
     };
 
-    var hideLoader = function (parentId) {
+    const hideLoader = function (parentId) {
         $('#' + parentId).find('.loader').hide()
     };
 
-    var load = function () {
+    const load = function () {
         loadDataAndSetupVisualizations();
     };
-
 
 
     return {
