@@ -272,7 +272,7 @@ const Visualization = (() => {
             circles.attr("class", "not-brushed");
         
             circles.filter(function (d){
-                    return t1 <= d.Date && d.Date <= t2;            
+                    return t1 <= d.time && d.time <= t2;            
                 })
                 .attr("class", "brushed");
         }
@@ -314,6 +314,10 @@ const Visualization = (() => {
 
         var circles = groups.selectAll('circle')
             .data(function (d) {
+
+                for(let k in d.Locations)
+                    d.Locations[k].time = d.time
+                
                 return d.Locations;
             })
             .enter()
