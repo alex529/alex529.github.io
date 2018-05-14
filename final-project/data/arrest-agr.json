@@ -576,16 +576,12 @@
           "name": "BRING/SEND NARC/CONT SUBS/ALCOHOL TO JAIL"
         },
         {
-          "size": 32625,
+          "size": 80639,
           "name": "POSSESSION OF CONTROLLED SUBSTANCE"
         },
         {
           "size": 2649,
           "name": "POSS DEVICE/INSTRUMT/PARAPHERNALIA"
-        },
-        {
-          "size": 11633,
-          "name": "POSSESSION CONTROLLED SUBSTANCE"
         },
         {
           "size": 2489,
@@ -594,10 +590,6 @@
         {
           "size": 3913,
           "name": "POSS/PURCHASE COCAINE BASE FOR SALE"
-        },
-        {
-          "size": 36381,
-          "name": "POSSESSION CONTROLLED SUBSTANCE"
         },
         {
           "size": 2159,
