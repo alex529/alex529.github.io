@@ -535,7 +535,7 @@ const Visualization = (() => {
     var drawDescentDoughnut = function () {
         //Width and height
         var margin = { top: 0, right: 50, bottom: 0, left: 60 };
-        var width = 650 - margin.left - margin.right,
+        var width = 400 - margin.left - margin.right,
             height = 400 - margin.top - margin.bottom;
         padding = 100;
         var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
@@ -651,7 +651,7 @@ const Visualization = (() => {
     var drawGenderDoughnut = function () {
         //Width and height
         var margin = { top: 0, right: 50, bottom: 0, left: 60 };
-        var width = 650 - margin.left - margin.right,
+        var width = 400 - margin.left - margin.right,
             height = 400 - margin.top - margin.bottom;
         padding = 100;
         var dataset, xScale, yScale, xAxis, yAxis;  //Empty, for now 
