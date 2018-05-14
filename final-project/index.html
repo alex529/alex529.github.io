@@ -273,9 +273,34 @@
                                 <div class="section__text mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
                                     <h4 class="mdl-cell mdl-cell--12-col">Subtitle</h4>
                                     <div class="mdl-cell mdl-cell--12-col graybox">
+
+                                        <p>
+                                            To investigate <b>when</b> the arrests have been conducted, a calendar is an intuitive visulization and a concept that most people are familiar with.
+                                            The arrests from all divisions have been aggregated and grouped into dates e.g. January 1st, January 2nd et cetera. With there calendar there is a possibility to recognize patterns during the different days, weeks and months.
+                                            Looking at the calendar with all years represented, it seems that the early months of a new year is generally more criminal<sup>2</sup>
+                                        </p>
+                                        <p>
+                                            The calendar is annotated with fixed holidays and celebration days like 4th of July, Halloween et cetera. This allows to see if there tends to be more or less arrests during these occasions. One can hover over the highlighted dates and get the name of the day.
+                                        </p>
+                                        <p>
+                                            Investigating the calendar with all years represented, it doesn't reveal any surprising day-to-day outliers. During christmas days, and especially around December 24th and 25th, significantly less crime is commited. There also seems to be notably lower number of arrests during the last week of November.
+                                            Looking into the months and seasons, there seems to be a small drop in crime during a calendar year, with the months, January, February, March and April being the most criminal months. This raises new hypotheses, for instance it could be interesting to compare the crime calender with a tourism ditto to see any correlations.                                          
+                                        </p>
+
+                                        <p>
+                                            <sup>2</sup> By using the term <i>criminal</i>, is only in the context of actual conducted arrests. It might also be, that the police has conducted less arrests without bringing down crime. If this is the case, the calendar might also show, that the police is less efficient during specific time periods. The calendar is not conclusive and will open up for an inductive research approach establishing multiple hypotheses from the observations.
+                                        </p>
+
                                         <div id="calendar" class="cal">
                                             <div class="loader"></div>
                                         </div>
+
+
+                                        <p>
+                                            By only reporting the summarised data i.e. for all years, it is interesting to decompose the data and look into the specific years. This might reveal daily outliers (bright/dark red).
+                                            Click the <b>+ Expand years</b> button to dive into each year<sup>3</sup>.
+                                        </p>
+
                                         <div id="yearly-calendars">
                                             <div id="calendar-2010" class="cal">
                                                 <div class="loader"></div>
@@ -305,11 +330,17 @@
                                                 <div class="loader"></div>
                                             </div>
                                         </div>
+
                                         <div class="hor-vert-center">
                                             <button id="calendar-btn" class="mdl-button mdl-js-button" onclick="Visualization.toggleCalendars()">
                                                 + Expand years
                                             </button>
+                                            <br>
                                         </div>
+
+                                        <p>
+                                            <sup>3</sup> Only fixed holidays/celebration days are highlighted in the calendars. Changing occasions like Super Bowl and easter are not highlighted in the calendars. Feel free to hold the specific calendar together with a list of red-letter days.
+                                        </p>
                                     </div>                
                                 </div>
                             </div>
