@@ -125,16 +125,25 @@
                         <div class="mdl-card mdl-cell mdl-cell--12-col">
                             <div class="mdl-card__supporting-text mdl-grid">
 
-                                <h2 class="mdl-cell mdl-cell--12-col"> <b> Where? </b> Location distribution of Arrests </h2>
+                                <h2 class="mdl-cell mdl-cell--12-col"> <b> Where? </b> Locations in divisions</h2>
 
                                 <div class="section__text mdl-cell mdl-cell--12-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
-                                    <h4 class="mdl-cell mdl-cell--12-col">Subtitle</h4>
+                                    <h4 class="mdl-cell mdl-cell--12-col">An interactive map visualizing the arrests in each division</h4>
                                     <div class="mdl-cell mdl-cell--12-col graybox">
+                                        <p>
+                                            In order to answer the question of <b>where</b> the arrests are happening, a map is visualizing the most criminal LAPD divisions in terms of total arrests between 2010 and 2018<sup>1</sup>.
+                                            The colors indiciate how many arrests have been conducted in each division. Even with a lower number of total arrests, the division might suffer from more crime per capita.
+                                        </p>
+
+                                        <p>
+                                            It is possible to click each division and have all arrests in that specific division shown on the map. A timeline appears showing the number of arrests conducted each day in the division. One can use the brush to select a desired time span, and the plotted arrests are updated in the map accordingly.
+                                        </p>
                                         
                                         
-                                        <div id="timeline">
-                                            <div class="loader"></div>
-                                        </div>
+ 
+                                        <p>
+                                            <sup>1</sup> During the data research and analysis, it has not been possible to collect data about the population in each division. This would have been particular useful to show the percentage arrest rate in each division.
+                                        </p>
                                         
                                         <div class="mdl-grid">
                                             <div class="mdl-cell mdl-cell--10-col graybox">
@@ -148,6 +157,10 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div id="timeline">
+                                                <div class="loader"></div>
+                                            </div>
 
                                         
                                     </div>                

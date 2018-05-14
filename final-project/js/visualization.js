@@ -258,7 +258,7 @@ const Visualization = (() => {
                 }
                 return timeline.height - yScale(count);
             })
-            .attr('fill', 'darkslateblue');
+            .attr('fill', 'rgb(216, 103, 119)');
 
         svg.append('g')
             .attr('class', 'axis')
